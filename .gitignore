@@ -1,0 +1,8 @@
+.gradle
+.idea
+*.iml
+build
+.DS_Store
+verifier*
+.keys/
+.run
