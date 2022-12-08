@@ -5,6 +5,8 @@
 人类语言的大量样本进行训练，可以在给定上下文的情 况下生成有意义的自然语言文本。
 该模型可以用于许多应用，例如自然语言处理（NLP）和 对话系统。
 
+[English](https://github.com/obiscr/ChatGPT/blob/main/README.md) | 
+[简体中文](https://github.com/obiscr/ChatGPT/blob/main/README_CN.md)
 <br/>
 
 # 关于本项目
