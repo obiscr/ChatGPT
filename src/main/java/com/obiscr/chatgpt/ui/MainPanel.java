@@ -35,7 +35,7 @@ public class MainPanel {
         top.add(button, BorderLayout.EAST);
         top.setBorder(UIUtil.getTextFieldBorder());
         contentPanel = new MarkdownJCEFHtmlPanel();
-        String usage = "首先，您需要注册一个[OpenAI](https://auth0.openai.com/u/signup/identifier?state=hKFo2SBOVnZMbDF4T1hLeFZIcTluZ1hKbmZOZENvVDgydHduRaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIER2ZVJvUzdhN2Q4MVBpUTdZelg0cGlBcnNyQm5oUG5zo2NpZNkgRFJpdnNubTJNdTQyVDNLT3BxZHR3QjNOWXZpSFl6d0Q)的账号，然后打开：[https://chat.openai.com/api/auth/session](https://chat.openai.com/api/auth/session)\n" +
+        String usage = "## 使用方法\n首先，您需要注册一个[OpenAI](https://auth0.openai.com/u/signup/identifier?state=hKFo2SBOVnZMbDF4T1hLeFZIcTluZ1hKbmZOZENvVDgydHduRaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIER2ZVJvUzdhN2Q4MVBpUTdZelg0cGlBcnNyQm5oUG5zo2NpZNkgRFJpdnNubTJNdTQyVDNLT3BxZHR3QjNOWXZpSFl6d0Q)的账号，然后打开：[https://chat.openai.com/api/auth/session](https://chat.openai.com/api/auth/session)\n" +
                 "这个网站，把accessToken记录下来。\n" +
                 "\t\t\t\t\n" +
                 "然后打开IDE，点击ChatGPT工具窗口的 ![](https://intellij-icons.jetbrains.design/icons/AllIcons/general/settings.svg) 按钮（或者手动打开： <kbd>Settings/Preferences</kbd> > <kbd>Tools</kbd> > <kbd>ChatGPT，</kbd>）\n" +
