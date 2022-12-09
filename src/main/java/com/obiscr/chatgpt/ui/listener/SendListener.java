@@ -1,7 +1,10 @@
 package com.obiscr.chatgpt.ui.listener;
 
+import com.obiscr.chatgpt.core.DataFactory;
+import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.settings.SettingsState;
 import com.obiscr.chatgpt.ui.MainPanel;
+import com.obiscr.chatgpt.ui.notifier.MyNotifier;
 import com.obiscr.chatgpt.util.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +22,6 @@ public class SendListener implements ActionListener,KeyListener {
     private static final Logger LOG = LoggerFactory.getLogger(SendListener.class);
 
     private final MainPanel mainPanel;
-    private static final String ACCESS_TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1UaEVOVUpHTkVNMVFURTRNMEZCTWpkQ05UZzVNRFUxUlRVd1FVSkRNRU13UmtGRVFrRXpSZyJ9.eyJodHRwczovL2FwaS5vcGVuYWkuY29tL3Byb2ZpbGUiOnsiZW1haWwiOiJ3dXppQG9iaXNjci5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZ2VvaXBfY291bnRyeSI6IlVTIn0sImh0dHBzOi8vYXBpLm9wZW5haS5jb20vYXV0aCI6eyJ1c2VyX2lkIjoidXNlci1Bd0hYM1FRVDlxaE43ZDR5NnlGODE0SzIifSwiaXNzIjoiaHR0cHM6Ly9hdXRoMC5vcGVuYWkuY29tLyIsInN1YiI6ImF1dGgwfDYzOGVhZDExZDg4YTQ1NDAyZTNlNmJiMyIsImF1ZCI6WyJodHRwczovL2FwaS5vcGVuYWkuY29tL3YxIiwiaHR0cHM6Ly9vcGVuYWkuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY3MDQ4NDc0NSwiZXhwIjoxNjcwNTcxMTQ1LCJhenAiOiJUZEpJY2JlMTZXb1RIdE45NW55eXdoNUU0eU9vNkl0RyIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUgbW9kZWwucmVhZCBtb2RlbC5yZXF1ZXN0IG9yZ2FuaXphdGlvbi5yZWFkIG9mZmxpbmVfYWNjZXNzIn0.neuTjG0PyReK_iW2-40zw53AGisHTYlsPkaU4uh2_4kU50oJnKH4ylaKJOz92WqJjWBO0VEx4IjELdvhfSHZiFFVsCtr2BdltNZ88FLlghsOa5bfPik1pNu7ZThhehVgjffVKc7OmuF25e8663FWCUnwcF6Ibi2Bo9wgwSN2vzy5NiBRxjkTQLePbkqZKMoB-dQurwfjC_O-0u3C7H4fUjJI9kvYk80JZWgDrmnf1DLYZbqS4380V4KgYZT8YnJuXO7GI8_eCswJOFuqcFStmGwhqJcofhouvqpA4naTjgB1p9qm2qxLDdjDS1UlerQjdJpug3ghQLJB_X_YhVLhUg";
 
     public SendListener(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
@@ -34,6 +36,9 @@ public class SendListener implements ActionListener,KeyListener {
         String accessToken = Objects.requireNonNull(SettingsState.getInstance()
                 .getState()).getAccessToken();
         if (accessToken== null|| accessToken.isEmpty()) {
+            MyNotifier.notifyError(DataFactory.getInstance().getProject(),
+                    ChatGPTBundle.message("notify.config.title"),
+                    ChatGPTBundle.message("notify.config.text"));
             return;
         }
 
@@ -42,6 +47,9 @@ public class SendListener implements ActionListener,KeyListener {
         String text = mainPanel.getSearchTextArea().
                 getTextArea().getText();
         LOG.info("ChatGPT Search: {}", text);
+        if (text.isEmpty()) {
+            return;
+        }
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.submit(() -> {
             try {

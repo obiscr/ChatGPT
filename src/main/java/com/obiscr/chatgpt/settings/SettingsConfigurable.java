@@ -1,6 +1,7 @@
 package com.obiscr.chatgpt.settings;
 
 import com.intellij.openapi.options.Configurable;
+import com.obiscr.chatgpt.message.ChatGPTBundle;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +21,7 @@ public class SettingsConfigurable implements Configurable {
   @Nls(capitalization = Nls.Capitalization.Title)
   @Override
   public String getDisplayName() {
-    return "ChatGPT";
+    return ChatGPTBundle.message("setting.menu.text");
   }
 
   @Override

@@ -4,6 +4,7 @@ import com.intellij.find.SearchTextArea;
 import com.intellij.ui.components.*;
 import com.intellij.util.ui.FormBuilder;
 import com.intellij.util.ui.UIUtil;
+import com.obiscr.chatgpt.message.ChatGPTBundle;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class SettingsComponent {
             ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
     myMainPanel = FormBuilder.createFormBuilder()
-            .addLabeledComponent(new JBLabel("Access token: "), scrollPane, 1, false)
+            .addLabeledComponent(new JBLabel(ChatGPTBundle.message("setting.access.token.label")), scrollPane, 1, false)
             //.addComponent(myIdeaUserStatus, 1)
             .addComponentFillVertically(new JPanel(), 0)
             .getPanel();

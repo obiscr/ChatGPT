@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class DataFactory {
 
-    private static final DataFactory factory = new DataFactory();
+    private static final DataFactory FACTORY = new DataFactory();
 
     private Project project;
     private ToolWindow toolWindow;
@@ -19,7 +19,7 @@ public class DataFactory {
     }
 
     public static DataFactory getInstance() {
-        return factory;
+        return FACTORY;
     }
 
     public Project getProject() {

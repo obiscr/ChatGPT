@@ -15,7 +15,8 @@ public class StringUtil {
         }
         source = source.substring(5);
         if ("{}".equals(source.trim())) {
-            return HtmlUtil.create("看起来出了一些问题，没有查询到任何数据。");
+            return "# Ops\n" +
+                    "It looks like something went wrong, no data was response.";
         }
         JSONObject object = JSON.parseObject(source);
         JSONArray resultArray = object.getJSONObject("message").getJSONObject("content").getJSONArray("parts");

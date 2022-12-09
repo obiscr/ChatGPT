@@ -2,6 +2,9 @@ package com.obiscr.chatgpt.util;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.obiscr.chatgpt.core.DataFactory;
+import com.obiscr.chatgpt.message.ChatGPTBundle;
+import com.obiscr.chatgpt.ui.notifier.MyNotifier;
 import org.intellij.plugins.markdown.ui.preview.jcef.MarkdownJCEFHtmlPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,9 +95,15 @@ public class HttpUtil {
         connection.getOutputStream().write(object.toJSONString().getBytes());
 
         connection.connect();
-
-        if (connection.getResponseCode() != 200) {
-            System.out.println(connection.getResponseCode());
+        int responseCode = connection.getResponseCode();
+        if (responseCode != 200) {
+            System.out.println(responseCode);
+            if (responseCode == 401) {
+                MyNotifier.notifyError(DataFactory.getInstance().getProject(),
+                        ChatGPTBundle.message("notify.response.title"),
+                        ChatGPTBundle.message("notify.response.text"));
+            }
+            LOG.error("ChatGPT Response error, responseCode={}", responseCode);
             throw new Exception("Failed to connect to SSE server");
         }
 

@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>ChatGPT</id>
   <name>ChatGPT</name>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <vendor email="wuzi@obiscr.com" url="https://obiscr.com">obiscr</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,12 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.0.1</p>
+      <ul>
+        <li>Support quick setting of Access Token（支持快速设置Access Token）</li>
+        <li>Add Token expiration reminder（添加Token过期提示）</li>
+        <li>Add relevant information on the home page（增加首页的相关信息）</li>
+      </ul><br>
       <p>1.0.0</p>
       <ul>
         <li>Support running in JetBrains IDEs（支持在JetBrains的IDE上运行）</li>
@@ -33,5 +39,8 @@
                              id="com.obiscr.chatgpt.settings.SettingsConfigurable"
                              displayName="ChatGPT"/>
     <applicationService serviceImplementation="com.obiscr.chatgpt.settings.SettingsState"/>
+    <notificationGroup id="ChatGPT Notification Group"
+                       displayType="BALLOON"
+                       key="ChatGPT.Notification"/>
   </extensions>
 </idea-plugin>
