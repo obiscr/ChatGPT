@@ -16,6 +16,10 @@ can be used for many applications, such as natural language processing
 
 This project is a plugin that supports ChatGPT running on JetBrains series IDE.
 
+![Hello](https://user-images.githubusercontent.com/28687074/206612065-230b936e-d32a-40c7-8c6c-0d6a4d9e8cd0.gif)
+
+![asm](https://user-images.githubusercontent.com/28687074/206612043-52f6106d-8cdb-4944-a055-30e74a480eaf.gif)
+
 ![img1](https://user-images.githubusercontent.com/28687074/206475742-124708fb-1cea-47cc-a299-08630ca4fe95.gif)
 
 ![img2](https://user-images.githubusercontent.com/28687074/206475807-45b82b9d-f879-40ed-a8fb-27e8abfd7667.png)
