@@ -7,7 +7,7 @@ import com.alibaba.fastjson2.JSONObject;
 /**
  * @author Wuzi
  */
-public class StringUtil {
+public class StringUtil extends com.intellij.openapi.util.text.StringUtil {
 
     public static String parse(String source) {
         if (source == null || source.length() <= 6){

@@ -3,6 +3,7 @@ package com.obiscr.chatgpt.util;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.obiscr.chatgpt.core.DataFactory;
+import com.obiscr.chatgpt.core.SseParams;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.ui.notifier.MyNotifier;
 import org.intellij.plugins.markdown.ui.preview.jcef.MarkdownJCEFHtmlPanel;
@@ -64,20 +65,18 @@ public class HttpUtil {
 
     /**
      * Get the answer
-     * @param question Question String
-     * @param accessToken Access Token
+     * @param params Question String
+     * @param panel Content Component
      * @throws Exception /
      */
-    public static void sse(String urlString, String question, String accessToken,
-                           MarkdownJCEFHtmlPanel panel) throws Exception {
-        String json = "{\n" + "\"action\": \"next\",\n" + "\"messages\": [\n" + "{\n" + "\"id\": \"" + UUID.randomUUID() + "\",\n" + "\"role\": \"user\",\n" + "\"content\": {\n" + "\"content_type\": \"text\",\n" + "\"parts\": [\n\"" + question + "\"]\n" + "}\n" + "}\n" + "],\n" + "\"parent_message_id\": \""+ UUID.randomUUID() +"\",\n" + "\"model\": \"text-davinci-002-render\"\n" + "}";
-        JSONObject object = JSON.parseObject(json);
+    public static void sse(SseParams params, MarkdownJCEFHtmlPanel panel) throws Exception {
+        JSONObject object = JSON.parseObject(params.getData());
 
         Stack<String> stack =new Stack<>();
 
         // Create Pool
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        URL url = new URL(urlString);
+        URL url = new URL(params.getUrl());
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -89,15 +88,19 @@ public class HttpUtil {
 
         connection.setRequestProperty("Accept", "text/event-stream");
         connection.setRequestProperty("Content-Type", "application/json");
-        if (null != accessToken) {
-            connection.setRequestProperty("Authorization", "Bearer " + accessToken);
+        if (StringUtil.isNotEmpty(params.getAccessToken())) {
+            connection.setRequestProperty("Authorization", "Bearer " + params.getAccessToken());
         }
         connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36");
+
+        LOG.info("ChatGPT Request: url={}, data:{}",params.getUrl(),object.toJSONString());
+
+        connection.connect();
 
         // Write data
         connection.getOutputStream().write(object.toJSONString().getBytes());
 
-        connection.connect();
+
         int responseCode = connection.getResponseCode();
         if (responseCode != 200) {
             System.out.println(responseCode);
@@ -105,6 +108,7 @@ public class HttpUtil {
                 MyNotifier.notifyError(DataFactory.getInstance().getProject(),
                         ChatGPTBundle.message("notify.response.title"),
                         ChatGPTBundle.message("notify.response.text"));
+                return;
             }
             LOG.error("ChatGPT Response error, responseCode={}", responseCode);
             throw new Exception("Failed to connect to SSE server");

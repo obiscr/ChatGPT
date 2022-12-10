@@ -23,6 +23,7 @@ public class SettingsState implements PersistentStateComponent<SettingsState> {
 
   public String accessToken = "";
   public String customizeUrl = "";
+  public String cloudFlareUrl = "";
   public SettingConfiguration.SettingURLType urlType =
           SettingConfiguration.SettingURLType.DEFAULT;
 

@@ -1,6 +1,11 @@
 package com.obiscr.chatgpt.util;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
+import com.intellij.openapi.vfs.ex.VirtualFileManagerEx;
+import com.intellij.openapi.vfs.impl.VirtualFileManagerImpl;
+import com.intellij.ui.jcef.JBCefOsrHandlerBrowser;
 import com.obiscr.chatgpt.core.DataFactory;
 import org.intellij.plugins.markdown.ui.preview.html.MarkdownUtil;
 
@@ -55,9 +60,20 @@ public class HtmlUtil {
         return html(head(null) + body(content));
     }
 
+
     public static String md2html(String source) {
         Project project = DataFactory.getInstance().getProject();
-        return MarkdownUtil.INSTANCE.generateMarkdownHtml(
-                Objects.requireNonNull(project.getProjectFile()), source, project);
+        if (project.getProjectFile() != null) {
+            return MarkdownUtil.INSTANCE.generateMarkdownHtml(
+                    project.getProjectFile(),
+                    source, project);
+        } else if (project.getWorkspaceFile() != null) {
+            return MarkdownUtil.INSTANCE.generateMarkdownHtml(
+                    project.getWorkspaceFile(),
+                    source, project);
+        } else {
+            return create(source);
+        }
+
     }
 }

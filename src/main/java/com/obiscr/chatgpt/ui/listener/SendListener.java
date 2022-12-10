@@ -1,6 +1,8 @@
 package com.obiscr.chatgpt.ui.listener;
 
 import com.obiscr.chatgpt.core.DataFactory;
+import com.obiscr.chatgpt.core.SseParams;
+import com.obiscr.chatgpt.core.SseParamsBuilder;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.settings.SettingConfiguration;
 import com.obiscr.chatgpt.settings.SettingsState;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -37,25 +40,6 @@ public class SendListener implements ActionListener,KeyListener {
         SettingsState state = SettingsState.getInstance().getState();
         assert state != null;
 
-        String accessToken = null;
-        String url = null;
-
-        // If the url type is official, required access token
-        if (state.urlType == SettingConfiguration.SettingURLType.OFFICIAL) {
-            url = HttpUtil.OFFICIAL_CONVERSATION_URL;
-            accessToken = Objects.requireNonNull(SettingsState.getInstance()
-                    .getState()).getAccessToken();
-            if (accessToken== null|| accessToken.isEmpty()) {
-                MyNotifier.notifyError(DataFactory.getInstance().getProject(),
-                        ChatGPTBundle.message("notify.config.title"),
-                        ChatGPTBundle.message("notify.config.text"));
-                return;
-            }
-        } else if (state.urlType == SettingConfiguration.SettingURLType.DEFAULT) {
-            url = HttpUtil.DEFAULT_CONVERSATION_URL;
-        }
-
-
         JButton button = mainPanel.getButton();
         button.setEnabled(false);
         String text = mainPanel.getSearchTextArea().
@@ -64,13 +48,37 @@ public class SendListener implements ActionListener,KeyListener {
         if (text.isEmpty()) {
             return;
         }
+
+        SseParamsBuilder builder = new SseParamsBuilder();
+        // If the url type is official, required access token
+        if (state.urlType == SettingConfiguration.SettingURLType.OFFICIAL) {
+            String accessToken = Objects.requireNonNull(SettingsState.getInstance()
+                    .getState()).getAccessToken();
+            if (accessToken== null|| accessToken.isEmpty()) {
+                MyNotifier.notifyError(DataFactory.getInstance().getProject(),
+                        ChatGPTBundle.message("notify.config.title"),
+                        ChatGPTBundle.message("notify.config.text"));
+                return;
+            }
+            String data = "{\n" + "\"action\": \"next\",\n" + "\"messages\": [\n" + "{\n" + "\"id\": \"" + UUID.randomUUID() + "\",\n" + "\"role\": \"user\",\n" + "\"content\": {\n" + "\"content_type\": \"text\",\n" + "\"parts\": [\n\"" + text + "\"]\n" + "}\n" + "}\n" + "],\n" + "\"parent_message_id\": \""+ UUID.randomUUID() +"\",\n" + "\"model\": \"text-davinci-002-render\"\n" + "}";
+            builder.buildUrl(HttpUtil.OFFICIAL_CONVERSATION_URL).buildToken(accessToken).buildData(data);
+        } else if (state.urlType == SettingConfiguration.SettingURLType.DEFAULT) {
+            builder.buildUrl(HttpUtil.DEFAULT_CONVERSATION_URL);
+        } else if (state.urlType == SettingConfiguration.SettingURLType.CLOUDFLARE) {
+            String data = "{ \"id\" : \"" + UUID.randomUUID()+ "\", \"message\" : \"" + text +"\", \"message_id\" :\"" + UUID.randomUUID()+ "\" }";
+            builder.buildUrl(state.cloudFlareUrl).buildData(data);
+        }
+
+        dispatch(builder.build(), button);
+    }
+
+    public void dispatch(SseParams params, JButton button) {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        String finalAccessToken = accessToken;
-        String finalUrl = url;
         executorService.submit(() -> {
             try {
-                HttpUtil.sse(finalUrl, text, finalAccessToken, mainPanel.getContentPanel());
+                HttpUtil.sse(params, mainPanel.getContentPanel());
             } catch (Exception ex) {
+                ex.printStackTrace();
                 throw new RuntimeException(ex);
             } finally {
                 button.setEnabled(true);

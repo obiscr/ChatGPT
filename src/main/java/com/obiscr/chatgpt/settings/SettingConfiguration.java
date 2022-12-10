@@ -13,6 +13,9 @@ public class SettingConfiguration {
         OFFICIAL,
 
         //
-        CUSTOMIZE
+        CUSTOMIZE,
+
+        //
+        CLOUDFLARE
     }
 }

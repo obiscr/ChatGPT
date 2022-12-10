@@ -1,6 +1,7 @@
 package com.obiscr.chatgpt;
 
 import com.obiscr.chatgpt.ui.MainPanel;
+import org.intellij.plugins.markdown.ui.preview.jcef.MarkdownJCEFHtmlPanel;
 
 import javax.swing.*;
 
@@ -10,11 +11,17 @@ import javax.swing.*;
  */
 public class MyToolWindow {
 
+  private final MainPanel panel = new MainPanel();
+
   public MyToolWindow() {
 
   }
 
   public JPanel getContent() {
-    return new MainPanel().init();
+    return panel.init();
+  }
+
+  public MarkdownJCEFHtmlPanel getContentPanel() {
+    return panel.getContentPanel();
   }
 }

@@ -33,6 +33,11 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
   private JBLabel defaultIntroduce;
   private JPanel officialIntroducePanel;
   private JBLabel officialIntroduce;
+  private JPanel customizeIntroducePanel;
+  private JPanel cloudflareIntroducePanel;
+  private JPanel cloudflareOptions;
+  private JBTextField cloudFlareUrlField;
+  private JBRadioButton cloudFlareChoice;
 
 
   public ChatGPTSettingsPanel() {
@@ -43,6 +48,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     register(defaultChoice, SettingConfiguration.SettingURLType.DEFAULT);
     register(officialChoice, SettingConfiguration.SettingURLType.OFFICIAL);
     register(customizeChoice, SettingConfiguration.SettingURLType.CUSTOMIZE);
+    register(cloudFlareChoice, SettingConfiguration.SettingURLType.CLOUDFLARE);
 
     ItemListener connectionTypeChangedListener = e -> {
       if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -52,6 +58,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     defaultChoice.addItemListener(connectionTypeChangedListener);
     officialChoice.addItemListener(connectionTypeChangedListener);
     customizeChoice.addItemListener(connectionTypeChangedListener);
+    cloudFlareChoice.addItemListener(connectionTypeChangedListener);
 
     enableOptions(customizeChoice);
 
@@ -63,6 +70,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     UIUtil.setEnabled(defaultOptions, defaultChoice.equals(source), true);
     UIUtil.setEnabled(officialOptions, officialChoice.equals(source), true);
     UIUtil.setEnabled(customizeOptions, customizeChoice.equals(source), true);
+    UIUtil.setEnabled(cloudflareOptions, cloudFlareChoice.equals(source), true);
   }
 
   @Override
@@ -72,6 +80,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     setUrlChoice(state.urlType);
     accessTokenArea.setText(state.accessToken);
     customizeUrlField.setText(state.customizeUrl);
+    cloudFlareUrlField.setText(state.cloudFlareUrl);
   }
 
   @Override
@@ -85,7 +94,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
 
     return !state.urlType.equals(getUrlChoice()) ||
            !StringUtil.equals(state.accessToken, accessTokenArea.getText()) ||
-           !StringUtil.equals(state.customizeUrl, customizeUrlField.getText());
+           !StringUtil.equals(state.customizeUrl, customizeUrlField.getText()) ||
+           !StringUtil.equals(state.cloudFlareUrl, cloudFlareUrlField.getText());
   }
 
   @Override
@@ -95,6 +105,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     state.urlType = getUrlChoice();
     state.accessToken = accessTokenArea.getText();
     state.customizeUrl = customizeUrlField.getText();
+    state.cloudFlareUrl = cloudFlareUrlField.getText();
   }
 
   @Override
@@ -105,6 +116,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     setSelected(defaultChoice, value);
     setSelected(officialChoice, value);
     setSelected(customizeChoice, value);
+    setSelected(cloudFlareChoice, value);
   }
 
   @NotNull
@@ -113,7 +125,10 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
                              ? defaultChoice
                              : officialChoice.isSelected()
                                ? officialChoice
-                               : customizeChoice.isSelected() ? customizeChoice : null;
+                               : customizeChoice.isSelected()
+                                 ? customizeChoice
+                                 : cloudFlareChoice.isSelected()
+                                   ? cloudFlareChoice : null;
 
     assert selected != null;
 
