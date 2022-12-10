@@ -26,7 +26,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
   private JBRadioButton officialChoice;
   private JBRadioButton customizeChoice;
   private JBTextField customizeUrlField;
-  private JTextArea accessTokenArea;
+  private JTextField accessTokenArea;
   private JPanel defaultOptions;
   private JPanel officialOptions;
   private JPanel customizeOptions;
