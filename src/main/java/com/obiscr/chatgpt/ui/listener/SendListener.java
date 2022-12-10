@@ -2,6 +2,7 @@ package com.obiscr.chatgpt.ui.listener;
 
 import com.obiscr.chatgpt.core.DataFactory;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
+import com.obiscr.chatgpt.settings.SettingConfiguration;
 import com.obiscr.chatgpt.settings.SettingsState;
 import com.obiscr.chatgpt.ui.MainPanel;
 import com.obiscr.chatgpt.ui.notifier.MyNotifier;
@@ -33,14 +34,27 @@ public class SendListener implements ActionListener,KeyListener {
     }
 
     public void doActionPerformed() {
-        String accessToken = Objects.requireNonNull(SettingsState.getInstance()
-                .getState()).getAccessToken();
-        if (accessToken== null|| accessToken.isEmpty()) {
-            MyNotifier.notifyError(DataFactory.getInstance().getProject(),
-                    ChatGPTBundle.message("notify.config.title"),
-                    ChatGPTBundle.message("notify.config.text"));
-            return;
+        SettingsState state = SettingsState.getInstance().getState();
+        assert state != null;
+
+        String accessToken = null;
+        String url = null;
+
+        // If the url type is official, required access token
+        if (state.urlType == SettingConfiguration.SettingURLType.OFFICIAL) {
+            url = HttpUtil.OFFICIAL_CONVERSATION_URL;
+            accessToken = Objects.requireNonNull(SettingsState.getInstance()
+                    .getState()).getAccessToken();
+            if (accessToken== null|| accessToken.isEmpty()) {
+                MyNotifier.notifyError(DataFactory.getInstance().getProject(),
+                        ChatGPTBundle.message("notify.config.title"),
+                        ChatGPTBundle.message("notify.config.text"));
+                return;
+            }
+        } else if (state.urlType == SettingConfiguration.SettingURLType.DEFAULT) {
+            url = HttpUtil.DEFAULT_CONVERSATION_URL;
         }
+
 
         JButton button = mainPanel.getButton();
         button.setEnabled(false);
@@ -51,9 +65,11 @@ public class SendListener implements ActionListener,KeyListener {
             return;
         }
         ExecutorService executorService = Executors.newFixedThreadPool(2);
+        String finalAccessToken = accessToken;
+        String finalUrl = url;
         executorService.submit(() -> {
             try {
-                HttpUtil.sse(text, accessToken, mainPanel.getContentPanel());
+                HttpUtil.sse(finalUrl, text, finalAccessToken, mainPanel.getContentPanel());
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             } finally {

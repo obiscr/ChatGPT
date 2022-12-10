@@ -35,8 +35,8 @@
   <extensions defaultExtensionNs="com.intellij">
     <toolWindow id="ChatGPT" anchor="right" icon="/icons/toolWindow.svg"
                 factoryClass="com.obiscr.chatgpt.MyToolWindowFactory"/>
-    <applicationConfigurable parentId="tools" instance="com.obiscr.chatgpt.settings.SettingsConfigurable"
-                             id="com.obiscr.chatgpt.settings.SettingsConfigurable"
+    <applicationConfigurable parentId="tools" instance="com.obiscr.chatgpt.settings.ChatGPTSettingsPanel"
+                             id="com.obiscr.chatgpt.settings.ChatGPTSettingsPanel"
                              displayName="ChatGPT"/>
     <applicationService serviceImplementation="com.obiscr.chatgpt.settings.SettingsState"/>
     <notificationGroup id="ChatGPT Notification Group"

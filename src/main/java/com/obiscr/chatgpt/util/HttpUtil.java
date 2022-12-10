@@ -26,7 +26,8 @@ public class HttpUtil {
     private static final Logger LOG = LoggerFactory.getLogger(HttpUtil.class);
     private static final String LOGIN_URL = "https://chat.openai.com/api/auth/session";
 
-    private static final String CONVERSATION_URL = "https://chat.openai.com/backend-api/conversation";
+    public static final String DEFAULT_CONVERSATION_URL = "https://gpt.chatapi.art/backend-api/conversation";
+    public static final String OFFICIAL_CONVERSATION_URL = "https://chat.openai.com/backend-api/conversation";
 
     public static String get(String urlString) throws IOException {
         URL url = new URL(urlString);
@@ -67,7 +68,7 @@ public class HttpUtil {
      * @param accessToken Access Token
      * @throws Exception /
      */
-    public static void sse(String question, String accessToken,
+    public static void sse(String urlString, String question, String accessToken,
                            MarkdownJCEFHtmlPanel panel) throws Exception {
         String json = "{\n" + "\"action\": \"next\",\n" + "\"messages\": [\n" + "{\n" + "\"id\": \"" + UUID.randomUUID() + "\",\n" + "\"role\": \"user\",\n" + "\"content\": {\n" + "\"content_type\": \"text\",\n" + "\"parts\": [\n\"" + question + "\"]\n" + "}\n" + "}\n" + "],\n" + "\"parent_message_id\": \""+ UUID.randomUUID() +"\",\n" + "\"model\": \"text-davinci-002-render\"\n" + "}";
         JSONObject object = JSON.parseObject(json);
@@ -76,7 +77,7 @@ public class HttpUtil {
 
         // Create Pool
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        URL url = new URL(CONVERSATION_URL);
+        URL url = new URL(urlString);
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -88,7 +89,9 @@ public class HttpUtil {
 
         connection.setRequestProperty("Accept", "text/event-stream");
         connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("Authorization", "Bearer " + accessToken);
+        if (null != accessToken) {
+            connection.setRequestProperty("Authorization", "Bearer " + accessToken);
+        }
         connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36");
 
         // Write data

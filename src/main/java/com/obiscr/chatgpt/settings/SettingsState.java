@@ -22,7 +22,9 @@ import org.jetbrains.annotations.Nullable;
 public class SettingsState implements PersistentStateComponent<SettingsState> {
 
   public String accessToken = "";
-  public boolean ideaStatus = false;
+  public String customizeUrl = "";
+  public SettingConfiguration.SettingURLType urlType =
+          SettingConfiguration.SettingURLType.DEFAULT;
 
   public static SettingsState getInstance() {
     return ApplicationManager.getApplication().getService(SettingsState.class);

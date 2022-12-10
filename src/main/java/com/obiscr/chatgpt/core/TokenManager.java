@@ -5,7 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
-import com.obiscr.chatgpt.settings.SettingsConfigurable;
+import com.obiscr.chatgpt.settings.ChatGPTSettingsPanel;
 import com.obiscr.chatgpt.settings.SettingsState;
 import com.obiscr.chatgpt.ui.notifier.MyNotifier;
 import com.obiscr.chatgpt.util.HttpUtil;
@@ -50,6 +50,6 @@ public class TokenManager {
 
     public void manuallyRefreshToken(Project project) {
         BrowserUtil.browse("https://chat.openai.com/api/auth/session");
-        ShowSettingsUtil.getInstance().showSettingsDialog(project, SettingsConfigurable.class);
+        ShowSettingsUtil.getInstance().showSettingsDialog(project, ChatGPTSettingsPanel.class);
     }
 }
