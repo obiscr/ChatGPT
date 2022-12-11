@@ -3,6 +3,11 @@
 # ChatGPT Changelog
 
 ## [Unreleased]
+## [1.0.4]
+### Added
++ Add timeout notification（增加超时通知）
++ Add progress bar（增加进度条）
+
 ## [1.0.3]
 ### Added
 + Add Cloudflare Source（增加 Cloudflare 源）

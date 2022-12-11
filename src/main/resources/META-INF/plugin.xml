@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>ChatGPT</id>
   <name>ChatGPT</name>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <vendor email="wuzi@obiscr.com" url="https://obiscr.com">obiscr</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,11 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.0.4</p>
+      <ul>
+        <li>Add timeout notification</li>
+        <li>Add progress bar</li>
+      </ul><br>
       <p>1.0.3</p>
       <ul>
         <li>Fix <a href="https://github.com/obiscr/ChatGPT/issues/6">#6</a></li>
