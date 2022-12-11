@@ -1,6 +1,7 @@
 package com.obiscr.chatgpt.ui;
 
 import com.intellij.find.SearchTextArea;
+import com.intellij.ide.ui.laf.darcula.ui.DarculaButtonUI;
 import com.intellij.ui.components.JBTextArea;
 import com.intellij.util.ui.UIUtil;
 import com.obiscr.chatgpt.core.Constant;
@@ -22,6 +23,8 @@ public class MainPanel {
     private final JButton button;
     private final MarkdownJCEFHtmlPanel contentPanel;
 
+    private final JProgressBar progressBar;
+
     public MainPanel() {
         SendListener listener = new SendListener(this);
 
@@ -30,8 +33,11 @@ public class MainPanel {
 
         button = new JButton("Send");
         button.addActionListener(listener);
+        button.setUI(new DarculaButtonUI());
 
         JPanel top = new JPanel(new BorderLayout());
+        progressBar = new JProgressBar();
+        top.add(progressBar, BorderLayout.NORTH);
         top.add(searchTextArea, BorderLayout.CENTER);
         top.add(button, BorderLayout.EAST);
         top.setBorder(UIUtil.getTextFieldBorder());
@@ -59,5 +65,14 @@ public class MainPanel {
 
     public JButton getButton() {
         return button;
+    }
+
+    public JProgressBar getProgressBar() {
+        return progressBar;
+    }
+
+    public void aroundRequest(boolean status) {
+        progressBar.setIndeterminate(status);
+        button.setEnabled(!status);
     }
 }

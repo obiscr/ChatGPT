@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.net.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -33,15 +36,17 @@ public class SendListener implements ActionListener,KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        doActionPerformed();
+        try {
+            doActionPerformed();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
-    public void doActionPerformed() {
+    public void doActionPerformed() throws IOException {
         SettingsState state = SettingsState.getInstance().getState();
         assert state != null;
 
-        JButton button = mainPanel.getButton();
-        button.setEnabled(false);
         String text = mainPanel.getSearchTextArea().
                 getTextArea().getText();
         LOG.info("ChatGPT Search: {}", text);
@@ -55,7 +60,19 @@ public class SendListener implements ActionListener,KeyListener {
             String accessToken = Objects.requireNonNull(SettingsState.getInstance()
                     .getState()).getAccessToken();
             if (accessToken== null|| accessToken.isEmpty()) {
-                MyNotifier.notifyError(DataFactory.getInstance().getProject(),
+
+                CookieManager cookieManager = new CookieManager();
+                cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+                CookieHandler.setDefault(cookieManager);
+                String s = HttpUtil.get("https://chat.openai.com/chat");
+                System.out.println(s);
+                List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
+                for (HttpCookie cookie : cookies) {
+                    String name = cookie.getName();
+                    String value = cookie.getValue();
+                    // Do something with the cookie name and value
+                }
+                MyNotifier.notifyErrorWithAction(DataFactory.getInstance().getProject(),
                         ChatGPTBundle.message("notify.config.title"),
                         ChatGPTBundle.message("notify.config.text"));
                 return;
@@ -69,19 +86,19 @@ public class SendListener implements ActionListener,KeyListener {
             builder.buildUrl(state.cloudFlareUrl).buildData(data);
         }
 
-        dispatch(builder.build(), button);
+        dispatch(builder.build());
     }
 
-    public void dispatch(SseParams params, JButton button) {
+    public void dispatch(SseParams params) {
+        mainPanel.aroundRequest(true);
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.submit(() -> {
             try {
-                HttpUtil.sse(params, mainPanel.getContentPanel());
+                HttpUtil.sse(params, mainPanel);
             } catch (Exception ex) {
                 ex.printStackTrace();
+                mainPanel.aroundRequest(false);
                 throw new RuntimeException(ex);
-            } finally {
-                button.setEnabled(true);
             }
         });
         executorService.shutdown();

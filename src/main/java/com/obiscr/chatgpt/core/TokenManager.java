@@ -43,7 +43,7 @@ public class TokenManager {
             settings.loadState(settings);
         } catch (Exception e) {
             LOG.error("ChatGPT refreshToken error: {}", e.getMessage());
-            MyNotifier.notifyError(DataFactory.getInstance().getProject(),
+            MyNotifier.notifyErrorWithAction(DataFactory.getInstance().getProject(),
                     "ChatGPT: Auto refresh token failed", "Please manually refresh the Token");
         }
     }

@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class MyNotifier {
 
-    public static void notifyError(@Nullable Project project, String title,
+    public static void notifyErrorWithAction(@Nullable Project project, String title,
                                    String content) {
         NotificationGroupManager.getInstance()
                 .getNotificationGroup(ChatGPTBundle.message("group.id"))
@@ -18,6 +18,15 @@ public class MyNotifier {
                 .setTitle(title)
 //                .addAction(new AutoRefreshAction(ChatGPTBundle.message("action.refresh.automatic.text")))
                 .addAction(new ManuallyRefreshAction(ChatGPTBundle.message("action.refresh.manually.text")))
+                .notify(project);
+    }
+
+    public static void notifyError(@Nullable Project project, String title,
+                                   String content) {
+        NotificationGroupManager.getInstance()
+                .getNotificationGroup(ChatGPTBundle.message("group.id"))
+                .createNotification(content, NotificationType.ERROR)
+                .setTitle(title)
                 .notify(project);
     }
 }
