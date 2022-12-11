@@ -61,18 +61,17 @@ public class SendListener implements ActionListener,KeyListener {
             String accessToken = Objects.requireNonNull(SettingsState.getInstance()
                     .getState()).getAccessToken();
             if (accessToken== null|| accessToken.isEmpty()) {
-
-                CookieManager cookieManager = new CookieManager();
-                cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-                CookieHandler.setDefault(cookieManager);
-                String s = HttpUtil.get("https://chat.openai.com/chat");
-                System.out.println(s);
-                List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
-                for (HttpCookie cookie : cookies) {
-                    String name = cookie.getName();
-                    String value = cookie.getValue();
-                    // Do something with the cookie name and value
-                }
+//                CookieManager cookieManager = new CookieManager();
+//                cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+//                CookieHandler.setDefault(cookieManager);
+//                String s = HttpUtil.get("https://chat.openai.com/chat");
+//                System.out.println(s);
+//                List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
+//                for (HttpCookie cookie : cookies) {
+//                    String name = cookie.getName();
+//                    String value = cookie.getValue();
+//                    // Do something with the cookie name and value
+//                }
                 MyNotifier.notifyErrorWithAction(DataFactory.getInstance().getProject(),
                         ChatGPTBundle.message("notify.config.title"),
                         ChatGPTBundle.message("notify.config.text"));
@@ -81,7 +80,21 @@ public class SendListener implements ActionListener,KeyListener {
             builder.buildUrl(HttpUtil.OFFICIAL_CONVERSATION_URL).buildToken(accessToken).buildData(OfficialBuilder.build(text));
         } else if (state.urlType == SettingConfiguration.SettingURLType.DEFAULT) {
             builder.buildUrl(HttpUtil.DEFAULT_CONVERSATION_URL).buildData(OfficialBuilder.build(text));
+        } else if (state.urlType == SettingConfiguration.SettingURLType.CUSTOMIZE) {
+            if (state.customizeUrl== null|| state.customizeUrl.isEmpty()) {
+                MyNotifier.notifyErrorWithAction(DataFactory.getInstance().getProject(),
+                        ChatGPTBundle.message("notify.config.title"),
+                        ChatGPTBundle.message("notify.config.text"));
+                return;
+            }
+            builder.buildUrl(state.customizeUrl).buildData(OfficialBuilder.build(text));
         } else if (state.urlType == SettingConfiguration.SettingURLType.CLOUDFLARE) {
+            if (state.cloudFlareUrl== null|| state.customizeUrl.isEmpty()) {
+                MyNotifier.notifyErrorWithAction(DataFactory.getInstance().getProject(),
+                        ChatGPTBundle.message("notify.config.title"),
+                        ChatGPTBundle.message("notify.config.text"));
+                return;
+            }
             builder.buildUrl(state.cloudFlareUrl).buildData(CloudflareBuilder.build(text));
         }
 

@@ -13,6 +13,7 @@ public class DataFactory {
 
     private Project project;
     private ToolWindow toolWindow;
+    private String conversationId;
 
     private DataFactory() {
 
@@ -33,5 +34,13 @@ public class DataFactory {
     public void setData(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         this.toolWindow = toolWindow;
         this.project = project;
+    }
+
+    public String getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(String conversationId) {
+        this.conversationId = conversationId;
     }
 }

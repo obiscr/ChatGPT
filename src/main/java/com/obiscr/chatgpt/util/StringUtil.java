@@ -9,21 +9,15 @@ import com.alibaba.fastjson2.JSONObject;
  */
 public class StringUtil extends com.intellij.openapi.util.text.StringUtil {
 
-    public static String parse(String source) {
-        if (source == null || source.length() <= 6){
-            return HtmlUtil.create(source);
+    public static boolean isNumber(String s) {
+        if (s == null) {
+            return false;
         }
-        source = source.substring(5);
-        if ("{}".equals(source.trim())) {
-            return "# Ops\n" +
-                    "It looks like something went wrong, no data was response.";
+        for (int i = 0; i < s.length(); ++i) {
+            if (!Character.isDigit(s.charAt(i))) {
+                return false;
+            }
         }
-        JSONObject object = JSON.parseObject(source);
-        JSONArray resultArray = object.getJSONObject("message").getJSONObject("content").getJSONArray("parts");
-        StringBuilder sb = new StringBuilder();
-        for (Object s : resultArray) {
-            sb.append(s.toString());
-        }
-        return sb.toString();
+        return true;
     }
 }

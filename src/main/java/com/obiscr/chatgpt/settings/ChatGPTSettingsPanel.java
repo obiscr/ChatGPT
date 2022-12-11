@@ -121,8 +121,13 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     state.accessToken = accessTokenField.getText();
     state.customizeUrl = customizeUrlField.getText();
     state.cloudFlareUrl = cloudFlareUrlField.getText();
-    state.readTimeout = readTimeoutField.getText().isEmpty() ? "5000" : readTimeoutField.getText();
-    state.connectionTimeout = connectionTimeoutField.getText().isEmpty() ? "5000" : connectionTimeoutField.getText();
+
+    boolean readTimeoutIsNumber = com.obiscr.chatgpt.util.
+            StringUtil.isNumber(readTimeoutField.getText());
+    boolean connectionTimeoutIsNumber = com.obiscr.chatgpt.util.
+            StringUtil.isNumber(connectionTimeoutField.getText());
+    state.readTimeout = !readTimeoutIsNumber ? "10000" : readTimeoutField.getText();
+    state.connectionTimeout = !connectionTimeoutIsNumber ? "10000" : connectionTimeoutField.getText();
   }
 
   @Override

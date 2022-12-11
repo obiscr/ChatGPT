@@ -1,4 +1,4 @@
-package com.obiscr.chatgpt.ui.notifier.action;
+package com.obiscr.chatgpt.ui.action;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnActionEvent;

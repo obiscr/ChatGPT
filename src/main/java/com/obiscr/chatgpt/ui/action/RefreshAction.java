@@ -1,9 +1,10 @@
-package com.obiscr.chatgpt.ui.notifier.action;
+package com.obiscr.chatgpt.ui.action;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.DumbAwareAction;
 import com.obiscr.chatgpt.core.Constant;
+import com.obiscr.chatgpt.core.DataFactory;
 import com.obiscr.chatgpt.util.HtmlUtil;
 import org.intellij.plugins.markdown.ui.preview.jcef.MarkdownJCEFHtmlPanel;
 import org.jetbrains.annotations.Nls;
@@ -24,6 +25,7 @@ public class RefreshAction extends DumbAwareAction {
   public void actionPerformed(@NotNull AnActionEvent e) {
     String s = HtmlUtil.md2html(Constant.HOME_CONTENT);
     contentPanel.setHtml(s,0);
+    DataFactory.getInstance().setConversationId(null);
   }
 
 

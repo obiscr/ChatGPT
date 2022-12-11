@@ -105,21 +105,23 @@ public class HttpUtil {
         connection.connect();
 
         int responseCode = connection.getResponseCode();
+        String responseMessage = connection.getResponseMessage();
+        String title = ChatGPTBundle.message("notify.common.error.title");
+        String text = ChatGPTBundle.message("notify.common.error.text",responseCode,responseMessage);
+
         if (responseCode != 200) {
-            LOG.error("ChatGPT Response error, responseCode={}", responseCode);
+            LOG.error("ChatGPT Response error, responseCode={}, responseMessage={}",
+                    responseCode, responseMessage);
             if (responseCode == 401) {
-                MyNotifier.notifyErrorWithAction(DataFactory.getInstance().getProject(),
-                        ChatGPTBundle.message("notify.response.title"),
-                        ChatGPTBundle.message("notify.response.text"));
-                panel.aroundRequest(false);
-                return;
+                title = ChatGPTBundle.message("notify.token_expired.error.title");
+                text = ChatGPTBundle.message("notify.token_expired.error.text");
             } else if (responseCode == 429) {
-                MyNotifier.notifyError(DataFactory.getInstance().getProject(),
-                        ChatGPTBundle.message("notify.too_many_request.error.title"),
-                        ChatGPTBundle.message("notify.too_many_request.error.text"));
-                panel.aroundRequest(false);
-                return;
+                title = ChatGPTBundle.message("notify.too_many_request.error.title");
+                text = ChatGPTBundle.message("notify.too_many_request.error.text");
             }
+            MyNotifier.notifyError(DataFactory.getInstance().getProject(),
+                    title, text);
+            panel.aroundRequest(false);
             throw new Exception("Failed to connect to SSE server");
         }
 

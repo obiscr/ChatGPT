@@ -2,6 +2,7 @@ package com.obiscr.chatgpt.core.builder;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.obiscr.chatgpt.core.DataFactory;
 
 import java.util.UUID;
 
@@ -27,6 +28,11 @@ public class OfficialBuilder {
         result.put("messages", messages);
         result.put("parent_message_id", UUID.randomUUID());
         result.put("model","text-davinci-002-render");
+        String conversationId = DataFactory.getInstance().getConversationId();
+
+        if (conversationId != null && !conversationId.isEmpty()) {
+            result.put("conversation_id",conversationId);
+        }
         return result;
     }
 }

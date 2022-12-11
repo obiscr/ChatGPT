@@ -8,8 +8,8 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.obiscr.chatgpt.core.DataFactory;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
-import com.obiscr.chatgpt.ui.notifier.action.RefreshAction;
-import com.obiscr.chatgpt.ui.notifier.action.SettingAction;
+import com.obiscr.chatgpt.ui.action.RefreshAction;
+import com.obiscr.chatgpt.ui.action.SettingAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
