@@ -3,6 +3,15 @@
 # ChatGPT Changelog
 
 ## [Unreleased]
+## [1.0.3]
+### Added
++ Add Cloudflare Source（增加 Cloudflare 源）
++ Add home button（添加主页按钮）
+
+### Changed
++ Fix [#6](https://github.com/obiscr/ChatGPT/issues/6)
++ Fix [#10](https://github.com/obiscr/ChatGPT/issues/10)
+
 ## [1.0.2]
 ### Added
 **备注：新增了一个国内源（默认），不需要Token，直接使用。或者国内用户访问慢的情况下可以尝试切换到默认源。**

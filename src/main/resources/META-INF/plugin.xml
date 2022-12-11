@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>ChatGPT</id>
   <name>ChatGPT</name>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <vendor email="wuzi@obiscr.com" url="https://obiscr.com">obiscr</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,13 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.0.3</p>
+      <ul>
+        <li>Fix <a href="https://github.com/obiscr/ChatGPT/issues/6">#6</a></li>
+        <li>Fix <a href="https://github.com/obiscr/ChatGPT/issues/10">#10</a></li>
+        <li>Add home button（添加主页按钮）</li>
+        <li>Add Cloudflare Source（增加 Cloudflare 源）</li>
+      </ul><br>
       <p>1.0.2</p>
       <b>备注：新增了一个国内源（默认），不需要Token，直接使用。或者国内用户访问慢的情况下可以尝试切换到默认源。</b>
       <ul>
