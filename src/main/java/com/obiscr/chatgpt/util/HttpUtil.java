@@ -1,7 +1,5 @@
 package com.obiscr.chatgpt.util;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
 import com.obiscr.chatgpt.core.DataFactory;
 import com.obiscr.chatgpt.core.SseParams;
 import com.obiscr.chatgpt.core.parser.*;
@@ -77,7 +75,6 @@ public class HttpUtil {
      * @throws Exception /
      */
     public static void sse(SseParams params, MainPanel panel) throws Exception {
-        JSONObject object = JSON.parseObject(params.getData());
 
         Stack<String> stack =new Stack<>();
 
@@ -85,11 +82,11 @@ public class HttpUtil {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         URL url = new URL(params.getUrl());
 
+        SettingsState state = SettingsState.getInstance();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
         connection.setRequestMethod("POST");
-        connection.setConnectTimeout(10 * 3000);
-        connection.setReadTimeout(10 * 3000);
+        connection.setConnectTimeout(Integer.parseInt(state.connectionTimeout));
+        connection.setReadTimeout(Integer.parseInt(state.readTimeout));
         connection.setDoOutput(true);
         connection.setUseCaches(false);
 
@@ -100,23 +97,29 @@ public class HttpUtil {
         }
         connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36");
 
-        LOG.info("ChatGPT Request: url={}, data:{}",params.getUrl(),object.toJSONString());
+        LOG.info("ChatGPT Request: url={}, data:{}",params.getUrl(),params.getData().toJSONString());
 
         // Write data
-        connection.getOutputStream().write(object.toJSONString().getBytes());
+        connection.getOutputStream().write(params.getData().toJSONString().getBytes());
 
         connection.connect();
 
         int responseCode = connection.getResponseCode();
         if (responseCode != 200) {
-            System.out.println(responseCode);
+            LOG.error("ChatGPT Response error, responseCode={}", responseCode);
             if (responseCode == 401) {
                 MyNotifier.notifyErrorWithAction(DataFactory.getInstance().getProject(),
                         ChatGPTBundle.message("notify.response.title"),
                         ChatGPTBundle.message("notify.response.text"));
+                panel.aroundRequest(false);
+                return;
+            } else if (responseCode == 429) {
+                MyNotifier.notifyError(DataFactory.getInstance().getProject(),
+                        ChatGPTBundle.message("notify.too_many_request.error.title"),
+                        ChatGPTBundle.message("notify.too_many_request.error.text"));
+                panel.aroundRequest(false);
                 return;
             }
-            LOG.error("ChatGPT Response error, responseCode={}", responseCode);
             throw new Exception("Failed to connect to SSE server");
         }
 
@@ -155,11 +158,6 @@ public class HttpUtil {
                         panel.getContentPanel().setHtml(html, 0);
                     }
                 }
-            } catch (SocketTimeoutException e) {
-                e.printStackTrace();
-                MyNotifier.notifyError(DataFactory.getInstance().getProject(),
-                        ChatGPTBundle.message("notify.timeout.error.title"),
-                        ChatGPTBundle.message("notify.timeout.error.text"));
             } catch (Exception e) {
                 e.printStackTrace();
                 LOG.error("ChatGPT Request exception: " +

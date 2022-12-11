@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.alibaba.fastjson2:fastjson2:2.0.20")
+    implementation("com.alibaba.fastjson2:fastjson2:2.0.17")
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin

@@ -7,7 +7,7 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.obiscr.chatgpt.core.DataFactory;
-import com.obiscr.chatgpt.ui.notifier.action.HomeAction;
+import com.obiscr.chatgpt.ui.notifier.action.RefreshAction;
 import com.obiscr.chatgpt.ui.notifier.action.SettingAction;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +32,7 @@ public class MyToolWindowFactory implements ToolWindowFactory {
     Content content = contentFactory.createContent(myToolWindow.getContent(), "Search", false);
     toolWindow.getContentManager().addContent(content);
     List<AnAction> actionList = new ArrayList<>();
-    actionList.add(new HomeAction("Home",myToolWindow.getContentPanel()));
+    actionList.add(new RefreshAction("Reset Thread",myToolWindow.getContentPanel()));
     actionList.add(new SettingAction("Settings"));
     toolWindow.setTitleActions(actionList);
   }

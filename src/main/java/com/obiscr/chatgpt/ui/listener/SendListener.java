@@ -3,6 +3,8 @@ package com.obiscr.chatgpt.ui.listener;
 import com.obiscr.chatgpt.core.DataFactory;
 import com.obiscr.chatgpt.core.SseParams;
 import com.obiscr.chatgpt.core.SseParamsBuilder;
+import com.obiscr.chatgpt.core.builder.CloudflareBuilder;
+import com.obiscr.chatgpt.core.builder.OfficialBuilder;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.settings.SettingConfiguration;
 import com.obiscr.chatgpt.settings.SettingsState;
@@ -18,7 +20,6 @@ import java.io.IOException;
 import java.net.*;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -77,13 +78,11 @@ public class SendListener implements ActionListener,KeyListener {
                         ChatGPTBundle.message("notify.config.text"));
                 return;
             }
-            String data = "{\n" + "\"action\": \"next\",\n" + "\"messages\": [\n" + "{\n" + "\"id\": \"" + UUID.randomUUID() + "\",\n" + "\"role\": \"user\",\n" + "\"content\": {\n" + "\"content_type\": \"text\",\n" + "\"parts\": [\n\"" + text + "\"]\n" + "}\n" + "}\n" + "],\n" + "\"parent_message_id\": \""+ UUID.randomUUID() +"\",\n" + "\"model\": \"text-davinci-002-render\"\n" + "}";
-            builder.buildUrl(HttpUtil.OFFICIAL_CONVERSATION_URL).buildToken(accessToken).buildData(data);
+            builder.buildUrl(HttpUtil.OFFICIAL_CONVERSATION_URL).buildToken(accessToken).buildData(OfficialBuilder.build(text));
         } else if (state.urlType == SettingConfiguration.SettingURLType.DEFAULT) {
-            builder.buildUrl(HttpUtil.DEFAULT_CONVERSATION_URL);
+            builder.buildUrl(HttpUtil.DEFAULT_CONVERSATION_URL).buildData(OfficialBuilder.build(text));
         } else if (state.urlType == SettingConfiguration.SettingURLType.CLOUDFLARE) {
-            String data = "{ \"id\" : \"" + UUID.randomUUID()+ "\", \"message\" : \"" + text +"\", \"message_id\" :\"" + UUID.randomUUID()+ "\" }";
-            builder.buildUrl(state.cloudFlareUrl).buildData(data);
+            builder.buildUrl(state.cloudFlareUrl).buildData(CloudflareBuilder.build(text));
         }
 
         dispatch(builder.build());
@@ -95,6 +94,12 @@ public class SendListener implements ActionListener,KeyListener {
         executorService.submit(() -> {
             try {
                 HttpUtil.sse(params, mainPanel);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                MyNotifier.notifyError(DataFactory.getInstance().getProject(),
+                        ChatGPTBundle.message("notify.timeout.error.title"),
+                        ChatGPTBundle.message("notify.timeout.error.text"));
+                mainPanel.aroundRequest(false);
             } catch (Exception ex) {
                 ex.printStackTrace();
                 mainPanel.aroundRequest(false);

@@ -1,5 +1,7 @@
 package com.obiscr.chatgpt.core;
 
+import com.alibaba.fastjson2.JSONObject;
+
 /**
  * @author Wuzi
  */
@@ -21,8 +23,8 @@ public class SseParamsBuilder {
         return this;
     }
 
-    public SseParamsBuilder buildData(String data) {
-        this.params.setData(data);
+    public SseParamsBuilder buildData(JSONObject object) {
+        this.params.setData(object);
         return this;
     }
 

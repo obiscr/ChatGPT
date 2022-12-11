@@ -5,6 +5,7 @@ import com.intellij.openapi.Disposable;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.util.NlsContexts;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
@@ -14,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -38,6 +40,11 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
   private JPanel cloudflareOptions;
   private JBTextField cloudFlareUrlField;
   private JBRadioButton cloudFlareChoice;
+
+  private JPanel urlTitledBorderBox;
+  private JPanel connectionTitledBorderBox;
+  private JTextField readTimeout;
+  private JTextField connectionTimeout;
 
 
   public ChatGPTSettingsPanel() {
@@ -81,6 +88,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     accessTokenArea.setText(state.accessToken);
     customizeUrlField.setText(state.customizeUrl);
     cloudFlareUrlField.setText(state.cloudFlareUrl);
+    readTimeout.setText(state.readTimeout);
+    connectionTimeout.setText(state.connectionTimeout);
   }
 
   @Override
@@ -95,7 +104,9 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     return !state.urlType.equals(getUrlChoice()) ||
            !StringUtil.equals(state.accessToken, accessTokenArea.getText()) ||
            !StringUtil.equals(state.customizeUrl, customizeUrlField.getText()) ||
-           !StringUtil.equals(state.cloudFlareUrl, cloudFlareUrlField.getText());
+           !StringUtil.equals(state.cloudFlareUrl, cloudFlareUrlField.getText()) ||
+           !StringUtil.equals(state.readTimeout, readTimeout.getText()) ||
+           !StringUtil.equals(state.connectionTimeout, connectionTimeout.getText());
   }
 
   @Override
@@ -106,6 +117,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     state.accessToken = accessTokenArea.getText();
     state.customizeUrl = customizeUrlField.getText();
     state.cloudFlareUrl = cloudFlareUrlField.getText();
+    state.readTimeout = readTimeout.getText();
+    state.connectionTimeout = connectionTimeout.getText();
   }
 
   @Override
@@ -146,5 +159,15 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
   @Override
   public @NlsContexts.ConfigurableName String getDisplayName() {
     return ChatGPTBundle.message("setting.menu.text");
+  }
+
+  private void createUIComponents() {
+    urlTitledBorderBox = new JPanel(new BorderLayout());
+    TitledSeparator tsUrl = new TitledSeparator("URL Settings");
+    urlTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
+
+    connectionTitledBorderBox = new JPanel(new BorderLayout());
+    TitledSeparator tsConnection = new TitledSeparator("Connections Settings");
+    connectionTitledBorderBox.add(tsConnection,BorderLayout.CENTER);
   }
 }

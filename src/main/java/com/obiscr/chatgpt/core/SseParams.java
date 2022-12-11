@@ -1,10 +1,12 @@
 package com.obiscr.chatgpt.core;
 
+import com.alibaba.fastjson2.JSONObject;
+
 public class SseParams {
         private String url;
         private String question;
         private String accessToken;
-        private String data;
+        private JSONObject data;
 
         public String getUrl() {
             return url;
@@ -30,11 +32,11 @@ public class SseParams {
             this.accessToken = accessToken;
         }
 
-        public String getData() {
+        public JSONObject getData() {
             return data;
         }
 
-        public void setData(String data) {
+        public void setData(JSONObject data) {
             this.data = data;
         }
     }
