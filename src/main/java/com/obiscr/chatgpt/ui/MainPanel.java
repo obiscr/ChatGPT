@@ -5,6 +5,7 @@ import com.intellij.ide.ui.laf.darcula.ui.DarculaButtonUI;
 import com.intellij.ui.components.JBTextArea;
 import com.intellij.util.ui.UIUtil;
 import com.obiscr.chatgpt.core.Constant;
+import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.ui.listener.SendListener;
 import com.obiscr.chatgpt.util.HtmlUtil;
 import org.intellij.plugins.markdown.ui.preview.jcef.MarkdownJCEFHtmlPanel;
@@ -31,7 +32,7 @@ public class MainPanel {
         searchTextArea = new SearchTextArea(new JBTextArea(),true);
         searchTextArea.getTextArea().addKeyListener(listener);
 
-        button = new JButton("Send");
+        button = new JButton(ChatGPTBundle.message("ui.toolwindow.send"));
         button.addActionListener(listener);
         button.setUI(new DarculaButtonUI());
 

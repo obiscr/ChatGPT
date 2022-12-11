@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.PropertyKey;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
 /**
@@ -29,5 +31,13 @@ public class ChatGPTBundle extends DynamicBundle {
     @NotNull
     public static Supplier<@Nls String> messagePointer(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object @NotNull ... params) {
         return INSTANCE.getLazyMessage(key, params);
+    }
+
+    @Override
+    protected @NotNull ResourceBundle findBundle(@NotNull String pathToBundle,
+                                                 @NotNull ClassLoader baseLoader,
+                                                 ResourceBundle.@NotNull Control control) {
+        Locale locale = DynamicBundle.getLocale();
+        return ResourceBundle.getBundle(pathToBundle,locale, baseLoader, control);
     }
 }

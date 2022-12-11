@@ -28,7 +28,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
   private JBRadioButton officialChoice;
   private JBRadioButton customizeChoice;
   private JBTextField customizeUrlField;
-  private JTextField accessTokenArea;
+  private JBTextField accessTokenField;
   private JPanel defaultOptions;
   private JPanel officialOptions;
   private JPanel customizeOptions;
@@ -43,8 +43,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
 
   private JPanel urlTitledBorderBox;
   private JPanel connectionTitledBorderBox;
-  private JTextField readTimeout;
-  private JTextField connectionTimeout;
+  private JBTextField readTimeoutField;
+  private JBTextField connectionTimeoutField;
 
 
   public ChatGPTSettingsPanel() {
@@ -69,7 +69,11 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
 
     enableOptions(customizeChoice);
 
-    customizeUrlField.getEmptyText().setText("Set your own server url");
+    accessTokenField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.url.official.token.empty_text"));
+    customizeUrlField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.url.customize.url.empty_text"));
+    cloudFlareUrlField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.url.cloudflare.url.empty_text"));
+    readTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.read_timeout.empty_text"));
+    connectionTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.connection_timeout.empty_text"));
   }
 
 
@@ -85,11 +89,11 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     SettingsState state = SettingsState.getInstance();
 
     setUrlChoice(state.urlType);
-    accessTokenArea.setText(state.accessToken);
+    accessTokenField.setText(state.accessToken);
     customizeUrlField.setText(state.customizeUrl);
     cloudFlareUrlField.setText(state.cloudFlareUrl);
-    readTimeout.setText(state.readTimeout);
-    connectionTimeout.setText(state.connectionTimeout);
+    readTimeoutField.setText(state.readTimeout);
+    connectionTimeoutField.setText(state.connectionTimeout);
   }
 
   @Override
@@ -102,11 +106,11 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     SettingsState state = SettingsState.getInstance();
 
     return !state.urlType.equals(getUrlChoice()) ||
-           !StringUtil.equals(state.accessToken, accessTokenArea.getText()) ||
+           !StringUtil.equals(state.accessToken, accessTokenField.getText()) ||
            !StringUtil.equals(state.customizeUrl, customizeUrlField.getText()) ||
            !StringUtil.equals(state.cloudFlareUrl, cloudFlareUrlField.getText()) ||
-           !StringUtil.equals(state.readTimeout, readTimeout.getText()) ||
-           !StringUtil.equals(state.connectionTimeout, connectionTimeout.getText());
+           !StringUtil.equals(state.readTimeout, readTimeoutField.getText()) ||
+           !StringUtil.equals(state.connectionTimeout, connectionTimeoutField.getText());
   }
 
   @Override
@@ -114,11 +118,11 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     SettingsState state = SettingsState.getInstance();
 
     state.urlType = getUrlChoice();
-    state.accessToken = accessTokenArea.getText();
+    state.accessToken = accessTokenField.getText();
     state.customizeUrl = customizeUrlField.getText();
     state.cloudFlareUrl = cloudFlareUrlField.getText();
-    state.readTimeout = readTimeout.getText();
-    state.connectionTimeout = connectionTimeout.getText();
+    state.readTimeout = readTimeoutField.getText().isEmpty() ? "5000" : readTimeoutField.getText();
+    state.connectionTimeout = connectionTimeoutField.getText().isEmpty() ? "5000" : connectionTimeoutField.getText();
   }
 
   @Override
@@ -158,16 +162,16 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
 
   @Override
   public @NlsContexts.ConfigurableName String getDisplayName() {
-    return ChatGPTBundle.message("setting.menu.text");
+    return ChatGPTBundle.message("ui.setting.menu.text");
   }
 
   private void createUIComponents() {
     urlTitledBorderBox = new JPanel(new BorderLayout());
-    TitledSeparator tsUrl = new TitledSeparator("URL Settings");
+    TitledSeparator tsUrl = new TitledSeparator(ChatGPTBundle.message("ui.setting.url.title"));
     urlTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
 
     connectionTitledBorderBox = new JPanel(new BorderLayout());
-    TitledSeparator tsConnection = new TitledSeparator("Connections Settings");
+    TitledSeparator tsConnection = new TitledSeparator(ChatGPTBundle.message("ui.setting.connection.title"));
     connectionTitledBorderBox.add(tsConnection,BorderLayout.CENTER);
   }
 }

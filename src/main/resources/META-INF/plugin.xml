@@ -13,8 +13,8 @@
   <change-notes><![CDATA[
       <p>1.0.4</p>
       <ul>
-        <li>Add timeout notification</li>
-        <li>Add progress bar</li>
+        <li>Add timeout notification（添加超时通知）</li>
+        <li>Add progress bar（添加进度表）</li>
       </ul><br>
       <p>1.0.3</p>
       <ul>
