@@ -18,9 +18,9 @@ public class CloudflareParser extends AbstractParser {
         if (jsonObject.containsKey("detail")) {
             JSONObject detail = jsonObject.getJSONObject("detail");
             if ("token_expired".equals(detail.getString("code"))) {
-                MyNotifier.notifyErrorWithAction(DataFactory.getInstance().getProject(),
-                        ChatGPTBundle.message("notify.response.title"),
-                        ChatGPTBundle.message("notify.response.text"));
+                MyNotifier.notifyError(DataFactory.getInstance().getProject(),
+                        ChatGPTBundle.message("notify.token_expired.error.title"),
+                        ChatGPTBundle.message("notify.token_expired.error.text"));
             }
             return EMPTY_RESPONSE;
         }

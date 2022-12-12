@@ -29,7 +29,7 @@ public class MyToolWindowFactory implements ToolWindowFactory {
   public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
     DataFactory.getInstance().setData(project, toolWindow);
     MyToolWindow myToolWindow = new MyToolWindow();
-    ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
+    ContentFactory contentFactory = ContentFactory.getInstance();
     Content content = contentFactory.createContent(myToolWindow.getContent(), ChatGPTBundle.message("toolwindows.content.search"), false);
     toolWindow.getContentManager().addContent(content);
     List<AnAction> actionList = new ArrayList<>();

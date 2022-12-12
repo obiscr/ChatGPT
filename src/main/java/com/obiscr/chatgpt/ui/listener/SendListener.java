@@ -89,7 +89,7 @@ public class SendListener implements ActionListener,KeyListener {
             }
             builder.buildUrl(state.customizeUrl).buildData(OfficialBuilder.build(text));
         } else if (state.urlType == SettingConfiguration.SettingURLType.CLOUDFLARE) {
-            if (state.cloudFlareUrl== null|| state.customizeUrl.isEmpty()) {
+            if (state.cloudFlareUrl== null|| state.cloudFlareUrl.isEmpty()) {
                 MyNotifier.notifyErrorWithAction(DataFactory.getInstance().getProject(),
                         ChatGPTBundle.message("notify.config.title"),
                         ChatGPTBundle.message("notify.config.text"));

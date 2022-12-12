@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>ChatGPT</id>
   <name>ChatGPT</name>
-  <version>1.0.5</version>
+  <version>1.0.6-222.223</version>
   <vendor email="wuzi@obiscr.com" url="https://obiscr.com">obiscr</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,10 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.0.6-222.223</p>
+      <ul>
+        <li>Dealing with API compatibility issues（处理API兼容问题）</li>
+      </ul><br>
       <p>1.0.5</p>
       <ul>
         <li>Fix the problem that the context is not associated（修复上下文不关联的问题）</li>
@@ -46,7 +50,7 @@
   ]]></change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="203" until-build="223.*"/>
+  <idea-version since-build="222.2680.4" until-build="223.*"/>
 
   <depends>com.intellij.modules.platform</depends>
   <depends>org.intellij.plugins.markdown</depends>
