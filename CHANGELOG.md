@@ -2,6 +2,10 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [1.0.8-203.222]
+### Changed
++ Enhance the built-in browser feature of the plugin（增强插件内置浏览器功能）
+
 ## [1.0.7-203.222]
 ### Changed
 + Support the use of Chat GPT in the browser embedded in the plugin（支持在插件中内嵌浏览器使用ChatGPT）
