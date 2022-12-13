@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>ChatGPT</id>
   <name>ChatGPT</name>
-  <version>1.0.7-222.223</version>
+  <version>1.0.8-222.223</version>
   <vendor email="wuzi@obiscr.com" url="https://obiscr.com">obiscr</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,10 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.0.8-222.223</p>
+      <ul>
+        <li>Enhance the built-in browser feature of the plugin（增强插件内置浏览器功能）</li>
+      </ul><br>
       <p>1.0.7-222.223</p>
       <ul>
         <li>Support the use of Chat GPT in the browser embedded in the plugin（支持在插件中内嵌浏览器使用ChatGPT）</li>
