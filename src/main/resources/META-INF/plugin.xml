@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>ChatGPT</id>
   <name>ChatGPT</name>
-  <version>1.0.6-222.223</version>
+  <version>1.0.7-222.223</version>
   <vendor email="wuzi@obiscr.com" url="https://obiscr.com">obiscr</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,10 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.0.7-222.223</p>
+      <ul>
+        <li>Support the use of Chat GPT in the browser embedded in the plugin（支持在插件中内嵌浏览器使用ChatGPT）</li>
+      </ul><br>
       <p>1.0.6-222.223</p>
       <ul>
         <li>Dealing with API compatibility issues（处理API兼容问题）</li>
@@ -59,7 +63,7 @@
   <!--<depends>com.intellij.modules.platform</depends>-->
 
   <extensions defaultExtensionNs="com.intellij">
-    <toolWindow id="ChatGPT" anchor="right" icon="/icons/toolWindow.svg"
+    <toolWindow id="ChatGPT" anchor="right" icon="/icons/toolWindow.svg" canCloseContents="true"
                 factoryClass="com.obiscr.chatgpt.MyToolWindowFactory"/>
     <applicationConfigurable parentId="tools" instance="com.obiscr.chatgpt.settings.ChatGPTSettingsPanel"
                              id="com.obiscr.chatgpt.settings.ChatGPTSettingsPanel"

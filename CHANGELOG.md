@@ -2,6 +2,10 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [1.0.7-222.223]
+### Changed
++ Support the use of Chat GPT in the browser embedded in the plugin（支持在插件中内嵌浏览器使用ChatGPT）
+
 ## [1.0.6-222.223]
 ### Changed
 + Dealing with API compatibility issues（处理API兼容问题）
