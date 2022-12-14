@@ -77,4 +77,19 @@
                        displayType="BALLOON"
                        key="ChatGPT.Notification"/>
   </extensions>
+
+  <actions>
+    <group id="ChatGPT" text="Search with ChatGPT" description="Search with ChatGPT">
+      <action id="OptimizeAction" class="com.obiscr.chatgpt.ui.action.editor.OptimizeAction"
+              icon="/icons/toolWindow.svg" />
+      <action id="TestAction" class="com.obiscr.chatgpt.ui.action.editor.TestAction"
+              icon="/icons/toolWindow.svg"/>
+      <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+      <group id="ChatGPTGroup" icon="/icons/toolWindow.svg" text="More ChatGPT Actions..." popup="true">
+        <action id="ExplainAction" icon="/icons/toolWindow.svg" class="com.obiscr.chatgpt.ui.action.editor.ExplainAction"/>
+        <action id="WrongAction" icon="/icons/toolWindow.svg" class="com.obiscr.chatgpt.ui.action.editor.WrongAction"/>
+      </group>
+      <separator/>
+    </group>
+  </actions>
 </idea-plugin>
