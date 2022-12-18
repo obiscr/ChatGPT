@@ -26,6 +26,7 @@ public class RefreshAction extends DumbAwareAction {
     String s = HtmlUtil.md2html(Constant.HOME_CONTENT);
     contentPanel.setHtml(s,0);
     DataFactory.getInstance().setConversationId(null);
+    DataFactory.getInstance().clearConversation();
   }
 
 

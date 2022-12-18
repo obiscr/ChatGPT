@@ -14,9 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
-import java.net.URL;
+import java.net.*;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -74,11 +72,7 @@ public class HttpUtil {
      * @param panel Content Component
      * @throws Exception /
      */
-    public static void sse(SseParams params, MainPanel panel) throws Exception {
-
-        Stack<String> stack =new Stack<>();
-
-        // Create Pool
+    public static void post(SseParams params, MainPanel panel, boolean useSse) throws Exception {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         URL url = new URL(params.getUrl());
 
@@ -90,6 +84,7 @@ public class HttpUtil {
         connection.setDoOutput(true);
         connection.setUseCaches(false);
 
+        // Request Headers
         connection.setRequestProperty("Accept", "text/event-stream");
         connection.setRequestProperty("Content-Type", "application/json");
         if (StringUtil.isNotEmpty(params.getAccessToken())) {
@@ -101,7 +96,6 @@ public class HttpUtil {
 
         // Write data
         connection.getOutputStream().write(params.getData().toJSONString().getBytes());
-
         connection.connect();
 
         int responseCode = connection.getResponseCode();
@@ -128,44 +122,47 @@ public class HttpUtil {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(connection.getInputStream())
         );
+
+        StringBuilder result = new StringBuilder();
         executorService.submit(() -> {
             String line = null;
             try {
                 while ((line = reader.readLine()) != null) {
-                    if ("data: [DONE]".equals(line)) {
-                        String last = stack.peek();
-                        LOG.info("Last content: {}", last);
-                        stack.clear();
-                        break;
-                    } else if (!line.isEmpty()) {
-                        stack.push(line);
+                    Map<String, String> conversation = new HashMap<>();
+                    if (line.isEmpty()) {
+                        continue;
+                    }
 
+                    // Dispatch to parse
+                    line = AbstractParser.dispatchParse(line);
+                    if (line == null) {
+                        line = EMPTY_RESPONSE;
+                    }
+                    result.append(line);
 
-                        // Pre-check the response data, format is: data: {}
-                        if (line.length() <= 6){
-                            line = HtmlUtil.create(line);
-                        }
-                        line = line.substring(5);
-                        if ("{}".equals(line.trim())) {
-                            line = EMPTY_RESPONSE;
-                        }
+                    // Add the result to data holder
+                    String key = StringUtil.appendMe(params.getQuestion());
+                    String value = StringUtil.appendQuestion(result.toString());
+                    conversation.put(key, value);
+                    DataFactory.getInstance().addConversation(conversation);
 
-                        // Dispatch to parse
-                        line = dispatchParse(line);
-                        if (line == null) {
-                            line = EMPTY_RESPONSE;
-                        }
-
-                        String html = HtmlUtil.md2html(line);
-                        panel.getContentPanel().setHtml(html, 0);
+                    // if in sse model, show content immediately
+                    if (useSse) {
+                        panel.showContent();
                     }
                 }
+                panel.showContent();
             } catch (Exception e) {
                 e.printStackTrace();
                 LOG.error("ChatGPT Request exception: " +
-                        "url:{}, params:{}, data:{}, errorMsg{}:", params.getUrl(),
+                                "url:{}, params:{}, data:{}, errorMsg{}:", params.getUrl(),
                         line,params.getData(), e.getMessage());
             } finally {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 connection.disconnect();
                 panel.aroundRequest(false);
             }
@@ -175,25 +172,5 @@ public class HttpUtil {
         if (!executorService.isShutdown()) {
             executorService.shutdownNow();
         }
-    }
-
-    private static String dispatchParse(String line) {
-        SettingConfiguration.SettingURLType urlType = SettingsState.getInstance().urlType;
-        switch (urlType) {
-            case DEFAULT:
-                line =  new DefaultParser().parse(line);
-                break;
-            case OFFICIAL:
-                line =  new OfficialParser().parse(line);
-                break;
-            case CUSTOMIZE:
-                line =  new CustomizeParser().parse(line);
-                break;
-            case CLOUDFLARE:
-                line =  new CloudflareParser().parse(line);
-                break;
-            default:break;
-        }
-        return line;
     }
 }
