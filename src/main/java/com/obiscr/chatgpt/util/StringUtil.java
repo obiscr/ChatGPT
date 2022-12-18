@@ -20,4 +20,12 @@ public class StringUtil extends com.intellij.openapi.util.text.StringUtil {
         }
         return true;
     }
+
+    public static String appendMe(String question) {
+        return "> ![](https://intellij-icons.jetbrains.design/icons/AllIcons/general/user.svg) 我\n\n" + question + "\n\n";
+    }
+
+    public static String appendQuestion(String response) {
+        return "\n\n> ![](https://intellij-icons.jetbrains.design/icons/AllIcons/general/balloonInformation.svg) ChatGPT\n\n" + response + "\n\n";
+    }
 }

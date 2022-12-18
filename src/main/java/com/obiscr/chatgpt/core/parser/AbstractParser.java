@@ -4,6 +4,8 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.obiscr.chatgpt.core.DataFactory;
+import com.obiscr.chatgpt.settings.SettingConfiguration;
+import com.obiscr.chatgpt.settings.SettingsState;
 
 /**
  * @author Wuzi
@@ -22,5 +24,25 @@ public abstract class AbstractParser implements SseParser{
         String conversationId = object.getString("conversation_id");
         DataFactory.getInstance().setConversationId(conversationId);
         return sb.toString();
+    }
+
+    public static String dispatchParse(String line) {
+        SettingConfiguration.SettingURLType urlType = SettingsState.getInstance().urlType;
+        switch (urlType) {
+            case DEFAULT:
+                line =  new DefaultParser().parse(line);
+                break;
+            case OFFICIAL:
+                line =  new OfficialParser().parse(line);
+                break;
+            case CUSTOMIZE:
+                line =  new CustomizeParser().parse(line);
+                break;
+            case CLOUDFLARE:
+                line =  new CloudflareParser().parse(line);
+                break;
+            default:break;
+        }
+        return line;
     }
 }

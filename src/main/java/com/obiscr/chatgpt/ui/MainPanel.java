@@ -7,7 +7,14 @@ import com.intellij.ui.OnePixelSplitter;
 import com.intellij.ui.components.JBTextArea;
 import com.intellij.util.ui.UIUtil;
 import com.obiscr.chatgpt.core.Constant;
+import com.obiscr.chatgpt.core.DataFactory;
+import com.obiscr.chatgpt.core.parser.CloudflareParser;
+import com.obiscr.chatgpt.core.parser.CustomizeParser;
+import com.obiscr.chatgpt.core.parser.DefaultParser;
+import com.obiscr.chatgpt.core.parser.OfficialParser;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
+import com.obiscr.chatgpt.settings.SettingConfiguration;
+import com.obiscr.chatgpt.settings.SettingsState;
 import com.obiscr.chatgpt.ui.listener.SendListener;
 import com.obiscr.chatgpt.util.HtmlUtil;
 import org.intellij.plugins.markdown.ui.preview.jcef.MarkdownJCEFHtmlPanel;
@@ -74,5 +81,12 @@ public class MainPanel {
     public void aroundRequest(boolean status) {
         progressBar.setIndeterminate(status);
         button.setEnabled(!status);
+    }
+
+    public void showContent() {
+        DataFactory dataFactory = DataFactory.getInstance();
+        String html = HtmlUtil.md2html(dataFactory.buildConversations());
+        contentPanel.setHtml(html, html.length());
+        contentPanel.scrollBy(0,html.length());
     }
 }
