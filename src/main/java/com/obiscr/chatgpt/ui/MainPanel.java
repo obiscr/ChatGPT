@@ -2,6 +2,8 @@ package com.obiscr.chatgpt.ui;
 
 import com.intellij.find.SearchTextArea;
 import com.intellij.ide.ui.laf.darcula.ui.DarculaButtonUI;
+import com.intellij.openapi.util.IconLoader;
+import com.intellij.ui.OnePixelSplitter;
 import com.intellij.ui.components.JBTextArea;
 import com.intellij.util.ui.UIUtil;
 import com.obiscr.chatgpt.core.Constant;
@@ -18,21 +20,23 @@ import java.awt.*;
  */
 public class MainPanel {
 
-    private final JPanel myToolWindowContent;
-
     private final SearchTextArea searchTextArea;
     private final JButton button;
     private final MarkdownJCEFHtmlPanel contentPanel;
-
     private final JProgressBar progressBar;
+    private final OnePixelSplitter splitter;
 
     public MainPanel() {
         SendListener listener = new SendListener(this);
 
+        splitter = new OnePixelSplitter(true,.9f);
+        splitter.setDividerWidth(2);
+
         searchTextArea = new SearchTextArea(new JBTextArea(),true);
         searchTextArea.getTextArea().addKeyListener(listener);
+        searchTextArea.setPreferredSize(new Dimension(searchTextArea.getWidth(),150));
 
-        button = new JButton(ChatGPTBundle.message("ui.toolwindow.send"));
+        button = new JButton(ChatGPTBundle.message("ui.toolwindow.send"), IconLoader.getIcon("/icons/send.svg",MainPanel.class));
         button.addActionListener(listener);
         button.setUI(new DarculaButtonUI());
 
@@ -47,9 +51,8 @@ public class MainPanel {
         String s = HtmlUtil.md2html(Constant.HOME_CONTENT);
         contentPanel.setHtml(s,0);
 
-        myToolWindowContent = new JPanel(new BorderLayout());
-        myToolWindowContent.add(top,BorderLayout.NORTH);
-        myToolWindowContent.add(contentPanel.getComponent(),BorderLayout.CENTER);
+        splitter.setFirstComponent(contentPanel.getComponent());
+        splitter.setSecondComponent(top);
     }
 
     public SearchTextArea getSearchTextArea() {
@@ -61,15 +64,11 @@ public class MainPanel {
     }
 
     public JPanel init() {
-        return myToolWindowContent;
+        return splitter;
     }
 
     public JButton getButton() {
         return button;
-    }
-
-    public JProgressBar getProgressBar() {
-        return progressBar;
     }
 
     public void aroundRequest(boolean status) {
