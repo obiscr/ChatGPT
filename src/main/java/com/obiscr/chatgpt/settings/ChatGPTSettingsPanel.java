@@ -23,160 +23,162 @@ import java.awt.event.ItemListener;
  * @author Wuzi
  */
 public class ChatGPTSettingsPanel implements Configurable, Disposable {
-  private JPanel myMainPanel;
-  private JBRadioButton defaultChoice;
-  private JBRadioButton officialChoice;
-  private JBRadioButton customizeChoice;
-  private JBTextField customizeUrlField;
-  private JBTextField accessTokenField;
-  private JPanel defaultOptions;
-  private JPanel officialOptions;
-  private JPanel customizeOptions;
-  private JBLabel defaultIntroduce;
-  private JPanel officialIntroducePanel;
-  private JBLabel officialIntroduce;
-  private JPanel customizeIntroducePanel;
-  private JPanel cloudflareIntroducePanel;
-  private JPanel cloudflareOptions;
-  private JBTextField cloudFlareUrlField;
-  private JBRadioButton cloudFlareChoice;
+    private JPanel myMainPanel;
+    private JBRadioButton defaultChoice;
+    private JBRadioButton officialChoice;
+    private JBRadioButton customizeChoice;
+    private JBTextField customizeUrlField;
+    private JBTextField accessTokenField;
+    private JPanel defaultOptions;
+    private JPanel officialOptions;
+    private JPanel customizeOptions;
+    private JBLabel defaultIntroduce;
+    private JPanel officialIntroducePanel;
+    private JBLabel officialIntroduce;
+    private JPanel cloudflareIntroducePanel;
+    private JPanel cloudflareOptions;
+    private JBTextField cloudFlareUrlField;
+    private JBRadioButton cloudFlareChoice;
 
-  private JPanel urlTitledBorderBox;
-  private JPanel connectionTitledBorderBox;
-  private JBTextField readTimeoutField;
-  private JBTextField connectionTimeoutField;
-
-
-  public ChatGPTSettingsPanel() {
-    init();
-  }
-
-  private void init() {
-    register(defaultChoice, SettingConfiguration.SettingURLType.DEFAULT);
-    register(officialChoice, SettingConfiguration.SettingURLType.OFFICIAL);
-    register(customizeChoice, SettingConfiguration.SettingURLType.CUSTOMIZE);
-    register(cloudFlareChoice, SettingConfiguration.SettingURLType.CLOUDFLARE);
-
-    ItemListener connectionTypeChangedListener = e -> {
-      if (e.getStateChange() == ItemEvent.SELECTED) {
-        enableOptions(e.getSource());
-      }
-    };
-    defaultChoice.addItemListener(connectionTypeChangedListener);
-    officialChoice.addItemListener(connectionTypeChangedListener);
-    customizeChoice.addItemListener(connectionTypeChangedListener);
-    cloudFlareChoice.addItemListener(connectionTypeChangedListener);
-
-    enableOptions(customizeChoice);
-
-    accessTokenField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.url.official.token.empty_text"));
-    customizeUrlField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.url.customize.url.empty_text"));
-    cloudFlareUrlField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.url.cloudflare.url.empty_text"));
-    readTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.read_timeout.empty_text"));
-    connectionTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.connection_timeout.empty_text"));
-  }
+    private JPanel urlTitledBorderBox;
+    private JPanel connectionTitledBorderBox;
+    private JBTextField readTimeoutField;
+    private JBTextField connectionTimeoutField;
+    private JBTextField defaultApiKeyField;
+    private JPanel defaultIntroducePanel;
+    private JPanel customizeIntroducePanel;
 
 
-  private void enableOptions(Object source) {
-    UIUtil.setEnabled(defaultOptions, defaultChoice.equals(source), true);
-    UIUtil.setEnabled(officialOptions, officialChoice.equals(source), true);
-    UIUtil.setEnabled(customizeOptions, customizeChoice.equals(source), true);
-    UIUtil.setEnabled(cloudflareOptions, cloudFlareChoice.equals(source), true);
-  }
+    public ChatGPTSettingsPanel() {
+        init();
+    }
 
-  @Override
-  public void reset() {
-    SettingsState state = SettingsState.getInstance();
+    private void init() {
+        register(defaultChoice, SettingConfiguration.SettingURLType.DEFAULT);
+        register(officialChoice, SettingConfiguration.SettingURLType.OFFICIAL);
+        register(customizeChoice, SettingConfiguration.SettingURLType.CUSTOMIZE);
+        register(cloudFlareChoice, SettingConfiguration.SettingURLType.CLOUDFLARE);
 
-    setUrlChoice(state.urlType);
-    accessTokenField.setText(state.accessToken);
-    customizeUrlField.setText(state.customizeUrl);
-    cloudFlareUrlField.setText(state.cloudFlareUrl);
-    readTimeoutField.setText(state.readTimeout);
-    connectionTimeoutField.setText(state.connectionTimeout);
-  }
+        ItemListener connectionTypeChangedListener = e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                enableOptions(e.getSource());
+            }
+        };
+        defaultChoice.addItemListener(connectionTypeChangedListener);
+        officialChoice.addItemListener(connectionTypeChangedListener);
+        customizeChoice.addItemListener(connectionTypeChangedListener);
+        cloudFlareChoice.addItemListener(connectionTypeChangedListener);
 
-  @Override
-  public @Nullable JComponent createComponent() {
-    return myMainPanel;
-  }
+        enableOptions(customizeChoice);
 
-  @Override
-  public boolean isModified() {
-    SettingsState state = SettingsState.getInstance();
+        accessTokenField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.url.official.token.empty_text"));
+        customizeUrlField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.url.customize.url.empty_text"));
+        cloudFlareUrlField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.url.cloudflare.url.empty_text"));
+        readTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.read_timeout.empty_text"));
+        connectionTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.connection_timeout.empty_text"));
+    }
 
-    return !state.urlType.equals(getUrlChoice()) ||
-           !StringUtil.equals(state.accessToken, accessTokenField.getText()) ||
-           !StringUtil.equals(state.customizeUrl, customizeUrlField.getText()) ||
-           !StringUtil.equals(state.cloudFlareUrl, cloudFlareUrlField.getText()) ||
-           !StringUtil.equals(state.readTimeout, readTimeoutField.getText()) ||
-           !StringUtil.equals(state.connectionTimeout, connectionTimeoutField.getText());
-  }
 
-  @Override
-  public void apply() {
-    SettingsState state = SettingsState.getInstance();
+    private void enableOptions(Object source) {
+        UIUtil.setEnabled(defaultOptions, defaultChoice.equals(source), true);
+        UIUtil.setEnabled(officialOptions, officialChoice.equals(source), true);
+        UIUtil.setEnabled(customizeOptions, customizeChoice.equals(source), true);
+        UIUtil.setEnabled(cloudflareOptions, cloudFlareChoice.equals(source), true);
+    }
 
-    state.urlType = getUrlChoice();
-    state.accessToken = accessTokenField.getText();
-    state.customizeUrl = customizeUrlField.getText();
-    state.cloudFlareUrl = cloudFlareUrlField.getText();
+    @Override
+    public void reset() {
+        SettingsState state = SettingsState.getInstance();
 
-    boolean readTimeoutIsNumber = com.obiscr.chatgpt.util.
-            StringUtil.isNumber(readTimeoutField.getText());
-    boolean connectionTimeoutIsNumber = com.obiscr.chatgpt.util.
-            StringUtil.isNumber(connectionTimeoutField.getText());
-    state.readTimeout = !readTimeoutIsNumber ? "10000" : readTimeoutField.getText();
-    state.connectionTimeout = !connectionTimeoutIsNumber ? "10000" : connectionTimeoutField.getText();
-  }
+        setUrlChoice(state.urlType);
+        accessTokenField.setText(state.accessToken);
+        customizeUrlField.setText(state.customizeUrl);
+        cloudFlareUrlField.setText(state.cloudFlareUrl);
+        readTimeoutField.setText(state.readTimeout);
+        connectionTimeoutField.setText(state.connectionTimeout);
+    }
 
-  @Override
-  public void dispose() {
-  }
+    @Override
+    public @Nullable JComponent createComponent() {
+        return myMainPanel;
+    }
 
-  private void setUrlChoice(@NotNull SettingConfiguration.SettingURLType value) {
-    setSelected(defaultChoice, value);
-    setSelected(officialChoice, value);
-    setSelected(customizeChoice, value);
-    setSelected(cloudFlareChoice, value);
-  }
+    @Override
+    public boolean isModified() {
+        SettingsState state = SettingsState.getInstance();
 
-  @NotNull
-  private SettingConfiguration.SettingURLType getUrlChoice() {
-    JBRadioButton selected = defaultChoice.isSelected()
-                             ? defaultChoice
-                             : officialChoice.isSelected()
-                               ? officialChoice
-                               : customizeChoice.isSelected()
-                                 ? customizeChoice
-                                 : cloudFlareChoice.isSelected()
-                                   ? cloudFlareChoice : null;
+        return !state.urlType.equals(getUrlChoice()) ||
+                !StringUtil.equals(state.accessToken, accessTokenField.getText()) ||
+                !StringUtil.equals(state.customizeUrl, customizeUrlField.getText()) ||
+                !StringUtil.equals(state.cloudFlareUrl, cloudFlareUrlField.getText()) ||
+                !StringUtil.equals(state.readTimeout, readTimeoutField.getText()) ||
+                !StringUtil.equals(state.connectionTimeout, connectionTimeoutField.getText());
+    }
 
-    assert selected != null;
+    @Override
+    public void apply() {
+        SettingsState state = SettingsState.getInstance();
 
-    return (SettingConfiguration.SettingURLType)selected.getClientProperty("value");
-  }
+        state.urlType = getUrlChoice();
+        state.accessToken = accessTokenField.getText();
+        state.customizeUrl = customizeUrlField.getText();
+        state.cloudFlareUrl = cloudFlareUrlField.getText();
 
-  private static void register(@NotNull JBRadioButton choice, @NotNull SettingConfiguration.SettingURLType value) {
-    choice.putClientProperty("value", value);
-  }
+        boolean readTimeoutIsNumber = com.obiscr.chatgpt.util.
+                StringUtil.isNumber(readTimeoutField.getText());
+        boolean connectionTimeoutIsNumber = com.obiscr.chatgpt.util.
+                StringUtil.isNumber(connectionTimeoutField.getText());
+        state.readTimeout = !readTimeoutIsNumber ? "10000" : readTimeoutField.getText();
+        state.connectionTimeout = !connectionTimeoutIsNumber ? "10000" : connectionTimeoutField.getText();
+    }
 
-  private static void setSelected(@NotNull JBRadioButton choice, @NotNull SettingConfiguration.SettingURLType value) {
-    choice.setSelected(value.equals(choice.getClientProperty("value")));
-  }
+    @Override
+    public void dispose() {
+    }
 
-  @Override
-  public @NlsContexts.ConfigurableName String getDisplayName() {
-    return ChatGPTBundle.message("ui.setting.menu.text");
-  }
+    private void setUrlChoice(@NotNull SettingConfiguration.SettingURLType value) {
+        setSelected(defaultChoice, value);
+        setSelected(officialChoice, value);
+        setSelected(customizeChoice, value);
+        setSelected(cloudFlareChoice, value);
+    }
 
-  private void createUIComponents() {
-    urlTitledBorderBox = new JPanel(new BorderLayout());
-    TitledSeparator tsUrl = new TitledSeparator(ChatGPTBundle.message("ui.setting.url.title"));
-    urlTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
+    @NotNull
+    private SettingConfiguration.SettingURLType getUrlChoice() {
+        JBRadioButton selected = defaultChoice.isSelected()
+                ? defaultChoice
+                : officialChoice.isSelected()
+                ? officialChoice
+                : customizeChoice.isSelected()
+                ? customizeChoice
+                : cloudFlareChoice.isSelected()
+                ? cloudFlareChoice : null;
 
-    connectionTitledBorderBox = new JPanel(new BorderLayout());
-    TitledSeparator tsConnection = new TitledSeparator(ChatGPTBundle.message("ui.setting.connection.title"));
-    connectionTitledBorderBox.add(tsConnection,BorderLayout.CENTER);
-  }
+        assert selected != null;
+
+        return (SettingConfiguration.SettingURLType)selected.getClientProperty("value");
+    }
+
+    private static void register(@NotNull JBRadioButton choice, @NotNull SettingConfiguration.SettingURLType value) {
+        choice.putClientProperty("value", value);
+    }
+
+    private static void setSelected(@NotNull JBRadioButton choice, @NotNull SettingConfiguration.SettingURLType value) {
+        choice.setSelected(value.equals(choice.getClientProperty("value")));
+    }
+
+    @Override
+    public @NlsContexts.ConfigurableName String getDisplayName() {
+        return ChatGPTBundle.message("ui.setting.menu.text");
+    }
+
+    private void createUIComponents() {
+        urlTitledBorderBox = new JPanel(new BorderLayout());
+        TitledSeparator tsUrl = new TitledSeparator(ChatGPTBundle.message("ui.setting.url.title"));
+        urlTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
+
+        connectionTitledBorderBox = new JPanel(new BorderLayout());
+        TitledSeparator tsConnection = new TitledSeparator(ChatGPTBundle.message("ui.setting.connection.title"));
+        connectionTitledBorderBox.add(tsConnection,BorderLayout.CENTER);
+    }
 }

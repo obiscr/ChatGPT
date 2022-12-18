@@ -132,7 +132,7 @@ public class SendListener implements ActionListener,KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+        if(e.getKeyCode() == KeyEvent.VK_ENTER && !e.isControlDown() && !e.isShiftDown()){
             e.consume();
             mainPanel.getButton().doClick();
         }
