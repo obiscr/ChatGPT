@@ -12,6 +12,14 @@ can be used for many applications, such as natural language processing
 [English](https://github.com/obiscr/ChatGPT/blob/main/README.md)
 <br/>
 
+[Homepage](https://plugins.jetbrains.com/plugin/20603-chatgpt) |
+[Docs/Preview](https://chatgpt.en.obiscr.com) |
+[Github](https://github.com/obiscr/ChatGPT) |
+[FAQ](https://chatgpt.en.obiscr.com/faq/) |
+[Slack](https://join.slack.com/t/observercreator/shared_invite/zt-14g3dnzkx-FGJM_WgY~vj0bJINTHQSAA) |
+[Donate/Sponsor](https://chatgpt.en.obiscr.com/donate/)
+
+
 # About this project
 
 This project is a plugin that supports ChatGPT running on JetBrains series IDE.
