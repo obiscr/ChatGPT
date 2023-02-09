@@ -9,6 +9,15 @@
 [简体中文](https://github.com/obiscr/ChatGPT/blob/main/README_CN.md)
 <br/>
 
+# 相关链接
+
+[主页](https://plugins.jetbrains.com/plugin/20603-chatgpt) |
+[文档/预览](https://chatgpt.cn.obiscr.com) |
+[Github](https://github.com/obiscr/ChatGPT) |
+[常见问题](https://chatgpt.cn.obiscr.com/faq/) |
+[微信群](https://www.obiscr.com/article/Wechat-group-is-now-open) |
+[捐赠/赞助](https://chatgpt.cn.obiscr.com/donate/)
+
 # 关于本项目
 
 这个项目是支持ChatGPT在JetBrains系列IDE上运行的一款插件。
