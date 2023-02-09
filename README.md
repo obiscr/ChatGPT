@@ -12,6 +12,8 @@ can be used for many applications, such as natural language processing
 [English](https://github.com/obiscr/ChatGPT/blob/main/README.md)
 <br/>
 
+# Useful Links
+
 [Homepage](https://plugins.jetbrains.com/plugin/20603-chatgpt) |
 [Docs/Preview](https://chatgpt.en.obiscr.com) |
 [Github](https://github.com/obiscr/ChatGPT) |
