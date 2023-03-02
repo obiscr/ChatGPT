@@ -1,35 +1,34 @@
 package com.obiscr.chatgpt.core;
 
+import com.obiscr.chatgpt.util.HtmlUtil;
+
 /**
  * @author Wuzi
  */
 public class Constant {
 
-    public static final String HOME_CONTENT =
-            "## 使用方法\n" +
-                    "**鉴于目前的形式请大家先使用网页版的ChatGPT，点击当前标签页旁边的 `在线ChatGPT` 即可打开。**\n\n" +
-                    "如何配置：请参考文档 [ChatGPT入门-配置](https://docs.obiscr.com/article/GPT-Getting-Started#Configuration)\n\n" +
-                    "如何使用：请参考文档 [ChatGPT入门-使用](https://docs.obiscr.com/article/GPT-Getting-Started#Usage)\n\n" +
-                    "\n" +
-                    "注意：这并不是一个完美的工具，可能会有错误。请斟酌使用。\n" +
-                    "\n" +
-                    "[主页](https://plugins.jetbrains.com/plugin/20603-chatgpt) |\n" +
-                    "[文档/预览](https://docs.obiscr.com/article/GPT) |\n" +
-                    "[Github](https://github.com/obiscr/ChatGPT) |\n" +
-                    "[Q&A](https://docs.obiscr.com/article/GPT-QA) |\n" +
-                    "[微信群](https://www.obiscr.com/article/Wechat-group-is-now-open)\n" +
-                    "\t  \n" +
-                    "\t\t\t\t\n" +
-                    "## Usage\n" +
-                    "**In view of the current form, please use the web version of ChatGPT first, click `Online ChatGPT` next to the current tab to open it.**\n\n" +
-                    "How to configuration：Please see [ChatGPT Getting Started-Configuration](https://docs.obiscr.com/article/GPT-Getting-Started#Configuration)\n\n" +
-                    "How to usage：Please see [ChatGPT Getting Started-Usage](https://docs.obiscr.com/article/GPT-Getting-Started#Usage)\n\n" +
-                    "\n" +
-                    "NOTE: This is not a perfect tool and may have bugs. Please use with discretion.\n" +
-                    "\n" +
-                    "[Homepage](https://plugins.jetbrains.com/plugin/20603-chatgpt) |\n" +
-                    "[Docs/Preview](https://docs.obiscr.com/article/GPT) |\n" +
-                    "[Github](https://github.com/obiscr/ChatGPT) |\n" +
-                    "[Q&A](https://docs.obiscr.com/article/GPT-QA) |\n" +
-                    "[Slack](https://join.slack.com/t/observercreator/shared_invite/zt-14g3dnzkx-FGJM_WgY~vj0bJINTHQSAA)";
+    public static final String CHATGPT_CONTENT =
+                    "**Important tip**: \n\n<br />"+
+                    "Currently using a third-party proxy service. will be unstable. And there is a limit on the number of requests per hour. <br />" +
+                            "**Please don't give me bad reviews. I have been working hard to provide you with a better service.**\n\n<br />" +
+                    "**Instructions**: \n\n<br />" +
+                    "Open *File* - *Setting/Preference* , select *Tool* - *OpenAI* - *ChatGPT*. Enter your own OpenAI account in Official.\n\n<br />" +
+                    "Click Login below to start logging in, and the Access Token below will be automatically refreshed after successful login.\n" +
+                    "The expiration time of the current Token is displayed below the Access Token. After the expiration, you can click Login again to refresh the Access Token.\n\n";
+
+    public static final String GPT35_TURBO_CONTENT =
+            "**Important tip**: \n\n<br />"+
+                    "This model is the official GPT 3.5 Turbo model. <br />" +
+                    "**Instructions**: \n\n<br />" +
+                    "At first, login to: [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys). Then create an API Key.\n" +
+                    "Open *File* - *Setting/Preference* , select *Tool* - *OpenAI* - *GPT 3.5 Turbo*. And fill the API Key in text field.";
+
+
+    public static String getChatGPTContent() {
+        return HtmlUtil.md2html(CHATGPT_CONTENT);
+    }
+
+    public static String getGpt35TurboContent() {
+        return HtmlUtil.md2html(GPT35_TURBO_CONTENT);
+    }
 }

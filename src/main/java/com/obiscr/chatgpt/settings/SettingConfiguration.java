@@ -7,15 +7,20 @@ public class SettingConfiguration {
 
     public enum SettingURLType {
         //
-        DEFAULT,
-
-        //
         OFFICIAL,
 
         //
         CUSTOMIZE,
+    }
+
+    public enum SettingProxyType {
+        //
+        DIRECT,
 
         //
-        CLOUDFLARE
+        HTTP,
+
+        //
+        SOCKS
     }
 }

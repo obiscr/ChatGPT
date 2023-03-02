@@ -2,6 +2,56 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.1-222.223]
+### Changed
++ Fix some issues
+
+## [2.1.0-222.223]
+### Added
++ Can stop conversation tasks
++ Can copy any conversation content
++ Support proxy settings
++ Use the official GPT 3.5 Turbo model
+
+### Changed
++ UI redesign
+
+### Removed
++ Temporarily remove the embedded online ChatGPT
++ Remove Default mode from URL source
++ Remove Cloudflare mode URL source
+
+## [2.0.3-222.223]
+### Changed
++ Fix [#65](https://github.com/obiscr/ChatGPT/issues/65)
+
+## [2.0.3-222.223]
+### Changed
++ Fix language issues
+
+## [2.0.2-222.223]
+### Changed
++ 中文文档迁移到（https://chatgpt.cn.obiscr.com）
++ 英文文档迁移到（https://chatgpt.en.obiscr.com）
++ Fix [#19](https://github.com/obiscr/ChatGPT/issues/19)
++ Fix [#46](https://github.com/obiscr/ChatGPT/issues/46)
+
+## [2.0.1-222.223]
+### Changed
++ Enhance some features of Online ChatGPT.（增强在线ChatGPT功能）
++ Update the icons.（图标更新）
+
+## [2.0.0-222.223]
+### Added
++ Added GPT 3 mode（新增GPT3模式）
++ Support right-click for quick search（支持右键进行快速搜索）
+
+### Changed
++ Input text area moves below（输入文本区域移动下方）
++ Fix [#5](https://github.com/obiscr/ChatGPT/issues/5) Keep chat history（保留历史聊天记录）
++ Fix [#21](https://github.com/obiscr/ChatGPT/issues/21) The input text area supports resizing（输入文本区域支持大小缩放）
++ Fix [#22](https://github.com/obiscr/ChatGPT/issues/22) Support for wrapping in the text area through shortcut keys（支持通过快捷键在文本区域换行）
+
 ## [1.0.8-222.223]
 ### Changed
 + Enhance the built-in browser feature of the plugin（增强插件内置浏览器功能）
