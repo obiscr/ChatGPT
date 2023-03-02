@@ -8,8 +8,8 @@ natural language text that is meaningful in a given context. The model
 can be used for many applications, such as natural language processing
 (NLP) and dialogue systems.
 
-[简体中文](https://github.com/obiscr/ChatGPT/blob/main/README_CN.md) | 
-[English](https://github.com/obiscr/ChatGPT/blob/main/README.md)
+[简体中文](https://github.com/dromara/ChatGPT/blob/main/README_CN.md) | 
+[English](https://github.com/dromara/ChatGPT/blob/main/README.md)
 <br/>
 
 # About this project
