@@ -32,12 +32,4 @@ public class ChatGPTBundle extends DynamicBundle {
     public static Supplier<@Nls String> messagePointer(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, Object @NotNull ... params) {
         return INSTANCE.getLazyMessage(key, params);
     }
-
-    @Override
-    protected @NotNull ResourceBundle findBundle(@NotNull String pathToBundle,
-                                                 @NotNull ClassLoader baseLoader,
-                                                 ResourceBundle.@NotNull Control control) {
-        Locale locale = DynamicBundle.getLocale();
-        return ResourceBundle.getBundle(pathToBundle,locale, baseLoader, control);
-    }
 }

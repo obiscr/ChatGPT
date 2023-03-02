@@ -9,28 +9,17 @@
 [简体中文](https://github.com/obiscr/ChatGPT/blob/main/README_CN.md)
 <br/>
 
-# 相关链接
-
-[主页](https://plugins.jetbrains.com/plugin/20603-chatgpt) |
-[文档/预览](https://chatgpt.cn.obiscr.com) |
-[Github](https://github.com/obiscr/ChatGPT) |
-[常见问题](https://chatgpt.cn.obiscr.com/faq/) |
-[微信群](https://www.obiscr.com/article/Wechat-group-is-now-open) |
-[捐赠/赞助](https://chatgpt.cn.obiscr.com/donate/)
-
 # 关于本项目
 
 这个项目是支持ChatGPT在JetBrains系列IDE上运行的一款插件。
 
-![Hello](https://user-images.githubusercontent.com/28687074/206612065-230b936e-d32a-40c7-8c6c-0d6a4d9e8cd0.gif)
+![gpt3-write-article](https://user-images.githubusercontent.com/28687074/222499283-d80a7601-b57d-49d9-90bd-2bb749d7e6ab.gif)
 
-![asm](https://user-images.githubusercontent.com/28687074/206612043-52f6106d-8cdb-4944-a055-30e74a480eaf.gif)
+![chatgpt-write-article](https://user-images.githubusercontent.com/28687074/222499301-8118f05f-1cc5-442d-b705-3c1008e9effa.gif)
 
-![img1](https://user-images.githubusercontent.com/28687074/206475742-124708fb-1cea-47cc-a299-08630ca4fe95.gif)
+![gpt3-test-case](https://user-images.githubusercontent.com/28687074/222499405-6fe25a51-8456-4831-9d1b-6e5060d6fa0a.gif)
 
-![img2](https://user-images.githubusercontent.com/28687074/206475807-45b82b9d-f879-40ed-a8fb-27e8abfd7667.png)
-
-![img3](https://user-images.githubusercontent.com/28687074/206475842-d2a6c9ea-76b5-4650-ae5a-39fc5e160205.png)
+![chatgpt-how-to-learn](https://user-images.githubusercontent.com/28687074/222499424-25c8a2bb-13b5-47d1-82bb-ca12b6cc05fa.gif)
 
 
 # 安装
@@ -40,14 +29,15 @@
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "ChatGPT"</kbd> >
   <kbd>Install Plugin</kbd>
 
-# 使用
+# 入门
 
-首先，您需要注册一个[OpenAI](https://auth0.openai.com/u/signup/identifier?state=hKFo2SBOVnZMbDF4T1hLeFZIcTluZ1hKbmZOZENvVDgydHduRaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIER2ZVJvUzdhN2Q4MVBpUTdZelg0cGlBcnNyQm5oUG5zo2NpZNkgRFJpdnNubTJNdTQyVDNLT3BxZHR3QjNOWXZpSFl6d0Q)的账号，然后打开：[https://chat.openai.com/api/auth/session](https://chat.openai.com/api/auth/session)
-这个网站，把accessToken记录下来。
+请看文档: [https://chatgpt.en.obiscr.com/getting-started/](https://chatgpt.en.obiscr.com/getting-started/)
 
-然后打开IDE，再接着，依次打开 <kbd>Settings/Preferences</kbd> > <kbd>Tools</kbd> > <kbd>ChatGPT，</kbd>
-然后把上面记录的accessToken填写到文本框。之后就可以使用啦。
 
 # 贡献
 
 这是一个新成立的项目，有很多地方可以优化。期待您的加入。
+
+# License
+
+本项目采用《GNU通用公共许可协议V3》,另外附加条件: 禁止使用本项目的代码构建其他 JetBrains Marketplace 平台的插件。违者必究。
