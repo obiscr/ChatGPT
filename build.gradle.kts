@@ -31,6 +31,11 @@ repositories {
 
 dependencies {
     implementation("com.alibaba.fastjson2:fastjson2:2.0.17")
+    implementation("cn.hutool:hutool-http:5.8.12")
+    implementation("com.obiscr:openai-auth:1.0.1")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.squareup.okhttp3:okhttp-sse:4.10.0")
+    implementation("com.vladsch.flexmark:flexmark:0.62.2")
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin

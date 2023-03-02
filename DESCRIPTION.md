@@ -1,12 +1,15 @@
 <!-- Plugin description -->
+
+## Note: At present, the official GPT-3.5-Turbo model is available.
+
 ## English
 
-[ChatGPT](https://chat.openai.com/chat) is a language model trained 
-by OpenAI and can be used for a variety of tasks, including dialogue 
-and <br />text generation.  ChatGPT is a neural network-based model that is 
+[ChatGPT](https://chat.openai.com/chat) is a language model trained
+by OpenAI and can be used for a variety of tasks, including dialogue
+and <br />text generation.  ChatGPT is a neural network-based model that is
 trained on large amounts of human language <br />data and is able to generate
-natural language text that is meaningful in a given context. The model 
-can be used <br />for many applications, such as natural language processing 
+natural language text that is meaningful in a given context. The model
+can be used <br />for many applications, such as natural language processing
 (NLP) and dialogue systems.
 
 <br/>
@@ -16,10 +19,17 @@ can be used <br />for many applications, such as natural language processing
 This project is a plugin that supports ChatGPT running on JetBrains series IDE.
 
 [Homepage](https://plugins.jetbrains.com/plugin/20603-chatgpt) |
-[Docs/Preview](https://docs.obiscr.com/article/GPT) |
+[Docs/Preview](https://chatgpt.en.obiscr.com) |
 [Github](https://github.com/obiscr/ChatGPT) |
-[Q&A](https://docs.obiscr.com/article/GPT-QA) |
-[Slack](https://join.slack.com/t/observercreator/shared_invite/zt-14g3dnzkx-FGJM_WgY~vj0bJINTHQSAA)
+[FAQ](https://chatgpt.en.obiscr.com/faq/) |
+[Slack](https://join.slack.com/t/observercreator/shared_invite/zt-14g3dnzkx-FGJM_WgY~vj0bJINTHQSAA) |
+[Donate/Sponsor](https://chatgpt.en.obiscr.com/donate/)
+
+## 强烈推荐
+
+PC端好用国内免费在线访问ChatGPT网站：[https://aicodehelper.com](https://aicodehelper.com#1)
+
+## 提示: 目前， 官方的 GPT-3.5-Turbo 模式已经接入。
 
 ## 简体中文
 
@@ -35,9 +45,10 @@ This project is a plugin that supports ChatGPT running on JetBrains series IDE.
 这个项目是支持ChatGPT在JetBrains系列IDE上运行的一款插件。
 
 [主页](https://plugins.jetbrains.com/plugin/20603-chatgpt) |
-[文档/预览](https://docs.obiscr.com/article/GPT) |
+[文档/预览](https://chatgpt.cn.obiscr.com) |
 [Github](https://github.com/obiscr/ChatGPT) |
-[Q&A](https://docs.obiscr.com/article/GPT-QA) |
-[微信群](https://www.obiscr.com/article/Wechat-group-is-now-open)
+[常见问题](https://chatgpt.cn.obiscr.com/faq/) |
+[微信群](https://www.obiscr.com/article/Wechat-group-is-now-open) |
+[捐赠/赞助](https://chatgpt.cn.obiscr.com/donate/)
 
 <!-- Plugin description end -->

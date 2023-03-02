@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>ChatGPT</id>
   <name>ChatGPT</name>
-  <version>1.0.8-222.223</version>
+  <version>2.1.1-203.221</version>
   <vendor email="wuzi@obiscr.com" url="https://obiscr.com">obiscr</vendor>
 
   <description><![CDATA[
@@ -11,54 +11,32 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      <p>1.0.8-222.223</p>
+      <p>2.1.1-203.221</p>
       <ul>
-        <li>Enhance the built-in browser feature of the plugin（增强插件内置浏览器功能）</li>
+        <li>Fix some issues</li>
       </ul><br>
-      <p>1.0.7-222.223</p>
+      <p>2.1.0-203.221</p>
+      <b>Added</b>
       <ul>
-        <li>Support the use of Chat GPT in the browser embedded in the plugin（支持在插件中内嵌浏览器使用ChatGPT）</li>
-      </ul><br>
-      <p>1.0.6-222.223</p>
+        <li>Can stop conversation tasks</li>
+        <li>Can copy any conversation content</li>
+        <li>Support proxy settings</li>
+        <li>Use the official GPT 3.5 Turbo model</li>
+      </ul>
+      <b>Changed</b>
       <ul>
-        <li>Dealing with API compatibility issues（处理API兼容问题）</li>
-      </ul><br>
-      <p>1.0.5</p>
+        <li>UI redesign</li>
+      </ul>
+      <b>Removed</b>
       <ul>
-        <li>Fix the problem that the context is not associated（修复上下文不关联的问题）</li>
-      </ul><br>
-      <p>1.0.4</p>
-      <ul>
-        <li>Add timeout notification（添加超时通知）</li>
-        <li>Add progress bar（添加进度表）</li>
-      </ul><br>
-      <p>1.0.3</p>
-      <ul>
-        <li>Fix <a href="https://github.com/obiscr/ChatGPT/issues/6">#6</a></li>
-        <li>Fix <a href="https://github.com/obiscr/ChatGPT/issues/10">#10</a></li>
-        <li>Add home button（添加主页按钮）</li>
-        <li>Add Cloudflare Source（增加 Cloudflare 源）</li>
-      </ul><br>
-      <p>1.0.2</p>
-      <b>备注：新增了一个国内源（默认），不需要Token，直接使用。或者国内用户访问慢的情况下可以尝试切换到默认源。</b>
-      <ul>
-        <li>Added new server sources（增加了新的服务器源（不需要Token））</li>
-        <li>Support for customizable backend servers（支持自定义服务器API）</li>
-      </ul><br>
-      <p>1.0.1</p>
-      <ul>
-        <li>Support quick setting of Access Token（支持快速设置Access Token）</li>
-        <li>Add Token expiration reminder（添加Token过期提示）</li>
-        <li>Add relevant information on the home page（增加首页的相关信息）</li>
-      </ul><br>
-      <p>1.0.0</p>
-      <ul>
-        <li>Support running in JetBrains IDEs（支持在JetBrains的IDE上运行）</li>
+        <li>Temporarily remove the embedded online ChatGPT</li>
+        <li>Remove Default mode from URL source</li>
+        <li>Remove Cloudflare mode URL source</li>
       </ul><br>
   ]]></change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="222.2680.4" until-build="223.*"/>
+  <idea-version since-build="203" until-build="221.*"/>
 
   <depends>com.intellij.modules.platform</depends>
   <depends>org.intellij.plugins.markdown</depends>
@@ -69,13 +47,24 @@
   <extensions defaultExtensionNs="com.intellij">
     <toolWindow id="ChatGPT" anchor="right" icon="/icons/toolWindow.svg" canCloseContents="true"
                 factoryClass="com.obiscr.chatgpt.MyToolWindowFactory"/>
-    <applicationConfigurable parentId="tools" instance="com.obiscr.chatgpt.settings.ChatGPTSettingsPanel"
-                             id="com.obiscr.chatgpt.settings.ChatGPTSettingsPanel"
+    <applicationConfigurable parentId="tools" instance="com.obiscr.chatgpt.settings.OpenAISettingsPanel"
+                             id="com.obiscr.chatgpt.settings.OpenAISettings"
+                             displayName="OpenAI"/>
+<!--    <groupConfigurable id="com.obiscr.chatgpt.settings.OpenAISettings" weight="-10"-->
+<!--                       displayNameKey="OpenAI"-->
+<!--                       descriptionKey="Here are the relevant settings for OpenAI"/>-->
+    <applicationConfigurable parentId="com.obiscr.chatgpt.settings.OpenAISettings" instance="com.obiscr.chatgpt.settings.ChatGPTSettingsPanel"
+                             id="com.obiscr.chatgpt.settings.ChatGPT"
                              displayName="ChatGPT"/>
-    <applicationService serviceImplementation="com.obiscr.chatgpt.settings.SettingsState"/>
-    <notificationGroup id="ChatGPT Notification Group"
-                       displayType="BALLOON"
-                       key="ChatGPT.Notification"/>
+    <applicationConfigurable parentId="com.obiscr.chatgpt.settings.OpenAISettings" instance="com.obiscr.chatgpt.settings.GPT3_35_TurboPanel"
+                             id="com.obiscr.chatgpt.settings.GPT3-3.5-Turbo"
+                             displayName="GPT 3.5 Turbo"/>
+    <applicationService serviceImplementation="com.obiscr.chatgpt.settings.OpenAISettingsState"/>
+    <applicationService serviceImplementation="com.obiscr.chatgpt.core.TokenManager"/>
+    <projectService serviceImplementation="com.obiscr.chatgpt.core.ConversationManager"/>
+    <projectService serviceImplementation="com.obiscr.chatgpt.core.SendAction"/>
+    <projectService serviceImplementation="com.obiscr.chatgpt.ChatGPTHandler"/>
+    <postStartupActivity implementation="com.obiscr.chatgpt.core.StartUpActivity"/>
   </extensions>
 
   <actions>

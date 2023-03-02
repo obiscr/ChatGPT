@@ -1,6 +1,5 @@
 package com.obiscr.chatgpt.ui.action.editor;
 
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +15,8 @@ public class WrongAction extends AbstractEditorAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-
+        key = "action.code.wrong.text";
+        super.actionPerformed(e);
     }
 
 }
