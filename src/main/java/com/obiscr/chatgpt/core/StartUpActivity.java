@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.startup.StartupActivity;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
+import com.obiscr.chatgpt.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,6 +16,9 @@ public class StartUpActivity implements StartupActivity.DumbAware {
     @Override
     public void runActivity(@NotNull Project project) {
         OpenAISettingsState state = OpenAISettingsState.getInstance();
+        if (StringUtil.isEmpty(state.expireTime)) {
+            return;
+        }
         DateTime expire = DateUtil.parse(state.expireTime);
         DateTime date = DateUtil.date();
         long delta = DateUtil.betweenDay(expire, date,true);
