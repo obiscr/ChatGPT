@@ -1,5 +1,7 @@
 # ChatGPT
 
+**This is the EAP version of the ChatGPT plugin, supported version: `2023.1 ~ 2023.*`**
+
 [ChatGPT](https://chat.openai.com/chat) is a language model trained
 by OpenAI and can be used for a variety of tasks, including dialogue
 and text generation. ChatGPT is a neural network-based model that is
