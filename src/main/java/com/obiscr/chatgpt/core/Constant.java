@@ -18,7 +18,7 @@ public class Constant {
 
     public static final String GPT35_TURBO_CONTENT =
             "**Important tip**: \n\n<br />"+
-                    "This model is the official GPT 3.5 Turbo model. <br />" +
+                    "This model is the official GPT 3.5 Turbo model. \n\n<br />" +
                     "**Instructions**: \n\n<br />" +
                     "At first, login to: [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys). Then create an API Key.\n" +
                     "Open *File* - *Setting/Preference* , select *Tool* - *OpenAI* - *GPT 3.5 Turbo*. And fill the API Key in text field.";
