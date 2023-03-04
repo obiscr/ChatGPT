@@ -9,6 +9,11 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.obiscr.chatgpt.MyToolWindowFactory.*;
+
 /**
  * @author Wuzi
  * Supports storing the application settings in a persistent way.
@@ -40,6 +45,11 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
   public String expireTime = "";
   public String imageUrl = "https://cdn.auth0.com/avatars/me.png";
   public String apiKey = "";
+  public Map<Integer,String> contentOrder = new HashMap<>(){{
+    put(1, CHATGPT_CONTENT_NAME);
+    put(2, GPT35_TRUBO_CONTENT_NAME);
+    put(3, ONLINE_CHATGPT_CONTENT_NAME);
+  }};
   public static OpenAISettingsState getInstance() {
     return ApplicationManager.getApplication().getService(OpenAISettingsState.class);
   }
