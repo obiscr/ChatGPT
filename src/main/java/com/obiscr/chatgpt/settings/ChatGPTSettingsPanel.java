@@ -32,10 +32,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     private JPanel officialOptions;
     private JPanel customizeOptions;
     private JPanel urlTitledBorderBox;
-    private JPanel connectionTitledBorderBox;
     private JBTextField emailField;
     private JBTextField passwordField;
-    private JPanel proxyTitledBorderBox;
     private JEditorPane accessTokenField;
     private JTextField expireTimeField;
     private JButton loginButton;
@@ -181,13 +179,5 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
         urlTitledBorderBox = new JPanel(new BorderLayout());
         TitledSeparator tsUrl = new TitledSeparator(ChatGPTBundle.message("ui.setting.url.title"));
         urlTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
-
-        connectionTitledBorderBox = new JPanel(new BorderLayout());
-        TitledSeparator tsConnection = new TitledSeparator(ChatGPTBundle.message("ui.setting.connection.title"));
-        connectionTitledBorderBox.add(tsConnection,BorderLayout.CENTER);
-
-        proxyTitledBorderBox = new JPanel(new BorderLayout());
-        TitledSeparator tsProxy = new TitledSeparator("Proxy Settings");
-        proxyTitledBorderBox.add(tsProxy,BorderLayout.CENTER);
     }
 }

@@ -2,7 +2,9 @@
 package com.obiscr.chatgpt.settings;
 
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.Configurable;
+import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.components.JBRadioButton;
@@ -16,6 +18,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.obiscr.chatgpt.MyToolWindowFactory.*;
 
 /**
  * @author Wuzi
@@ -34,8 +41,15 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JBRadioButton proxySocksChoice;
     private JTextField hostnameField;
     private JPanel proxyOptions;
-
-
+    private JPanel contentTitledBorderBox;
+    private JComboBox<String> firstCombobox;
+    private JComboBox<String> secondCombobox;
+    private JComboBox<String> thirdCombobox;
+    private final String[] comboboxItemsString = {
+            CHATGPT_CONTENT_NAME,
+            GPT35_TRUBO_CONTENT_NAME,
+            ONLINE_CHATGPT_CONTENT_NAME};
+    private boolean needRestart = false;
     public OpenAISettingsPanel() {
         init();
     }
@@ -56,6 +70,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         readTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.read_timeout.empty_text"));
         connectionTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.connection_timeout.empty_text"));
+
+        firstCombobox.setModel(new DefaultComboBoxModel<>(comboboxItemsString));
+        secondCombobox.setModel(new DefaultComboBoxModel<>(comboboxItemsString));
+        thirdCombobox.setModel(new DefaultComboBoxModel<>(comboboxItemsString));
     }
 
     private void enableProxyOptions(boolean enabled) {
@@ -73,6 +91,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         setProxyChoice(state.proxyType);
         hostnameField.setText(state.proxyHostname);
         portField.setText(state.proxyPort);
+
+        firstCombobox.setSelectedItem(state.contentOrder.get(1));
+        secondCombobox.setSelectedItem(state.contentOrder.get(2));
+        thirdCombobox.setSelectedItem(state.contentOrder.get(3));
     }
 
     @Override
@@ -84,13 +106,21 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     public boolean isModified() {
         OpenAISettingsState state = OpenAISettingsState.getInstance();
 
+        // If you change the order, you need to restart the IDE to take effect
+        needRestart = !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem())||
+                !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem())||
+                !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem());
+
         return
                 !StringUtil.equals(state.readTimeout, readTimeoutField.getText()) ||
                 !StringUtil.equals(state.connectionTimeout, connectionTimeoutField.getText()) ||
                 !state.proxyType.equals(getProxyChoice()) ||
                 !state.enableProxy == enableProxyCheckBox.isSelected() ||
                 !StringUtil.equals(state.proxyHostname, hostnameField.getText()) ||
-                !StringUtil.equals(state.proxyPort, portField.getText());
+                !StringUtil.equals(state.proxyPort, portField.getText()) ||
+                !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem())||
+                !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem())||
+                !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem());
     }
 
     @Override
@@ -111,6 +141,39 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         boolean portIsNumber = com.obiscr.chatgpt.util.
                 StringUtil.isNumber(portField.getText());
         state.proxyPort = !portIsNumber ? "0" : portField.getText();
+
+        String firstSelected = (String) firstCombobox.getSelectedItem();
+        String secondSelected = (String) secondCombobox.getSelectedItem();
+        String thirdSelected = (String) thirdCombobox.getSelectedItem();
+
+        // Determine whether each location has a different Content
+        List<String> strings = new ArrayList<>(3);
+        strings.add(firstSelected);
+        strings.add(secondSelected);
+        strings.add(thirdSelected);
+        List<String> collect = strings.stream().distinct().collect(Collectors.toList());
+        if (collect.size() != strings.size()) {
+            MessageDialogBuilder.yesNo("Duplicate Content exists!", "The content of " +
+                            "each position must be unique, please re-adjust the order")
+                    .yesText("Ok")
+                    .noText("Close").ask(myMainPanel);
+            return;
+        }
+
+        state.contentOrder.put(1, firstSelected);
+        state.contentOrder.put(2, secondSelected);
+        state.contentOrder.put(3, thirdSelected);
+
+        if (needRestart) {
+            boolean yes = MessageDialogBuilder.yesNo("Content order changed!", "Changing " +
+                            "the content order requires restarting the IDE to take effect. Do you " +
+                            "want to restart to apply the settings?")
+                    .yesText("Restart")
+                    .noText("Not Now").ask(myMainPanel);
+            if (yes) {
+                ApplicationManager.getApplication().restart();
+            }
+        }
     }
 
     @Override
@@ -154,10 +217,6 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     }
 
     private void createUIComponents() {
-        urlTitledBorderBox = new JPanel(new BorderLayout());
-        TitledSeparator tsUrl = new TitledSeparator(ChatGPTBundle.message("ui.setting.url.title"));
-        urlTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
-
         connectionTitledBorderBox = new JPanel(new BorderLayout());
         TitledSeparator tsConnection = new TitledSeparator(ChatGPTBundle.message("ui.setting.connection.title"));
         connectionTitledBorderBox.add(tsConnection,BorderLayout.CENTER);
@@ -165,5 +224,9 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         proxyTitledBorderBox = new JPanel(new BorderLayout());
         TitledSeparator tsProxy = new TitledSeparator("Proxy Settings");
         proxyTitledBorderBox.add(tsProxy,BorderLayout.CENTER);
+
+        contentTitledBorderBox = new JPanel(new BorderLayout());
+        TitledSeparator tsUrl = new TitledSeparator("Tool Window Settings");
+        contentTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
     }
 }
