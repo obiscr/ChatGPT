@@ -8,9 +8,14 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.ui.content.*;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
+import com.obiscr.chatgpt.ui.BrowserContent;
 import com.obiscr.chatgpt.ui.action.*;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +28,8 @@ public class MyToolWindowFactory implements ToolWindowFactory {
 
     public static final String CHATGPT_CONTENT_NAME = "ChatGPT";
     public static final String GPT35_TRUBO_CONTENT_NAME = "GPT-3.5-Turbo";
+
+    public static final String ONLINE_CHATGPT = "Online ChatGPT";
 
     /**
      * Create the tool window content.
@@ -44,6 +51,11 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         gpt35Turbo.setCloseable(false);
         toolWindow.getContentManager().addContent(gpt35Turbo);
 
+        BrowserToolWindow browserToolWindow = new BrowserToolWindow();
+        Content browser = contentFactory.createContent(browserToolWindow.getContent(),
+                ONLINE_CHATGPT, false);
+        browser.setCloseable(false);
+        toolWindow.getContentManager().addContent(browser);
         toolWindow.addContentManagerListener(new ContentManagerListener() {
             @Override
             public void selectionChanged(@NotNull ContentManagerEvent event) {
@@ -52,6 +64,8 @@ public class MyToolWindowFactory implements ToolWindowFactory {
                     project.putUserData(ACTIVE_CONTENT,chatGPTToolWindow.getPanel());
                 } else if (GPT35_TRUBO_CONTENT_NAME.equals(displayName)) {
                     project.putUserData(ACTIVE_CONTENT,gpt35TurboToolWindow.getPanel());
+                } else if (ONLINE_CHATGPT.equals(displayName)) {
+                    project.putUserData(ACTIVE_CONTENT,browserToolWindow.getPanel());
                 }
             }
         });
