@@ -119,7 +119,6 @@ public class MainPanel {
     }
 
     public void setRequestHolder(Object eventSource) {
-        System.out.println(eventSource);
         this.requestHolder = eventSource;
     }
 
