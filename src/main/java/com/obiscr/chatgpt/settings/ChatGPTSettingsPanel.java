@@ -1,7 +1,6 @@
 // Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.obiscr.chatgpt.settings;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.ui.MessageDialogBuilder;
@@ -33,10 +32,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     private JPanel officialOptions;
     private JPanel customizeOptions;
     private JPanel urlTitledBorderBox;
-    private JPanel connectionTitledBorderBox;
     private JBTextField emailField;
     private JBTextField passwordField;
-    private JPanel proxyTitledBorderBox;
     private JEditorPane accessTokenField;
     private JTextField expireTimeField;
     private JButton loginButton;
@@ -182,13 +179,5 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
         urlTitledBorderBox = new JPanel(new BorderLayout());
         TitledSeparator tsUrl = new TitledSeparator(ChatGPTBundle.message("ui.setting.url.title"));
         urlTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
-
-        connectionTitledBorderBox = new JPanel(new BorderLayout());
-        TitledSeparator tsConnection = new TitledSeparator(ChatGPTBundle.message("ui.setting.connection.title"));
-        connectionTitledBorderBox.add(tsConnection,BorderLayout.CENTER);
-
-        proxyTitledBorderBox = new JPanel(new BorderLayout());
-        TitledSeparator tsProxy = new TitledSeparator("Proxy Settings");
-        proxyTitledBorderBox.add(tsProxy,BorderLayout.CENTER);
     }
 }

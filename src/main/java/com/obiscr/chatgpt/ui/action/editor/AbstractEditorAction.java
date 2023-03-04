@@ -32,10 +32,11 @@ public abstract class AbstractEditorAction extends AnAction {
         Editor editor = e.getData(CommonDataKeys.EDITOR);
         assert editor != null;
         String selectedText = editor.getSelectionModel().getSelectedText();
+
         // Browser text does not require code blocks
-        String browserText = selectedText;
-        selectedText = "<pre><code>" + selectedText + "</code></pre>";
-        text = ChatGPTBundle.message(key, selectedText);
+        String browserText = ChatGPTBundle.message(key, selectedText);
+        String apiText = ChatGPTBundle.message(key, "<pre><code>" + selectedText + "</code></pre>");
+
         SendAction sendAction = e.getProject().getService(SendAction.class);
         Object mainPanel = e.getProject().getUserData(ACTIVE_CONTENT);
 
@@ -46,7 +47,7 @@ public abstract class AbstractEditorAction extends AnAction {
             return;
         }
 
-        String formattedText = text.replace("\n", "<br />");
+        String formattedText = apiText.replace("\n", "<br />");
         sendAction.doActionPerformed((MainPanel) mainPanel, formattedText);
     }
 
