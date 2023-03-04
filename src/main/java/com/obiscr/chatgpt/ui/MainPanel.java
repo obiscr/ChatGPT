@@ -49,7 +49,6 @@ public class MainPanel {
         searchTextArea = new SearchTextArea(new JBTextArea(),true);
         searchTextArea.getTextArea().addKeyListener(listener);
         searchTextArea.setPreferredSize(new Dimension(searchTextArea.getWidth(),50));
-
         button = new JButton(ChatGPTBundle.message("ui.toolwindow.send"), IconLoader.getIcon("/icons/send.svg",MainPanel.class));
         button.addActionListener(listener);
         button.setUI(new DarculaButtonUI());
