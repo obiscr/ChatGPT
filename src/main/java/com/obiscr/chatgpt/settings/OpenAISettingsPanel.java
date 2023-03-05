@@ -1,6 +1,7 @@
 // Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.obiscr.chatgpt.settings;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.Configurable;
@@ -9,8 +10,13 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
+import com.intellij.ui.components.labels.LinkLabel;
+import com.intellij.ui.dsl.builder.components.DslLabel;
+import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
+import com.obiscr.chatgpt.icons.ChatGPTIcons;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
+import com.obiscr.chatgpt.ui.SupportDialog;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,6 +24,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +53,12 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JComboBox<String> firstCombobox;
     private JComboBox<String> secondCombobox;
     private JComboBox<String> thirdCombobox;
+    private JCheckBox enableLineWarpCheckBox;
+    private JLabel readTimeoutHelpLabel;
+    private JLabel connectionTimeoutHelpLabel;
+    private JLabel contentOrderHelpLabel;
+    private JLabel supportDonate;
+    private JPanel supportPanel;
     private final String[] comboboxItemsString = {
             CHATGPT_CONTENT_NAME,
             GPT35_TRUBO_CONTENT_NAME,
@@ -65,6 +79,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 enableProxyOptions(false);
             }
         };
+
         enableProxyCheckBox.addItemListener(proxyTypeChangedListener);
         enableProxyOptions(false);
 
@@ -95,6 +110,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         firstCombobox.setSelectedItem(state.contentOrder.get(1));
         secondCombobox.setSelectedItem(state.contentOrder.get(2));
         thirdCombobox.setSelectedItem(state.contentOrder.get(3));
+
+        enableLineWarpCheckBox.setSelected(state.enableLineWarp);
+
+        initHelp();
     }
 
     @Override
@@ -109,7 +128,8 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         // If you change the order, you need to restart the IDE to take effect
         needRestart = !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem())||
                 !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem())||
-                !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem());
+                !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem()) ||
+                !state.enableLineWarp == enableLineWarpCheckBox.isSelected();
 
         return
                 !StringUtil.equals(state.readTimeout, readTimeoutField.getText()) ||
@@ -118,9 +138,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 !state.enableProxy == enableProxyCheckBox.isSelected() ||
                 !StringUtil.equals(state.proxyHostname, hostnameField.getText()) ||
                 !StringUtil.equals(state.proxyPort, portField.getText()) ||
-                !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem())||
-                !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem())||
-                !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem());
+                !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem()) ||
+                !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem()) ||
+                !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem()) ||
+                !state.enableLineWarp == enableLineWarpCheckBox.isSelected();
     }
 
     @Override
@@ -174,6 +195,8 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 ApplicationManager.getApplication().restart();
             }
         }
+
+        state.enableLineWarp = enableLineWarpCheckBox.isSelected();
     }
 
     @Override
@@ -228,5 +251,26 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         contentTitledBorderBox = new JPanel(new BorderLayout());
         TitledSeparator tsUrl = new TitledSeparator("Tool Window Settings");
         contentTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
+
+        supportPanel = new JPanel(new BorderLayout());
+        supportDonate = new LinkLabel<>("Support / Donate", ChatGPTIcons.SUPPORT);
+        supportDonate.setBorder(JBUI.Borders.emptyTop(20));
+        supportDonate.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new SupportDialog(null).show();
+            }
+        });
+    }
+
+    public void initHelp() {
+        readTimeoutHelpLabel.setFont(JBUI.Fonts.smallFont());
+        readTimeoutHelpLabel.setForeground(UIUtil.getContextHelpForeground());
+
+        connectionTimeoutHelpLabel.setFont(JBUI.Fonts.smallFont());
+        connectionTimeoutHelpLabel.setForeground(UIUtil.getContextHelpForeground());
+
+        contentOrderHelpLabel.setFont(JBUI.Fonts.smallFont());
+        contentOrderHelpLabel.setForeground(UIUtil.getContextHelpForeground());
     }
 }
