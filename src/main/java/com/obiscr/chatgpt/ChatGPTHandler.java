@@ -71,7 +71,7 @@ public class ChatGPTHandler extends AbstractHandler {
             public void onClosed(@NotNull EventSource eventSource) {
                 LOG.info("ChatGPT: conversation close. Url = {}",eventSource.request().url());
                 if (!handler) {
-                    component.setContent("Too many requests in 1 hour. Try again later.");
+                    component.setContent("Connection to remote server failed. There are usually several reasons for this:<br />1. Request too frequently, please try again later.<br />2. It may be necessary to set up a proxy to request.");
                 }
                 mainPanel.aroundRequest(false);
                 component.scrollToBottom();
