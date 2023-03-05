@@ -4,6 +4,7 @@ package com.obiscr.chatgpt.settings;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ex.ApplicationManagerEx;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.openapi.util.text.StringUtil;
@@ -176,7 +177,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
             MessageDialogBuilder.yesNo("Duplicate Content exists!", "The content of " +
                             "each position must be unique, please re-adjust the order")
                     .yesText("Ok")
-                    .noText("Close").ask(myMainPanel);
+                    .noText("Close").show();
             return;
         }
 
@@ -184,18 +185,18 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         state.contentOrder.put(2, secondSelected);
         state.contentOrder.put(3, thirdSelected);
 
+        state.enableLineWarp = enableLineWarpCheckBox.isSelected();
+
         if (needRestart) {
             boolean yes = MessageDialogBuilder.yesNo("Content order changed!", "Changing " +
                             "the content order requires restarting the IDE to take effect. Do you " +
                             "want to restart to apply the settings?")
                     .yesText("Restart")
-                    .noText("Not Now").ask(myMainPanel);
+                    .noText("Not Now").isYes();
             if (yes) {
-                ApplicationManager.getApplication().restart();
+                ApplicationManagerEx.getApplicationEx().restart(true);
             }
         }
-
-        state.enableLineWarp = enableLineWarpCheckBox.isSelected();
     }
 
     @Override

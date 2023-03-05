@@ -85,9 +85,9 @@ public class SupportDialog extends DialogWrapper {
     }
 
     private ActionLink createActionLink(String text, String url) {
-        ActionLink actionLink = new ActionLink(text);
-        actionLink.addActionListener(e -> BrowserUtil.browse(url));
-        return actionLink;
+        return new ActionLink(text, e -> {
+            BrowserUtil.browse(url);
+        });
     }
 
     private JPanel createSupportPanel() {
