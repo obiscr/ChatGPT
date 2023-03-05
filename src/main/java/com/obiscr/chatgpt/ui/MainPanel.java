@@ -6,15 +6,18 @@ import com.intellij.ide.ui.laf.darcula.ui.DarculaButtonUI;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.util.Key;
+import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.OnePixelSplitter;
 import com.intellij.ui.components.JBTextArea;
 import com.obiscr.chatgpt.MyToolWindowFactory;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
+import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.ui.listener.SendListener;
 import okhttp3.sse.EventSource;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
 import java.awt.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,12 +46,13 @@ public class MainPanel {
         myProject = project;
         SendListener listener = new SendListener(this);
 
-        splitter = new OnePixelSplitter(true,.9f);
+        splitter = new OnePixelSplitter(true,.98f);
         splitter.setDividerWidth(2);
 
         searchTextArea = new SearchTextArea(new JBTextArea(),true);
         searchTextArea.getTextArea().addKeyListener(listener);
-        searchTextArea.setPreferredSize(new Dimension(searchTextArea.getWidth(),50));
+        searchTextArea.setMinimumSize(new Dimension(searchTextArea.getWidth(), 500));
+        searchTextArea.setMultilineEnabled(OpenAISettingsState.getInstance().enableLineWarp);
         button = new JButton(ChatGPTBundle.message("ui.toolwindow.send"), IconLoader.getIcon("/icons/send.svg",MainPanel.class));
         button.addActionListener(listener);
         button.setUI(new DarculaButtonUI());

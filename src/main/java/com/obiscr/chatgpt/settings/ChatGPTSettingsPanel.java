@@ -7,6 +7,7 @@ import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.TitledSeparator;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.util.ui.JBUI;
@@ -39,7 +40,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     private JButton loginButton;
     private JPanel officialIntroducePanel;
     private JPanel customizeIntroducePanel;
-
+    private JBLabel accountHelpLabel;
+    private JBLabel customizeHelpLabel;
 
 
     public ChatGPTSettingsPanel() {
@@ -54,6 +56,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
                 enableUrlOptions(e.getSource());
             }
         };
+
         officialChoice.addItemListener(connectionTypeChangedListener);
         customizeChoice.addItemListener(connectionTypeChangedListener);
         enableUrlOptions(customizeChoice);
@@ -91,6 +94,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
             myMainPanel.updateUI();
             apply();
         });
+
+        initHelp();
     }
 
 
@@ -179,5 +184,13 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
         urlTitledBorderBox = new JPanel(new BorderLayout());
         TitledSeparator tsUrl = new TitledSeparator(ChatGPTBundle.message("ui.setting.url.title"));
         urlTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
+    }
+
+    private void initHelp() {
+        accountHelpLabel.setFont(JBUI.Fonts.smallFont());
+        accountHelpLabel.setForeground(UIUtil.getContextHelpForeground());
+
+        customizeHelpLabel.setFont(JBUI.Fonts.smallFont());
+        customizeHelpLabel.setForeground(UIUtil.getContextHelpForeground());
     }
 }
