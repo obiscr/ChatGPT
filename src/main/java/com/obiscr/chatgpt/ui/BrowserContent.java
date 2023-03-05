@@ -1,8 +1,12 @@
 package com.obiscr.chatgpt.ui;
 
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.actionSystem.Separator;
+import com.intellij.openapi.actionSystem.impl.ActionToolbarImpl;
 import com.intellij.ui.jcef.JBCefApp;
 import com.intellij.ui.jcef.JBCefBrowser;
 import com.intellij.util.ui.JBUI;
+import com.obiscr.chatgpt.ui.action.browser.*;
 
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -13,7 +17,7 @@ import javax.swing.*;
  */
 public class BrowserContent {
 
-    private final String url = "https://chat.openai.com/chat";
+    public static final String url = "https://chat.openai.com/chat";
     private final JPanel contentPanel;
     private JBCefBrowser browser;
     public BrowserContent() {
@@ -32,6 +36,17 @@ public class BrowserContent {
         }
         browser = new JBCefBrowser(url);
         AtomicReference<JComponent> component = new AtomicReference<>(browser.getComponent());
+        DefaultActionGroup toolbarActions = new DefaultActionGroup();
+        toolbarActions.add(new RefreshPage(browser));
+        toolbarActions.add(new Separator());
+        toolbarActions.add(new ClearCookies(browser,contentPanel));
+        toolbarActions.add(new Separator());
+        toolbarActions.add(new ZoomLevelAdd(browser));
+        toolbarActions.add(new ZoomLevelSub(browser));
+        toolbarActions.add(new ZoomLevelDefault(browser));
+        ActionToolbarImpl browserToolbar = new ActionToolbarImpl("Browser Toolbar", toolbarActions, true);
+        browserToolbar.setTargetComponent(null);
+        contentPanel.add(browserToolbar,BorderLayout.NORTH);
         contentPanel.add(component.get(),BorderLayout.CENTER);
     }
 
