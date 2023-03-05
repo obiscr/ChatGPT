@@ -2,6 +2,14 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.2-202]
+### Added
++ Rollback the Online ChatGPT.
++ Support custom display order of Content in tool windows
+
+### Changed
++ UI description information optimization
+
 ## [2.1.1-202]
 ### Changed
 + Fix some issues
