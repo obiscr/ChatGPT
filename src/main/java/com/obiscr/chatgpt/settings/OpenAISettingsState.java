@@ -50,6 +50,9 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
     put(2, GPT35_TRUBO_CONTENT_NAME);
     put(3, ONLINE_CHATGPT_CONTENT_NAME);
   }};
+
+  public Boolean enableLineWarp = true;
+
   public static OpenAISettingsState getInstance() {
     return ApplicationManager.getApplication().getService(OpenAISettingsState.class);
   }
