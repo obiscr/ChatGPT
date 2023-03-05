@@ -42,6 +42,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     private JPanel customizeIntroducePanel;
     private JBLabel accountHelpLabel;
     private JBLabel customizeHelpLabel;
+    private JLabel accessTokenHelpLabel;
 
 
     public ChatGPTSettingsPanel() {
@@ -192,5 +193,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
 
         customizeHelpLabel.setFont(JBUI.Fonts.smallFont());
         customizeHelpLabel.setForeground(UIUtil.getContextHelpForeground());
+
+        accessTokenHelpLabel.setFont(JBUI.Fonts.smallFont());
+        accessTokenHelpLabel.setForeground(UIUtil.getContextHelpForeground());
     }
 }
