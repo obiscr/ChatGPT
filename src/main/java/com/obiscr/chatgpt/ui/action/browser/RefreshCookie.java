@@ -26,7 +26,7 @@ public class RefreshCookie extends AnAction {
         String accessToken = OpenAISettingsState.getInstance().accessToken;
         if (StringUtil.isNotEmpty(accessToken)) {
             JBCefCookie jbCefCookie = new JBCefCookie("__Secure-next-auth.session-token", accessToken , "chat.openai.com", "/", true, true);
-            browser.getJBCefCookieManager().setCookie(BrowserContent.url,jbCefCookie);
+            browser.getJBCefCookieManager().setCookie(BrowserContent.url,jbCefCookie,false);
         }
     }
 }
