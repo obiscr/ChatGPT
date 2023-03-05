@@ -1,9 +1,8 @@
 // Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.obiscr.chatgpt.settings;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.Disposable;
-import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ex.ApplicationManagerEx;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.openapi.util.text.StringUtil;
@@ -11,7 +10,6 @@ import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.components.labels.LinkLabel;
-import com.intellij.ui.dsl.builder.components.DslLabel;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
 import com.obiscr.chatgpt.icons.ChatGPTIcons;
@@ -185,6 +183,8 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         state.contentOrder.put(2, secondSelected);
         state.contentOrder.put(3, thirdSelected);
 
+        state.enableLineWarp = enableLineWarpCheckBox.isSelected();
+
         if (needRestart) {
             boolean yes = MessageDialogBuilder.yesNo("Content order changed!", "Changing " +
                             "the content order requires restarting the IDE to take effect. Do you " +
@@ -192,11 +192,9 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                     .yesText("Restart")
                     .noText("Not Now").ask(myMainPanel);
             if (yes) {
-                ApplicationManager.getApplication().restart();
+                ApplicationManagerEx.getApplicationEx().restart(true);
             }
         }
-
-        state.enableLineWarp = enableLineWarpCheckBox.isSelected();
     }
 
     @Override
