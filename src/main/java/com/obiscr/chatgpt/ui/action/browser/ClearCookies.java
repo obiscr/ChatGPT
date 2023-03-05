@@ -30,7 +30,7 @@ public class ClearCookies extends AnAction {
                         "Once the cookies are cleared, you will need to " +
                                 "login again, are you sure to continue?")
                 .yesText("Yes")
-                .noText("No").ask(contentPanel);
+                .noText("No").isYes();
         if (yes) {
             browser.getJBCefCookieManager().getCefCookieManager().deleteCookies(BrowserContent.url,"");
         }

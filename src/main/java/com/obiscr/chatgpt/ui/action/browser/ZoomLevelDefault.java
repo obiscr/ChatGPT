@@ -16,11 +16,11 @@ public class ZoomLevelDefault extends AnAction {
     public ZoomLevelDefault(JBCefBrowser browser) {
         super(() -> "Restore Default Zoom Level", AllIcons.Actions.SetDefault);
         this.browser = browser;
-        this.defaultZoomLevel = browser.getZoomLevel();
+        this.defaultZoomLevel = browser.getCefBrowser().getZoomLevel();
     }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        browser.setZoomLevel(defaultZoomLevel);
+        browser.getCefBrowser().setZoomLevel(defaultZoomLevel);
     }
 }

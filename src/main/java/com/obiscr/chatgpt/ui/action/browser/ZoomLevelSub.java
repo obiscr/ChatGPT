@@ -18,6 +18,6 @@ public class ZoomLevelSub extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        browser.setZoomLevel(browser.getZoomLevel() - 0.1D);
+        browser.getCefBrowser().setZoomLevel(browser.getCefBrowser().getZoomLevel() - 0.1D);
     }
 }
