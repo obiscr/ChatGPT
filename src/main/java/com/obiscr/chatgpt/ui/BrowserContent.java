@@ -57,7 +57,9 @@ public class BrowserContent {
     public void execute(String question) {
         if (question.contains("\"") && question.contains("'")) {
             question = "`" + question + "`";
-        } else {
+        } else if (question.contains("'")) {
+            question = "\"" + question + "\"";
+        } else if (question.contains("\"")) {
             question = "'" + question + "'";
         }
 
