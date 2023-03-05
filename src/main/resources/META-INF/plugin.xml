@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>ChatGPT</id>
   <name>ChatGPT</name>
-  <version>2.1.1-203.221</version>
+  <version>2.1.2-203.221</version>
   <vendor email="wuzi@obiscr.com" url="https://obiscr.com">obiscr</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,16 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>2.1.2-203.221</p>
+      <b>Added</b>
+      <ul>
+        <li>Rollback the Online ChatGPT</li>
+        <li>Support custom display order of Content in tool windows</li>
+      </ul>
+      <b>Changed</b>
+      <ul>
+        <li>UI description information optimization</li>
+      </ul><br>
       <p>2.1.1-203.221</p>
       <ul>
         <li>Fix some issues</li>
