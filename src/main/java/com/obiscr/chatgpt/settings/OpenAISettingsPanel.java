@@ -4,6 +4,7 @@ package com.obiscr.chatgpt.settings;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ex.ApplicationManagerEx;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.openapi.util.text.StringUtil;
@@ -184,6 +185,8 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         state.contentOrder.put(2, secondSelected);
         state.contentOrder.put(3, thirdSelected);
 
+        state.enableLineWarp = enableLineWarpCheckBox.isSelected();
+
         if (needRestart) {
             boolean yes = MessageDialogBuilder.yesNo("Content order changed!", "Changing " +
                             "the content order requires restarting the IDE to take effect. Do you " +
@@ -191,11 +194,9 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                     .yesText("Restart")
                     .noText("Not Now").ask(myMainPanel);
             if (yes) {
-                ApplicationManager.getApplication().restart();
+                ApplicationManagerEx.getApplicationEx().restart(true);
             }
         }
-
-        state.enableLineWarp = enableLineWarpCheckBox.isSelected();
     }
 
     @Override
