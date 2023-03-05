@@ -1,9 +1,8 @@
 // Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.obiscr.chatgpt.settings;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.Disposable;
-import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ex.ApplicationManagerEx;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.openapi.util.text.StringUtil;
@@ -51,7 +50,6 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JPanel contentTitledBorderBox;
     private JComboBox<String> firstCombobox;
     private JComboBox<String> secondCombobox;
-    private JComboBox<String> thirdCombobox;
     private JCheckBox enableLineWarpCheckBox;
     private JLabel readTimeoutHelpLabel;
     private JLabel connectionTimeoutHelpLabel;
@@ -60,8 +58,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JPanel supportPanel;
     private final String[] comboboxItemsString = {
             CHATGPT_CONTENT_NAME,
-            GPT35_TRUBO_CONTENT_NAME,
-            ONLINE_CHATGPT_CONTENT_NAME};
+            GPT35_TRUBO_CONTENT_NAME};
     private boolean needRestart = false;
     public OpenAISettingsPanel() {
         init();
@@ -87,7 +84,6 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         firstCombobox.setModel(new DefaultComboBoxModel<>(comboboxItemsString));
         secondCombobox.setModel(new DefaultComboBoxModel<>(comboboxItemsString));
-        thirdCombobox.setModel(new DefaultComboBoxModel<>(comboboxItemsString));
     }
 
     private void enableProxyOptions(boolean enabled) {
@@ -108,7 +104,6 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         firstCombobox.setSelectedItem(state.contentOrder.get(1));
         secondCombobox.setSelectedItem(state.contentOrder.get(2));
-        thirdCombobox.setSelectedItem(state.contentOrder.get(3));
 
         enableLineWarpCheckBox.setSelected(state.enableLineWarp);
 
@@ -127,7 +122,6 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         // If you change the order, you need to restart the IDE to take effect
         needRestart = !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem())||
                 !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem())||
-                !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem()) ||
                 !state.enableLineWarp == enableLineWarpCheckBox.isSelected();
 
         return
@@ -139,7 +133,6 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 !StringUtil.equals(state.proxyPort, portField.getText()) ||
                 !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem()) ||
                 !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem()) ||
-                !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem()) ||
                 !state.enableLineWarp == enableLineWarpCheckBox.isSelected();
     }
 
@@ -164,38 +157,35 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         String firstSelected = (String) firstCombobox.getSelectedItem();
         String secondSelected = (String) secondCombobox.getSelectedItem();
-        String thirdSelected = (String) thirdCombobox.getSelectedItem();
 
         // Determine whether each location has a different Content
         List<String> strings = new ArrayList<>(3);
         strings.add(firstSelected);
         strings.add(secondSelected);
-        strings.add(thirdSelected);
         List<String> collect = strings.stream().distinct().collect(Collectors.toList());
         if (collect.size() != strings.size()) {
             MessageDialogBuilder.yesNo("Duplicate Content exists!", "The content of " +
                             "each position must be unique, please re-adjust the order")
                     .yesText("Ok")
-                    .noText("Close").ask(myMainPanel);
+                    .noText("Close").show();
             return;
         }
 
         state.contentOrder.put(1, firstSelected);
         state.contentOrder.put(2, secondSelected);
-        state.contentOrder.put(3, thirdSelected);
+
+        state.enableLineWarp = enableLineWarpCheckBox.isSelected();
 
         if (needRestart) {
             boolean yes = MessageDialogBuilder.yesNo("Content order changed!", "Changing " +
                             "the content order requires restarting the IDE to take effect. Do you " +
                             "want to restart to apply the settings?")
                     .yesText("Restart")
-                    .noText("Not Now").ask(myMainPanel);
+                    .noText("Not Now").isYes();
             if (yes) {
-                ApplicationManager.getApplication().restart();
+                ApplicationManagerEx.getApplicationEx().restart(true);
             }
         }
-
-        state.enableLineWarp = enableLineWarpCheckBox.isSelected();
     }
 
     @Override

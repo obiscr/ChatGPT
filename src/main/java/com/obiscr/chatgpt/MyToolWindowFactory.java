@@ -1,14 +1,11 @@
 package com.obiscr.chatgpt;
 
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.*;
-import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
-import com.obiscr.chatgpt.ui.action.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -22,7 +19,6 @@ public class MyToolWindowFactory implements ToolWindowFactory {
 
     public static final String CHATGPT_CONTENT_NAME = "ChatGPT";
     public static final String GPT35_TRUBO_CONTENT_NAME = "GPT-3.5-Turbo";
-    public static final String ONLINE_CHATGPT_CONTENT_NAME = "Online ChatGPT";
 
     /**
      * Create the tool window content.
@@ -41,17 +37,12 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         Content gpt35Turbo = contentFactory.createContent(gpt35TurboToolWindow.getContent(), GPT35_TRUBO_CONTENT_NAME, false);
         gpt35Turbo.setCloseable(false);
 
-        BrowserToolWindow browserToolWindow = new BrowserToolWindow();
-        Content browser = contentFactory.createContent(browserToolWindow.getContent(),
-                ONLINE_CHATGPT_CONTENT_NAME, false);
-        browser.setCloseable(false);
-
         OpenAISettingsState settingsState = OpenAISettingsState.getInstance();
         Map<Integer, String> contentSort = settingsState.contentOrder;
 
-        for (int i = 0 ; i <= 2 ; i++) {
+        for (int i = 0 ; i <= 1 ; i++) {
             toolWindow.getContentManager().addContent(getContent(contentSort.get(i + 1),chatGpt,
-                    gpt35Turbo,browser), i);
+                    gpt35Turbo), i);
         }
 
 
@@ -63,9 +54,6 @@ public class MyToolWindowFactory implements ToolWindowFactory {
                 break;
             case GPT35_TRUBO_CONTENT_NAME:
                 project.putUserData(ACTIVE_CONTENT, gpt35TurboToolWindow.getPanel());
-                break;
-            case ONLINE_CHATGPT_CONTENT_NAME:
-                project.putUserData(ACTIVE_CONTENT, browserToolWindow.getPanel());
                 break;
             default:
                 throw new RuntimeException("Error content name, content name must be one of ChatGPT, GPT-3.5-Turbo, Online ChatGPT");
@@ -81,8 +69,6 @@ public class MyToolWindowFactory implements ToolWindowFactory {
                     project.putUserData(ACTIVE_CONTENT,chatGPTToolWindow.getPanel());
                 } else if (GPT35_TRUBO_CONTENT_NAME.equals(displayName)) {
                     project.putUserData(ACTIVE_CONTENT,gpt35TurboToolWindow.getPanel());
-                } else if (ONLINE_CHATGPT_CONTENT_NAME.equals(displayName)) {
-                    project.putUserData(ACTIVE_CONTENT,browserToolWindow.getPanel());
                 }
             }
         });
@@ -95,15 +81,11 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         //toolWindow.setTitleActions(actionList);
     }
 
-    private Content getContent(String key, Content chatgpt ,
-                                 Content gpt35Turbo,
-                                 Content browser) {
+    private Content getContent(String key, Content chatgpt, Content gpt35Turbo) {
         if (CHATGPT_CONTENT_NAME.equals(key)) {
             return chatgpt;
         } else if (GPT35_TRUBO_CONTENT_NAME.equals(key)) {
             return gpt35Turbo;
-        } else if (ONLINE_CHATGPT_CONTENT_NAME.equals(key)) {
-            return browser;
         }
         return null;
     }

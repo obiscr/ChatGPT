@@ -2,10 +2,12 @@ package com.obiscr.chatgpt.ui;
 
 import com.intellij.CommonBundle;
 import com.intellij.ide.BrowserUtil;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.ui.components.ActionLink;
 import com.intellij.ui.components.JBLabel;
+import com.intellij.ui.components.labels.ActionLink;
 import com.intellij.ui.components.panels.NonOpaquePanel;
 import com.intellij.ui.components.panels.VerticalLayout;
 import com.intellij.ui.scale.JBUIScale;
@@ -85,9 +87,12 @@ public class SupportDialog extends DialogWrapper {
     }
 
     private ActionLink createActionLink(String text, String url) {
-        ActionLink actionLink = new ActionLink(text);
-        actionLink.addActionListener(e -> BrowserUtil.browse(url));
-        return actionLink;
+        return new ActionLink(text, new AnAction() {
+            @Override
+            public void actionPerformed(@NotNull AnActionEvent e) {
+                BrowserUtil.browse(url);
+            }
+        });
     }
 
     private JPanel createSupportPanel() {

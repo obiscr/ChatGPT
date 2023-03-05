@@ -6,7 +6,6 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.obiscr.chatgpt.core.SendAction;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
-import com.obiscr.chatgpt.ui.BrowserContent;
 import com.obiscr.chatgpt.ui.MainPanel;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,19 +31,10 @@ public abstract class AbstractEditorAction extends AnAction {
         assert editor != null;
         String selectedText = editor.getSelectionModel().getSelectedText();
 
-        // Browser text does not require code blocks
-        String browserText = ChatGPTBundle.message(key, selectedText);
         String apiText = ChatGPTBundle.message(key, "<pre><code>" + selectedText + "</code></pre>");
 
         SendAction sendAction = e.getProject().getService(SendAction.class);
         Object mainPanel = e.getProject().getUserData(ACTIVE_CONTENT);
-
-        // If the Online Chat GPT mode is currently selected, the selected
-        // code needs to be processed with Cef Browser
-        if (mainPanel instanceof BrowserContent) {
-            ((BrowserContent) mainPanel).execute(browserText);
-            return;
-        }
 
         String formattedText = apiText.replace("\n", "<br />");
         sendAction.doActionPerformed((MainPanel) mainPanel, formattedText);
