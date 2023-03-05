@@ -41,7 +41,13 @@ public class BrowserContent {
     }
 
     public void execute(String question) {
-        String fillQuestion = "document.getElementsByTagName(\"textarea\")[0].value = '" + question + "'";
+        if (question.contains("\"") && question.contains("'")) {
+            question = "`" + question + "`";
+        } else {
+            question = "'" + question + "'";
+        }
+
+        String fillQuestion = "document.getElementsByTagName(\"textarea\")[0].value = " + question ;
         String doClick = "document.getElementsByTagName(\"textarea\")[0].nextSibling.click()";
         // Fill the question
         String formattedQuestion = fillQuestion.replace("\n", "\\n");
