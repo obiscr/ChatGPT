@@ -11,7 +11,6 @@ import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.components.labels.LinkLabel;
-import com.intellij.ui.dsl.builder.components.DslLabel;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
 import com.obiscr.chatgpt.icons.ChatGPTIcons;
