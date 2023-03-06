@@ -49,6 +49,8 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JBRadioButton proxySocksChoice;
     private JTextField hostnameField;
     private JPanel proxyOptions;
+    private JCheckBox enableHeadPortraitCheckBox;
+    private JPanel publicSettingTitledBorderBox;
     private JPanel contentTitledBorderBox;
     private JComboBox<String> firstCombobox;
     private JComboBox<String> secondCombobox;
@@ -103,6 +105,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         connectionTimeoutField.setText(state.connectionTimeout);
 
         enableProxyCheckBox.setSelected(state.enableProxy);
+        enableHeadPortraitCheckBox.setSelected(state.enableHeadPortrait);
         setProxyChoice(state.proxyType);
         hostnameField.setText(state.proxyHostname);
         portField.setText(state.proxyPort);
@@ -136,6 +139,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 !StringUtil.equals(state.connectionTimeout, connectionTimeoutField.getText()) ||
                 !state.proxyType.equals(getProxyChoice()) ||
                 !state.enableProxy == enableProxyCheckBox.isSelected() ||
+                !state.enableHeadPortrait == enableHeadPortraitCheckBox.isSelected() ||
                 !StringUtil.equals(state.proxyHostname, hostnameField.getText()) ||
                 !StringUtil.equals(state.proxyPort, portField.getText()) ||
                 !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem()) ||
@@ -157,6 +161,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         state.proxyType = getProxyChoice();
         state.enableProxy = enableProxyCheckBox.isSelected();
+        state.enableHeadPortrait = enableHeadPortraitCheckBox.isSelected();
         state.proxyHostname = hostnameField.getText();
 
         boolean portIsNumber = com.obiscr.chatgpt.util.
@@ -251,6 +256,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         contentTitledBorderBox = new JPanel(new BorderLayout());
         TitledSeparator tsUrl = new TitledSeparator("Tool Window Settings");
         contentTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
+
+        publicSettingTitledBorderBox = new JPanel(new BorderLayout());
+        TitledSeparator tsSetting = new TitledSeparator(ChatGPTBundle.message("ui.setting.setting.title"));
+        publicSettingTitledBorderBox.add(tsSetting,BorderLayout.CENTER);
 
         supportPanel = new JPanel(new BorderLayout());
         supportDonate = new LinkLabel<>("Support / Donate", ChatGPTIcons.SUPPORT);
