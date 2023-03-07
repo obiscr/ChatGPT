@@ -7,15 +7,15 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Wuzi
  */
-public class WrongAction extends AbstractEditorAction {
+public class BugAction extends AbstractEditorAction {
 
-    public WrongAction() {
+    public BugAction() {
         super(() -> ChatGPTBundle.message("action.code.wrong.menu"));
     }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        key = "action.code.wrong.text";
+        key = "Find the bug in the code below:";
         super.actionPerformed(e);
     }
 
