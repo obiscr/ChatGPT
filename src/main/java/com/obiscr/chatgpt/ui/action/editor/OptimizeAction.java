@@ -15,7 +15,7 @@ public class OptimizeAction extends AbstractEditorAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        key = "action.code.optimize.text";
+        key = "Optimize this code:";
         super.actionPerformed(e);
     }
 

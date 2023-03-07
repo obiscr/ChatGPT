@@ -7,15 +7,15 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Wuzi
  */
-public class TestAction extends AbstractEditorAction {
+public class TestCaseAction extends AbstractEditorAction {
 
-    public TestAction() {
+    public TestCaseAction() {
         super(() -> ChatGPTBundle.message("action.code.test.menu"));
     }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        key = "action.code.test.text";
+        key = "Add test case for code:";
         super.actionPerformed(e);
     }
 

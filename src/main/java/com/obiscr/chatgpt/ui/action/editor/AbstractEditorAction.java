@@ -6,9 +6,9 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.util.NlsActions;
 import com.obiscr.chatgpt.core.SendAction;
-import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.ui.BrowserContent;
 import com.obiscr.chatgpt.ui.MainPanel;
+import com.obiscr.chatgpt.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -29,13 +29,24 @@ public abstract class AbstractEditorAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
+        doActionPerformed(e);
+    }
+
+    public void doActionPerformed(@NotNull AnActionEvent e) {
         Editor editor = e.getData(CommonDataKeys.EDITOR);
         assert editor != null;
         String selectedText = editor.getSelectionModel().getSelectedText();
 
+        // Here is to adapt to the custom prefix
+        String data = (String) e.getProject().getUserData(CustomAction.ACTIVE_PREFIX);
+        if (StringUtil.isNotEmpty(data)) {
+            key = data + ":";
+            e.getProject().putUserData(CustomAction.ACTIVE_PREFIX, "");
+        }
+
         // Browser text does not require code blocks
-        String browserText = ChatGPTBundle.message(key, selectedText);
-        String apiText = ChatGPTBundle.message(key, "<pre><code>" + selectedText + "</code></pre>");
+        String browserText = key + "\n" + selectedText;
+        String apiText = key + "\n" + "<pre><code>" + selectedText + "</code></pre>";
 
         SendAction sendAction = e.getProject().getService(SendAction.class);
         Object mainPanel = e.getProject().getUserData(ACTIVE_CONTENT);

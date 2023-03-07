@@ -9,8 +9,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static com.obiscr.chatgpt.MyToolWindowFactory.*;
 
@@ -53,6 +52,7 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
 
   public Boolean enableLineWarp = true;
 
+  public List<String> customActionsPrefix = new ArrayList<>();
   public static OpenAISettingsState getInstance() {
     return ApplicationManager.getApplication().getService(OpenAISettingsState.class);
   }
