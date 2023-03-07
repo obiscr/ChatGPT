@@ -15,7 +15,7 @@ public class ExplainAction extends AbstractEditorAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        key = "action.code.explain.text";
+        key = "Explain this code:";
         super.actionPerformed(e);
     }
 
