@@ -1,5 +1,7 @@
 # ChatGPT
 
+## 重要：目前OpenAI官方不支持Google/Microsoft账户登录，并不是插件不支持
+
 [ChatGPT](https://chat.openai.com/chat)是一种语言模型，它由OpenAI训练，
 可以用于多种任务，包括对话和文本生成。ChatGPT 是一种基于神经网络的模型，它使用
 人类语言的大量样本进行训练，可以在给定上下文的情 况下生成有意义的自然语言文本。

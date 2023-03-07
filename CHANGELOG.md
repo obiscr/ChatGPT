@@ -2,6 +2,11 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.3-201]
+### Added
++ Support for adding custom prefixes
+
+
 ## [2.1.2-201]
 ### Added
 + Support custom display order of Content in tool windows
