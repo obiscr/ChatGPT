@@ -2,6 +2,11 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.3-202]
+### Added
++ Support for adding custom prefixes
+
+
 ## [2.1.2-202]
 ### Added
 + Rollback the Online ChatGPT.
