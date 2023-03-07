@@ -33,6 +33,9 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
     private final MessageComponent tips =
             new MessageComponent("Type anything to ask me.",false);
 
+    private final MessageComponent mustRead =
+            new MessageComponent("Must Read: <a href='https://chatgpt.en.obiscr.com/getting-started/'>https://chatgpt.en.obiscr.com/getting-started/</a><br />使用必读: <a href='https://chatgpt.cn.obiscr.com/getting-started/'>https://chatgpt.cn.obiscr.com/getting-started/</a>",false);
+
     public MessageGroupComponent(@NotNull Project project, boolean isChatGPT) {
         setBorder(JBUI.Borders.empty(10, 10, 10, 0));
         setLayout(new BorderLayout(JBUI.scale(7), 0));
@@ -60,6 +63,7 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
                 super.mouseClicked(e);
                 myList.removeAll();
                 myList.add(tips);
+                myList.add(mustRead);
                 myList.updateUI();
                 ConversationManager.getInstance(project).setConversationId(null);
             }
@@ -95,6 +99,7 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
             add(gpt35TurboModelExplanation);
         }
         add(tips);
+        add(mustRead);
     }
 
     public void add(MessageComponent messageComponent) {
