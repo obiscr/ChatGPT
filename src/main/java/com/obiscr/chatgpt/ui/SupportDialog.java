@@ -47,6 +47,7 @@ public class SupportDialog extends DialogWrapper {
         panel.add(new JBLabel("You can contribute or support this project through the following ways:"));
         panel.add(createItemPanel());
         panel.add(new JBLabel("If you like this plugin, please consider donating it, it will encourage me to develop better plugins."));
+        panel.add(createDonatePanel());
         panel.add(createSupportPanel());
         return panel;
     }
@@ -86,6 +87,14 @@ public class SupportDialog extends DialogWrapper {
         return jPanel;
     }
 
+    private JPanel createDonatePanel() {
+        JPanel jPanel = new NonOpaquePanel();
+        jPanel.setLayout(new GridLayout(2,1));
+        jPanel.add(createActionLink("1. PayPal","https://paypal.me/obiscr"));
+        jPanel.add(createActionLink("2. Buy me a coffee","https://www.buymeacoffee.com/obiscr"));
+        return jPanel;
+    }
+
     private ActionLink createActionLink(String text, String url) {
         return new ActionLink(text, new AnAction() {
             @Override
@@ -110,7 +119,7 @@ public class SupportDialog extends DialogWrapper {
         JLabel weChatPayLabel = new JLabel("WeChat Pay", SwingConstants.CENTER);
         weChatPayLabel.setBorder(JBUI.Borders.empty(10, 0));
         wechat.add(weChatPayLabel, BorderLayout.SOUTH);
-        alipay.setBorder(JBUI.Borders.empty(20));
+        wechat.setBorder(JBUI.Borders.empty(20));
 
         JPanel coffee = new JPanel(new BorderLayout());
         coffee.add(new JLabel(ChatGPTIcons.BUE_ME_A_COFFEE), BorderLayout.CENTER);
@@ -121,7 +130,7 @@ public class SupportDialog extends DialogWrapper {
 
         panel.add(alipay);
         panel.add(wechat);
-        panel.add(coffee);
+        //panel.add(coffee);
 
         return panel;
     }
