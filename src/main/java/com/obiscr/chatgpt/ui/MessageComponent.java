@@ -90,7 +90,7 @@ public class MessageComponent extends JBPanel<MessageComponent> {
 
         component.setEditable(false);
         component.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, java.lang.Boolean.TRUE);
-        component.setContentType("text/html");
+        component.setContentType("text/html;charset=UTF-8");
         component.setOpaque(false);
         component.setBorder(null);
 

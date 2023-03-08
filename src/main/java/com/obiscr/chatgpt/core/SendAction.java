@@ -6,6 +6,8 @@ import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowManager;
 import com.obiscr.chatgpt.ChatGPTHandler;
 import com.obiscr.chatgpt.GPT35TurboHandler;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
@@ -86,6 +88,13 @@ public class SendAction extends AnAction {
         // Check the configuration first
         if (!presetCheck(mainPanel.isChatGPTModel())) {
             return;
+        }
+
+        // Check the toolWindow is active
+        ToolWindow chatGPT = ToolWindowManager.getInstance(mainPanel.getProject()).getToolWindow("ChatGPT");
+        assert chatGPT != null;
+        if (!chatGPT.isActive()) {
+            chatGPT.activate(null);
         }
 
         // Reset the question container
