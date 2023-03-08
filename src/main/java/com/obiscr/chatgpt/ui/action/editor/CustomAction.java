@@ -19,6 +19,8 @@ import java.util.List;
 public class CustomAction extends AbstractEditorAction {
 
     public static final Key ACTIVE_PREFIX = Key.create("ActivePrefix");
+    public static final Key ACTIVE_PROMPT = Key.create("ActivePrompt");
+    public static final Key ACTIVE_FILE_TYPE = Key.create("ActiveFileType");
 
     public CustomAction() {
         super(() -> ChatGPTBundle.message("action.code.custom.action"));
