@@ -112,7 +112,7 @@ public class CustomActionsPanel implements Configurable, Disposable {
 
         myTable.setDefaultRenderer(Object.class, new ValidatingTableCellRendererWrapper(new ColoredTableCellRenderer() {
             {
-                setIpad(JBInsets.emptyInsets());}
+                setIpad(new JBInsets(0, 0, 0, 0));}
 
             @Override
             protected void customizeCellRenderer(@NotNull JTable table, @Nullable Object value, boolean selected, boolean hasFocus, int row, int column) {
