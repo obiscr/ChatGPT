@@ -100,13 +100,7 @@ public class TokenManager {
         }
         OpenAIAuth auth;
         if (settings.enableProxy) {
-            Proxy.Type type = settings.proxyType ==
-                    SettingConfiguration.SettingProxyType.HTTP ? Proxy.Type.HTTP :
-                    settings.proxyType == SettingConfiguration.SettingProxyType.SOCKS ? Proxy.Type.SOCKS :
-                            Proxy.Type.DIRECT;
-            Proxy proxy = new OpenAIProxy(settings.proxyHostname, Integer.parseInt(settings.proxyPort),
-                    type).build();
-            auth = new OpenAIAuth(email, password, proxy);
+            auth = new OpenAIAuth(email, password, settings.getProxy());
         } else {
             auth = new OpenAIAuth(email, password);
         }
