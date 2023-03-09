@@ -43,6 +43,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     private JBLabel accountHelpLabel;
     private JBLabel customizeHelpLabel;
     private JLabel accessTokenHelpLabel;
+    private JPanel modelTitledBorderBox;
+    private JComboBox<String> comboCombobox;
 
 
     public ChatGPTSettingsPanel() {
@@ -116,6 +118,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
         expireTimeField.setText(state.expireTime);
 
         customizeUrlField.setText(state.customizeUrl);
+        comboCombobox.setSelectedItem(state.chatGptModel);
     }
 
     @Override
@@ -132,7 +135,9 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
                 !StringUtil.equals(state.email, emailField.getText()) ||
                 !StringUtil.equals(state.password, passwordField.getText()) ||
                 !StringUtil.equals(state.accessToken, accessTokenField.getText()) ||
-                !StringUtil.equals(state.expireTime, expireTimeField.getText());
+                !StringUtil.equals(state.expireTime, expireTimeField.getText()) ||
+                !state.chatGptModel.equals(comboCombobox.getSelectedItem())
+                ;
     }
 
     @Override
@@ -145,6 +150,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
         state.password = passwordField.getText();
         state.accessToken = accessTokenField.getText();
         state.expireTime = expireTimeField.getText();
+        state.chatGptModel = comboCombobox.getSelectedItem().toString();
     }
 
     @Override
@@ -185,6 +191,10 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
         urlTitledBorderBox = new JPanel(new BorderLayout());
         TitledSeparator tsUrl = new TitledSeparator(ChatGPTBundle.message("ui.setting.url.title"));
         urlTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
+
+        modelTitledBorderBox = new JPanel(new BorderLayout());
+        TitledSeparator mdUrl = new TitledSeparator("Model Settings");
+        modelTitledBorderBox.add(mdUrl,BorderLayout.CENTER);
     }
 
     private void initHelp() {

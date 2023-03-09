@@ -1,11 +1,13 @@
 package com.obiscr.chatgpt.ui;
 
+import com.alibaba.fastjson2.JSONArray;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.NullableComponent;
 import com.intellij.ui.Gray;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPanel;
+import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.ui.components.panels.VerticalLayout;
 import com.intellij.util.ui.JBFont;
@@ -13,6 +15,7 @@ import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
 import com.obiscr.chatgpt.core.Constant;
 import com.obiscr.chatgpt.core.ConversationManager;
+import com.obiscr.chatgpt.core.builder.OfficialBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -35,7 +38,9 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
 
     private final MessageComponent mustRead =
             new MessageComponent("Must Read: <a href='https://chatgpt.en.obiscr.com/getting-started/'>https://chatgpt.en.obiscr.com/getting-started/</a><br />&#20351;&#29992;&#24517;&#35835;: <a href='https://chatgpt.cn.obiscr.com/getting-started/'>https://chatgpt.cn.obiscr.com/getting-started/</a>",false);
-
+    private JBTextField systemRole;
+    private static final String systemRoleText = "You are a helpful language assistant";
+    private final JSONArray messages = new JSONArray();
     public MessageGroupComponent(@NotNull Project project, boolean isChatGPT) {
         setBorder(JBUI.Borders.empty(10, 10, 10, 0));
         setLayout(new BorderLayout(JBUI.scale(7), 0));
@@ -44,7 +49,18 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
         JPanel mainPanel = new JPanel(new BorderLayout(0, JBUI.scale(8)));
         mainPanel.setOpaque(false);
         mainPanel.setBorder(JBUI.Borders.emptyLeft(8));
-        add(mainPanel);
+
+        if (!isChatGPT) {
+            JPanel panel = new JPanel(new GridLayout(2,1));
+            panel.add(new JBLabel(" System role: you can direct your assistant and set its behavior"));
+            systemRole = new JBTextField();
+            systemRole.getEmptyText().setText(systemRoleText);
+            panel.add(systemRole);
+            panel.setBorder(JBUI.Borders.empty(0,8,10,10));
+            add(panel,BorderLayout.NORTH);
+        }
+
+        add(mainPanel,BorderLayout.CENTER);
 
         JBLabel myTitle = new JBLabel("Conversation");
         myTitle.setForeground(JBColor.namedColor("Label.infoForeground", new JBColor(Gray.x80, Gray.x8C)));
@@ -65,7 +81,11 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
                 myList.add(tips);
                 myList.add(mustRead);
                 myList.updateUI();
-                ConversationManager.getInstance(project).setConversationId(null);
+                if (isChatGPT) {
+                    ConversationManager.getInstance(project).setConversationId(null);
+                } else {
+                    messages.clear();
+                }
             }
         });
 
@@ -176,5 +196,16 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
     public void removeScrollListener() {
         myScrollPane.getVerticalScrollBar().
                 removeAdjustmentListener(scrollListener);
+    }
+
+    public JSONArray getMessages() {
+        return messages;
+    }
+
+    public String getSystemRole() {
+        if (systemRole.getText().isEmpty()) {
+            return systemRoleText;
+        }
+        return systemRole.getText();
     }
 }

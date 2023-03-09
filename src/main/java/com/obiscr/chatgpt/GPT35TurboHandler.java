@@ -2,11 +2,13 @@ package com.obiscr.chatgpt;
 
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
+import com.obiscr.chatgpt.core.builder.OfficialBuilder;
 import com.obiscr.OpenAIProxy;
 import com.obiscr.chatgpt.core.parser.OfficialParser;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.ui.MainPanel;
 import com.obiscr.chatgpt.ui.MessageComponent;
+import com.obiscr.chatgpt.ui.MessageGroupComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,14 @@ public class GPT35TurboHandler  extends AbstractHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GPT35TurboHandler.class);
 
     public MessageComponent handle(MainPanel mainPanel, MessageComponent component, String question) {
+        MessageGroupComponent contentPanel = mainPanel.getContentPanel();
+
+        // Define the default system role
+        if (contentPanel.getMessages().isEmpty()) {
+            String text = contentPanel.getSystemRole();
+            contentPanel.getMessages().add(OfficialBuilder.systemMessage(text));
+        }
+
         RequestProvider provider = new RequestProvider().create(mainPanel, question);
         try {
             LOG.info("ChatGPT Request: question={}",question);
@@ -36,8 +46,9 @@ public class GPT35TurboHandler  extends AbstractHandler {
                 return component;
             }
             OfficialParser.ParseResult parseResult = OfficialParser.
-                    parseGPT35Turbo(new String(response.body().getBytes(), StandardCharsets.UTF_8));
+                    parseGPT35Turbo(response.body());
 
+            mainPanel.getContentPanel().getMessages().add(OfficialBuilder.assistantMessage(parseResult.getSource()));
             component.setSourceContent(parseResult.getSource());
             component.setContent(parseResult.getHtml());
             mainPanel.aroundRequest(false);
