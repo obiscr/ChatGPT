@@ -134,7 +134,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                         "Please provide an API Key before you can " +
                                 "refresh usage or create a new API Key.")
                 .yesText("Got it")
-                .noText("Close").ask(myMainPanel);
+                .noText("Close").show();
         return null;
     }
 
@@ -185,7 +185,6 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 !StringUtil.equals(state.proxyPort, portField.getText()) ||
                 !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem()) ||
                 !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem()) ||
-                !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem()) ||
                 !state.enableLineWarp == enableLineWarpCheckBox.isSelected() ||
                 !StringUtil.equals(state.assistantApiKey,assistantApiKey.getText());
     }
