@@ -50,7 +50,11 @@ public class RequestProvider {
         } else {
             provider.url = "https://api.openai.com/v1/chat/completions";
             provider.header = TokenManager.getInstance().getGPT35TurboHeaders();
-            provider.data = JSON.toJSONString(OfficialBuilder.buildGpt35Turbo(question));
+            if (instance.enableContext) {
+                provider.data = JSON.toJSONString(OfficialBuilder.buildGpt35Turbo(question,mainPanel.getContentPanel()));
+            } else {
+                provider.data = JSON.toJSONString(OfficialBuilder.buildGpt35Turbo(question));
+            }
         }
         return provider;
     }
