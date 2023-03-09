@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.Proxy;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -46,7 +47,7 @@ public class ChatGPTHandler extends AbstractHandler {
         Request request = new Request.Builder()
                 .url(provider.getUrl())
                 .headers(Headers.of(provider.getHeader()))
-                .post(RequestBody.create(provider.getData(),
+                .post(RequestBody.create(provider.getData().getBytes(StandardCharsets.UTF_8),
                         MediaType.parse("application/json")))
                 .build();
         OpenAISettingsState instance = OpenAISettingsState.getInstance();
@@ -80,6 +81,7 @@ public class ChatGPTHandler extends AbstractHandler {
             @Override
             public void onEvent(@NotNull EventSource eventSource, @Nullable String id, @Nullable String type, @NotNull String data) {
                 handler = true;
+                data = new String(data.getBytes(StandardCharsets.UTF_8));
                 if (StringUtil.isEmpty(data)) {
                     return;
                 }
