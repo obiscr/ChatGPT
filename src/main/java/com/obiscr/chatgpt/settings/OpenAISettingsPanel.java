@@ -1,6 +1,9 @@
 // Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.obiscr.chatgpt.settings;
 
+import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ex.ApplicationManagerEx;
 import com.intellij.openapi.options.Configurable;
@@ -12,18 +15,19 @@ import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
+import com.obiscr.OpenAIProxy;
 import com.obiscr.chatgpt.icons.ChatGPTIcons;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.ui.SupportDialog;
+import com.obiscr.chatgpt.util.OpenAIUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.net.Proxy;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,11 +61,25 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JLabel contentOrderHelpLabel;
     private JLabel supportDonate;
     private JPanel supportPanel;
+    private JTextField usedField;
+    private JTextField totalField;
+    private JBTextField assistantApiKey;
+    private JButton createAPIKeyButton;
+    private JButton refreshButton;
+    private JPanel openaiAssistantTitledBorderBox;
+    private JTextField availableField;
+    private JTextField grantField;
+    private JLabel openaiAssistantContentHelpLabel;
+    private JLabel openaiAssistantUsageHelpLabel;
     private final String[] comboboxItemsString = {
             CHATGPT_CONTENT_NAME,
             GPT35_TRUBO_CONTENT_NAME,
             ONLINE_CHATGPT_CONTENT_NAME};
     private boolean needRestart = false;
+
+    public static final String FIND_GRANTS = "https://api.openai.com/dashboard/billing/credit_grants";
+    public static final String CREATE_API_KEY = "https://api.openai.com/dashboard/user/api_keys";
+
     public OpenAISettingsPanel() {
         init();
     }
@@ -83,10 +101,43 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         readTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.read_timeout.empty_text"));
         connectionTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.connection_timeout.empty_text"));
+        assistantApiKey.getEmptyText().setText("If it is empty, the API Key in GPT-3.5-Turbo will be used");
 
         firstCombobox.setModel(new DefaultComboBoxModel<>(comboboxItemsString));
         secondCombobox.setModel(new DefaultComboBoxModel<>(comboboxItemsString));
         thirdCombobox.setModel(new DefaultComboBoxModel<>(comboboxItemsString));
+
+        refreshButton.addActionListener(e -> {
+            String apiKey = checkKeyExists();
+            if (StringUtil.isEmpty(apiKey)) {
+                return;
+            }
+            OpenAIUtil.refreshGranted(apiKey, myMainPanel,
+                    usedField, availableField, grantField);
+        });
+
+        createAPIKeyButton.addActionListener(e -> {
+            String apiKey = checkKeyExists();
+            if (StringUtil.isEmpty(apiKey)) {
+                return;
+            }
+            OpenAIUtil.createAPIKey(apiKey,myMainPanel);
+        });
+    }
+
+    private String checkKeyExists() {
+        if (StringUtil.isNotEmpty(assistantApiKey.getText())){
+            return assistantApiKey.getText();
+        }
+        if (StringUtil.isNotEmpty(OpenAISettingsState.getInstance().apiKey)) {
+            return OpenAISettingsState.getInstance().apiKey;
+        }
+        MessageDialogBuilder.yesNo("API Key is required?",
+                        "Please provide an API Key before you can " +
+                                "refresh usage or create a new API Key.")
+                .yesText("Got it")
+                .noText("Close").ask(myMainPanel);
+        return null;
     }
 
     private void enableProxyOptions(boolean enabled) {
@@ -110,7 +161,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         thirdCombobox.setSelectedItem(state.contentOrder.get(3));
 
         enableLineWarpCheckBox.setSelected(state.enableLineWarp);
-
+        assistantApiKey.setText(state.assistantApiKey);
         initHelp();
     }
 
@@ -139,7 +190,8 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem()) ||
                 !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem()) ||
                 !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem()) ||
-                !state.enableLineWarp == enableLineWarpCheckBox.isSelected();
+                !state.enableLineWarp == enableLineWarpCheckBox.isSelected() ||
+                !StringUtil.equals(state.assistantApiKey,assistantApiKey.getText());
     }
 
     @Override
@@ -184,6 +236,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         state.contentOrder.put(3, thirdSelected);
 
         state.enableLineWarp = enableLineWarpCheckBox.isSelected();
+        state.assistantApiKey = assistantApiKey.getText();
 
         if (needRestart) {
             boolean yes = MessageDialogBuilder.yesNo("Content order changed!", "Changing " +
@@ -250,6 +303,11 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         TitledSeparator tsUrl = new TitledSeparator("Tool Window Settings");
         contentTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
 
+        openaiAssistantTitledBorderBox = new JPanel(new BorderLayout());
+        TitledSeparator oaUrl = new TitledSeparator("OpenAI Assistant");
+        openaiAssistantTitledBorderBox.add(oaUrl,BorderLayout.CENTER);
+
+
         supportPanel = new JPanel(new BorderLayout());
         supportDonate = new LinkLabel<>("Support / Donate", ChatGPTIcons.SUPPORT);
         supportDonate.setBorder(JBUI.Borders.emptyTop(20));
@@ -270,5 +328,11 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         contentOrderHelpLabel.setFont(JBUI.Fonts.smallFont());
         contentOrderHelpLabel.setForeground(UIUtil.getContextHelpForeground());
+
+        openaiAssistantContentHelpLabel.setFont(JBUI.Fonts.smallFont());
+        openaiAssistantContentHelpLabel.setForeground(UIUtil.getContextHelpForeground());
+
+        openaiAssistantUsageHelpLabel.setFont(JBUI.Fonts.smallFont());
+        openaiAssistantUsageHelpLabel.setForeground(UIUtil.getContextHelpForeground());
     }
 }
