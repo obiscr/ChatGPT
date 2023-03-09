@@ -53,6 +53,10 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
   public Boolean enableLineWarp = true;
 
   public List<String> customActionsPrefix = new ArrayList<>();
+
+  public String chatGptModel = "text-davinci-002-render-sha";
+  public String gpt35Model = "gpt-3.5-turbo";
+  public Boolean enableContext = false;
   public static OpenAISettingsState getInstance() {
     return ApplicationManager.getApplication().getService(OpenAISettingsState.class);
   }
