@@ -33,15 +33,15 @@ public class OpenAIUtil {
             JSONObject object = JSON.parseObject(grants);
             if (object.containsKey("error")) {
                 String errorMessage = object.getJSONObject("error").getString("message");
-                MessageDialogBuilder.okCancel("Refresh Failed",
+                MessageDialogBuilder.yesNo("Refresh Failed",
                                 "Refresh grant failed, error: " + errorMessage)
-                        .ask(component);
+                        .show();
                 return;
             }
             if (!object.containsKey("total_used") || !object.containsKey("total_granted")) {
-                MessageDialogBuilder.okCancel("Refresh Failed",
+                MessageDialogBuilder.yesNo("Refresh Failed",
                                 "Refresh grant failed, please try again later.")
-                        .ask(component);
+                        .show();
                 return;
             }
             Double used = object.getDouble("total_used");
@@ -51,9 +51,9 @@ public class OpenAIUtil {
             availableField.setText(String.valueOf(available));
             grantField.setText(String.valueOf(granted));
         } catch (Exception e) {
-            MessageDialogBuilder.okCancel("Refresh Failed",
+            MessageDialogBuilder.yesNo("Refresh Failed",
                             "Refresh grant failed, error: " + e.getMessage())
-                    .ask(component);
+                    .show();
         }
     }
 
@@ -72,15 +72,15 @@ public class OpenAIUtil {
             JSONObject object = JSON.parseObject(grants);
             if (object.containsKey("error")) {
                 String errorMessage = object.getJSONObject("error").getString("message");
-                MessageDialogBuilder.okCancel("Create API Key Failed",
+                MessageDialogBuilder.yesNo("Create API Key Failed",
                                 "Refresh grant failed, error: " + errorMessage)
-                        .ask(component);
+                        .show();
                 return;
             }
             if (!object.containsKey("result") || !object.getString("result").equals("success")) {
-                MessageDialogBuilder.okCancel("Create API Key Failed",
+                MessageDialogBuilder.yesNo("Create API Key Failed",
                                 "Create API Key failed, please try again later.")
-                        .ask(component);
+                        .show();
                 return;
             }
             JSONObject key = object.getJSONObject("key");
@@ -89,14 +89,14 @@ public class OpenAIUtil {
                             "Your API Key is: \n\n" + newKey + " \n\nThe API Key will only be displayed once, please record the API " +
                                     "Key immediately. Do you want to save it to GPT-3.5-Turbo?\n")
                     .yesText("Save it")
-                    .noText("No, thanks").ask(component);
+                    .noText("No, thanks").isYes();
             if(ask) {
                 OpenAISettingsState.getInstance().apiKey = newKey;
             }
         } catch (Exception e) {
-            MessageDialogBuilder.okCancel("Create API Key Failed",
+            MessageDialogBuilder.yesNo("Create API Key Failed",
                             "Create API Key failed, error: " + e.getMessage())
-                    .ask(component);
+                    .show();
         }
     }
 }

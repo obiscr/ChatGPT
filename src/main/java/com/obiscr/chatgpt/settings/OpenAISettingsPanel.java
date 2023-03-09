@@ -138,7 +138,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                         "Please provide an API Key before you can " +
                                 "refresh usage or create a new API Key.")
                 .yesText("Got it")
-                .noText("Close").ask(myMainPanel);
+                .noText("Close").show();
         return null;
     }
 
