@@ -6,6 +6,8 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.util.NlsActions;
 import com.intellij.openapi.fileTypes.NativeFileType;
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowManager;
 import com.obiscr.chatgpt.core.SendAction;
 import com.obiscr.chatgpt.ui.BrowserContent;
 import com.obiscr.chatgpt.ui.MainPanel;
@@ -34,6 +36,14 @@ public abstract class AbstractEditorAction extends AnAction {
     }
 
     public void doActionPerformed(@NotNull AnActionEvent e) {
+
+        // Check the toolWindow is active
+        ToolWindow chatGPT = ToolWindowManager.getInstance(e.getProject()).getToolWindow("ChatGPT");
+        assert chatGPT != null;
+        if (!chatGPT.isActive()) {
+            chatGPT.activate(null);
+        }
+
         Editor editor = e.getData(CommonDataKeys.EDITOR);
         assert editor != null;
         String selectedText = editor.getSelectionModel().getSelectedText();
