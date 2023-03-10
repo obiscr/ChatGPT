@@ -9,6 +9,7 @@ import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.components.labels.LinkLabel;
+import com.intellij.ui.components.panels.NonOpaquePanel;
 import com.intellij.ui.components.panels.VerticalLayout;
 import com.intellij.util.ui.JBFont;
 import com.intellij.util.ui.JBUI;
@@ -50,7 +51,7 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
         mainPanel.setBorder(JBUI.Borders.emptyLeft(8));
 
         if (!isChatGPT) {
-            JPanel panel = new JPanel(new GridLayout(2,1));
+            JPanel panel = new NonOpaquePanel(new GridLayout(2,1));
             panel.add(new JBLabel(" System role: you can direct your assistant and set its behavior"));
             systemRole = new JBTextField();
             systemRole.getEmptyText().setText(systemRoleText);
