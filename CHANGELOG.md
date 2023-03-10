@@ -2,6 +2,14 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.4-202]
+### Added
++ Support conversation model selection
++ Support GPT-3.5-Turbo context
++ Support system roles of GPT-3.5-Turbo
++ Support querying the usage limit of the account
++ Support for creating API Key
+
 ## [2.1.3-202]
 ### Added
 + Support for adding custom prefixes
