@@ -90,13 +90,6 @@ public class SendAction extends AnAction {
             return;
         }
 
-        // Check the toolWindow is active
-        ToolWindow chatGPT = ToolWindowManager.getInstance(mainPanel.getProject()).getToolWindow("ChatGPT");
-        assert chatGPT != null;
-        if (!chatGPT.isActive()) {
-            chatGPT.activate(null);
-        }
-
         // Reset the question container
         mainPanel.getSearchTextArea().getTextArea().setText("");
         mainPanel.aroundRequest(true);
