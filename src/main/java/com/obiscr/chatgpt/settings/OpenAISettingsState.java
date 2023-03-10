@@ -36,6 +36,7 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
   public String email = "";
   public String password = "";
   public Boolean enableProxy = false;
+  public Boolean enableAvatar = true;
   public SettingConfiguration.SettingProxyType proxyType =
           SettingConfiguration.SettingProxyType.DIRECT;
 
