@@ -47,19 +47,20 @@ public class MessageComponent extends JBPanel<MessageComponent> {
         setBorder(JBUI.Borders.empty(10, 10, 10, 0));
         setLayout(new BorderLayout(JBUI.scale(7), 0));
 
-        JPanel iconPanel = new JPanel(new BorderLayout());
-        iconPanel.setOpaque(false);
-        Image imageIcon;
-        try {
-            String url = OpenAISettingsState.getInstance().imageUrl;
-            imageIcon = me ? ImgUtils.getImage(new URL(url)) : ImgUtils.iconToImage(ChatGPTIcons.OPEN_AI);
-        } catch (Exception e) {
-            imageIcon = me ? ImgUtils.iconToImage(ChatGPTIcons.ME) : ImgUtils.iconToImage(ChatGPTIcons.AI);
+        if (OpenAISettingsState.getInstance().enableAvatar) {
+            JPanel iconPanel = new JPanel(new BorderLayout());
+            iconPanel.setOpaque(false);
+            Image imageIcon;
+            try {
+                String url = OpenAISettingsState.getInstance().imageUrl;
+                imageIcon = me ? ImgUtils.getImage(new URL(url)) : ImgUtils.iconToImage(ChatGPTIcons.OPEN_AI);
+            } catch (Exception e) {
+                imageIcon = me ? ImgUtils.iconToImage(ChatGPTIcons.ME) : ImgUtils.iconToImage(ChatGPTIcons.AI);
+            }
+            Image scale = ImgUtil.scale(imageIcon, 30, 30);
+            iconPanel.add(new JBLabel(new ImageIcon(scale)), BorderLayout.NORTH);
+            add(iconPanel, BorderLayout.WEST);
         }
-        Image scale = ImgUtil.scale(imageIcon, 30, 30);
-        iconPanel.add(new JBLabel(new ImageIcon(scale)), BorderLayout.NORTH);
-        add(iconPanel, BorderLayout.WEST);
-
         JPanel centerPanel = new JPanel(new VerticalLayout(JBUI.scale(8)));
         centerPanel.setOpaque(false);
         centerPanel.setBorder(JBUI.Borders.emptyRight(10));
@@ -82,7 +83,7 @@ public class MessageComponent extends JBPanel<MessageComponent> {
                 //                NotificationType.INFORMATION));
             }
         });
-        actionPanel.add(copyAction,BorderLayout.NORTH);
+        actionPanel.add(copyAction, BorderLayout.NORTH);
         add(actionPanel, BorderLayout.EAST);
     }
 
@@ -117,7 +118,7 @@ public class MessageComponent extends JBPanel<MessageComponent> {
         }
     }
 
-    public void setSourceContent(String source){
+    public void setSourceContent(String source) {
         answer = source;
     }
 
