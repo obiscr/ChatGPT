@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class RequestProvider {
 
-    public static final String OFFICIAL_CONVERSATION_URL = "https://chatgpt.duti.tech/api/conversation";
+    public static final String OFFICIAL_CONVERSATION_URL = "https://bypass.duti.tech/api/conversation";
     private Project myProject;
     private String url;
     private String data;
