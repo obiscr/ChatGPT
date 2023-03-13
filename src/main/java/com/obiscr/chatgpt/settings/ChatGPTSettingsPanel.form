@@ -14,7 +14,7 @@
         </constraints>
         <properties>
           <margin top="2" left="-2" bottom="2" right="3"/>
-          <text resource-bundle="messages/ChatGPTBundle" key="ui.setting.url.official.label"/>
+          <text value="Unofficial (unstable)"/>
         </properties>
       </component>
       <vspacer id="cde94">
