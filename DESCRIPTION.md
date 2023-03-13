@@ -1,7 +1,5 @@
 <!-- Plugin description -->
 
-## Note: At present, the official GPT-3.5-Turbo model is available.
-
 ## English
 
 [ChatGPT](https://chat.openai.com/chat) is a language model trained
@@ -25,11 +23,13 @@ This project is a plugin that supports ChatGPT running on JetBrains series IDE.
 [Slack](https://join.slack.com/t/observercreator/shared_invite/zt-14g3dnzkx-FGJM_WgY~vj0bJINTHQSAA) |
 [Donate/Sponsor](https://chatgpt.en.obiscr.com/donate/)
 
+## 微信公众号
+
+<img alt="微信公众号: 观察与创造" width="600" src="https://user-images.githubusercontent.com/28687074/224671786-ecb449a1-4901-4690-bef5-b8d03a8120fa.png" />
+
 ## 强烈推荐
 
 PC端好用国内免费在线访问ChatGPT网站：[https://aicodehelper.com](https://aicodehelper.com#1)
-
-## 提示: 目前， 官方的 GPT-3.5-Turbo 模式已经接入。
 
 ## 简体中文
 
