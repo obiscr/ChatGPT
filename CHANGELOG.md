@@ -2,6 +2,12 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.5-202]
+### Changed
++ Fix [#94](https://github.com/dromara/ChatGPT/issues/94)
++ Support enable/disable avatar
++ Fix ChatGPT network error
+
 ## [2.1.4-202]
 ### Added
 + Support conversation model selection
