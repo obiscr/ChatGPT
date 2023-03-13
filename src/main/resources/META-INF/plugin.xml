@@ -95,14 +95,10 @@
 
   <actions>
     <group id="ChatGPT" text="Search with ChatGPT" description="Search with ChatGPT">
-      <action id="OptimizeAction" class="com.obiscr.chatgpt.ui.action.editor.OptimizeAction"
-              icon="/icons/toolWindow.svg" />
-      <action id="TestAction" class="com.obiscr.chatgpt.ui.action.editor.TestCaseAction"
-              icon="/icons/toolWindow.svg"/>
-      <action id="ExplainAction" icon="/icons/toolWindow.svg"
-              class="com.obiscr.chatgpt.ui.action.editor.ExplainAction"/>
       <action id="WrongAction" icon="/icons/toolWindow.svg"
               class="com.obiscr.chatgpt.ui.action.editor.BugAction"/>
+      <action id="OptimizeAction" class="com.obiscr.chatgpt.ui.action.editor.OptimizeAction"
+              icon="/icons/toolWindow.svg" />
       <action id="CustomAction" icon="/icons/toolWindow.svg"
               class="com.obiscr.chatgpt.ui.action.editor.CustomAction">
         <keyboard-shortcut keymap="$default" first-keystroke="control shift Q"/>
