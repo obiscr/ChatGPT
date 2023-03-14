@@ -2,6 +2,12 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.6-202]
+### Changed
++ Fix [#107](https://github.com/dromara/ChatGPT/issues/107)
++ Fix the problem of GPT 3.5 Turbo displaying blank
++ Fix the UI flicker problem
+
 ## [2.1.5-202]
 ### Changed
 + Fix [#94](https://github.com/dromara/ChatGPT/issues/94)
