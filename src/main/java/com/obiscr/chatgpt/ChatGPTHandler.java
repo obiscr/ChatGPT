@@ -1,26 +1,16 @@
 package com.obiscr.chatgpt;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONArray;
-import com.alibaba.fastjson2.JSONObject;
 import com.intellij.openapi.project.Project;
-import com.obiscr.OpenAIProxy;
-import com.obiscr.chatgpt.core.ConversationManager;
-import com.obiscr.chatgpt.core.TokenManager;
-import com.obiscr.chatgpt.core.builder.OfficialBuilder;
 import com.obiscr.chatgpt.core.parser.OfficialParser;
-import com.obiscr.chatgpt.settings.SettingConfiguration;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.ui.MainPanel;
 import com.obiscr.chatgpt.ui.MessageComponent;
-import com.obiscr.chatgpt.util.HtmlUtil;
 import com.obiscr.chatgpt.util.StringUtil;
 import okhttp3.*;
 import okhttp3.internal.http2.StreamResetException;
 import okhttp3.sse.EventSource;
 import okhttp3.sse.EventSourceListener;
 import okhttp3.sse.EventSources;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;

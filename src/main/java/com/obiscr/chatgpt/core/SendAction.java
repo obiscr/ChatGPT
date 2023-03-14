@@ -6,8 +6,6 @@ import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ToolWindowManager;
 import com.obiscr.chatgpt.ChatGPTHandler;
 import com.obiscr.chatgpt.GPT35TurboHandler;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
@@ -17,6 +15,7 @@ import com.obiscr.chatgpt.ui.MainPanel;
 import com.obiscr.chatgpt.ui.MessageComponent;
 import com.obiscr.chatgpt.ui.MessageGroupComponent;
 import com.obiscr.chatgpt.util.StringUtil;
+import okhttp3.Call;
 import okhttp3.sse.EventSource;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -94,7 +93,6 @@ public class SendAction extends AnAction {
         mainPanel.getSearchTextArea().getTextArea().setText("");
         mainPanel.aroundRequest(true);
         Project project = mainPanel.getProject();
-        ChatGPTHandler chatGPTHandler = project.getService(ChatGPTHandler.class);
         MessageGroupComponent contentPanel = mainPanel.getContentPanel();
 
         // Add the message component to container
@@ -107,6 +105,7 @@ public class SendAction extends AnAction {
             ExecutorService executorService = mainPanel.getExecutorService();
             // Request the server.
             if (mainPanel.isChatGPTModel()) {
+                ChatGPTHandler chatGPTHandler = project.getService(ChatGPTHandler.class);
                 executorService.submit(() -> {
                     EventSource handle = chatGPTHandler.handle(mainPanel, answer, data);
                     mainPanel.setRequestHolder(handle);
@@ -114,14 +113,13 @@ public class SendAction extends AnAction {
                     contentPanel.scrollToBottom();
                 });
             } else {
+                GPT35TurboHandler gpt35TurboHandler = project.getService(GPT35TurboHandler.class);
                 executorService.submit(() -> {
-                    new GPT35TurboHandler().handle(mainPanel, answer, data);
+                    Call handle = gpt35TurboHandler.handle(mainPanel, answer, data);
+                    mainPanel.setRequestHolder(handle);
                     contentPanel.updateLayout();
                     contentPanel.scrollToBottom();
                 });
-                // Because this Http request is blocked, it cannot be placed in Runnable
-                // So it needs to be executed outside Runnable
-                mainPanel.setRequestHolder(answer);
             }
         } catch (Exception e) {
             mainPanel.aroundRequest(false);
