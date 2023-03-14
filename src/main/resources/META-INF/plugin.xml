@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>ChatGPT</id>
   <name>ChatGPT</name>
-  <version>2.1.5-201</version>
+  <version>2.1.6-201</version>
   <vendor email="wuzi@obiscr.com" url="https://obiscr.com">obiscr</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,12 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>2.1.6-201</p>
+      <ul>
+        <li>Fix <a href="https://github.com/dromara/ChatGPT/issues/94">#94</a></li>
+        <li>Support enable/disable avatar</li>
+        <li>Fix ChatGPT network error</li>
+      </ul><br>
       <p>2.1.5-201</p>
       <ul>
         <li>Fix <a href="https://github.com/dromara/ChatGPT/issues/94">#94</a></li>
