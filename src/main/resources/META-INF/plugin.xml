@@ -97,6 +97,7 @@
     <projectService serviceImplementation="com.obiscr.chatgpt.core.ConversationManager"/>
     <projectService serviceImplementation="com.obiscr.chatgpt.core.SendAction"/>
     <projectService serviceImplementation="com.obiscr.chatgpt.ChatGPTHandler"/>
+    <projectService serviceImplementation="com.obiscr.chatgpt.GPT35TurboHandler"/>
     <postStartupActivity implementation="com.obiscr.chatgpt.core.StartUpActivity"/>
   </extensions>
 

@@ -1,6 +1,6 @@
 package com.obiscr.chatgpt.ui;
 
-import com.alibaba.fastjson2.JSONArray;
+import com.google.gson.JsonArray;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.NullableComponent;
 import com.intellij.ui.Gray;
@@ -41,7 +41,7 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
             new MessageComponent("Must Read: <a href='https://chatgpt.en.obiscr.com/getting-started/'>https://chatgpt.en.obiscr.com/getting-started/</a><br />&#20351;&#29992;&#24517;&#35835;: <a href='https://chatgpt.cn.obiscr.com/getting-started/'>https://chatgpt.cn.obiscr.com/getting-started/</a>",false);
     private JBTextField systemRole;
     private static final String systemRoleText = "You are a helpful language assistant";
-    private final JSONArray messages = new JSONArray();
+    private JsonArray messages = new JsonArray();
     public MessageGroupComponent(@NotNull Project project, boolean isChatGPT) {
         setBorder(JBUI.Borders.empty(10, 10, 10, 0));
         setLayout(new BorderLayout(JBUI.scale(7), 0));
@@ -85,7 +85,7 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
                 if (isChatGPT) {
                     ConversationManager.getInstance(project).setConversationId(null);
                 } else {
-                    messages.clear();
+                    messages = new JsonArray();
                 }
             }
         });
@@ -199,7 +199,7 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
                 removeAdjustmentListener(scrollListener);
     }
 
-    public JSONArray getMessages() {
+    public JsonArray getMessages() {
         return messages;
     }
 
