@@ -1,8 +1,9 @@
 package com.obiscr.chatgpt.core.parser;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONArray;
-import com.alibaba.fastjson2.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.intellij.openapi.project.Project;
 import com.obiscr.chatgpt.core.ConversationManager;
 import com.obiscr.chatgpt.ui.MessageComponent;
@@ -18,19 +19,19 @@ public class OfficialParser {
     private static final String DONE = "[DONE]";
 
     public static ParseResult parseChatGPT(@NotNull Project project, MessageComponent component, String response) {
-        JSONObject jsonObject = JSON.parseObject(response);
+        JsonObject object = JsonParser.parseString(response).getAsJsonObject();
         // Handler the error info from the proxy server.
-        if (jsonObject.containsKey("detail")) {
-            String detail = jsonObject.getString("detail");
+        if (object.keySet().contains("detail")) {
+            String detail = object.get("detail").getAsString();
             component.setSourceContent(detail);
             component.setContent(detail);
             return null;
         }
-        JSONArray partsArray = jsonObject.getJSONObject("message")
-                .getJSONObject("content")
-                .getJSONArray("parts");
-        String conversationId = jsonObject.getString("conversation_id");
-        String parentId = (jsonObject.getJSONObject("message")).getString("id");
+        JsonArray partsArray = object.get("message").getAsJsonObject()
+                .get("content").getAsJsonObject()
+                .get("parts").getAsJsonArray();
+        String conversationId = object.get("conversation_id").getAsString();
+        String parentId = (object.get("message").getAsJsonObject()).get("id").getAsString();
         ConversationManager.getInstance(project).setParentMessageId(parentId);
         ConversationManager.getInstance(project).setConversationId(conversationId);
 
@@ -39,26 +40,25 @@ public class OfficialParser {
         }
         StringBuilder result = new StringBuilder();
         for (int i = 0 ; i < partsArray.size() ; i++) {
-            result.append(partsArray.getString(i));
+            result.append(partsArray.get(i).getAsString());
         }
         ParseResult parseResult = new ParseResult();
-        parseResult.source = HtmlUtil.md2html(result.toString());
+        parseResult.source = result.toString();
         parseResult.html = HtmlUtil.md2html(result.toString());
         return parseResult;
     }
 
     public static ParseResult parseGPT35Turbo(String response) {
-        JSONObject object = JSON.parseObject(response);
+        JsonObject object = JsonParser.parseString(response).getAsJsonObject();
+        JsonArray choices = object.get("choices").getAsJsonArray();
         StringBuilder result = new StringBuilder();
-        JSONArray resultArray = object.getJSONArray("choices");
-        for (Object s : resultArray) {
-            JSONObject choice = JSON.parseObject(s.toString());
-            JSONObject messages  = choice.getJSONObject("message");
-            String content = JSON.parseObject(messages.toString()).getString("content");
+        for (JsonElement element : choices) {
+            JsonObject messages = element.getAsJsonObject().get("message").getAsJsonObject();
+            String content = messages.get("content").getAsString();
             result.append(content);
         }
         ParseResult parseResult = new ParseResult();
-        parseResult.source = HtmlUtil.md2html(result.toString());
+        parseResult.source = result.toString();
         parseResult.html = HtmlUtil.md2html(result.toString());
         return parseResult;
     }

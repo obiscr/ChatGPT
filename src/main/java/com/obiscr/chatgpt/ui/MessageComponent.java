@@ -6,6 +6,7 @@ import com.intellij.icons.AllIcons;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
+import com.intellij.notification.impl.ui.NotificationsUtil;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPanel;
@@ -15,9 +16,10 @@ import com.obiscr.chatgpt.icons.ChatGPTIcons;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.util.ImgUtils;
+import com.obiscr.chatgpt.util.StringUtil;
 
+import javax.accessibility.AccessibleContext;
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -29,13 +31,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class MessageComponent extends JBPanel<MessageComponent> {
 
-    private final JEditorPane component = new JEditorPane();
+    private final MessagePanel component = new MessagePanel();
 
     private final String question;
 
     private String answer;
-
-    private AtomicBoolean stopping = new AtomicBoolean(false);
 
     public MessageComponent(String content, boolean me) {
         question = content;
@@ -89,11 +89,11 @@ public class MessageComponent extends JBPanel<MessageComponent> {
 
         component.setEditable(false);
         component.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, java.lang.Boolean.TRUE);
-        component.setContentType("text/html;charset=UTF-8");
+        component.setContentType("text/html; charset=UTF-8");
         component.setOpaque(false);
         component.setBorder(null);
 
-        component.setText(content);
+        component.updateMessage(content);
 
         component.setEditable(false);
         if (component.getCaret() != null) {
@@ -107,10 +107,10 @@ public class MessageComponent extends JBPanel<MessageComponent> {
     }
 
     public void setContent(String content) {
-        if (!stopping.get()) {
-            component.setText(content);
+        SwingUtilities.invokeLater(() -> {
+            component.updateMessage(content);
             component.updateUI();
-        }
+        });
     }
 
     public void setSourceContent(String source) {
@@ -122,9 +122,5 @@ public class MessageComponent extends JBPanel<MessageComponent> {
             Rectangle bounds = getBounds();
             scrollRectToVisible(bounds);
         });
-    }
-
-    public void setStopping(boolean stopping) {
-        this.stopping.set(stopping);
     }
 }

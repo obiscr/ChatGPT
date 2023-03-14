@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.alibaba.fastjson2:fastjson2:2.0.17")
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation("cn.hutool:hutool-http:5.8.12")
     implementation("com.obiscr:openai-auth:1.0.1")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")

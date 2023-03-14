@@ -13,6 +13,7 @@ import com.obiscr.chatgpt.MyToolWindowFactory;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.ui.listener.SendListener;
+import okhttp3.Call;
 import okhttp3.sse.EventSource;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,9 +63,8 @@ public class MainPanel {
             aroundRequest(false);
             if (requestHolder instanceof EventSource) {
                 ((EventSource)requestHolder).cancel();
-            } else if (requestHolder instanceof MessageComponent) {
-                ((MessageComponent) requestHolder).setContent("Stop generating");
-                ((MessageComponent) requestHolder).setStopping(true);
+            } else if (requestHolder instanceof Call) {
+                ((Call) requestHolder).cancel();
             }
         });
         stopGenerating.setUI(new DarculaButtonUI());

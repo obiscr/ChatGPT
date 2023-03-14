@@ -1,16 +1,12 @@
 package com.obiscr.chatgpt.util;
 
 import cn.hutool.http.HttpUtil;
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.intellij.openapi.ui.MessageDialogBuilder;
-import com.intellij.ui.components.JBTextField;
-import com.obiscr.OpenAIProxy;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
-import com.obiscr.chatgpt.settings.SettingConfiguration;
 
 import javax.swing.*;
-import java.net.Proxy;
 import java.nio.charset.StandardCharsets;
 
 import static com.obiscr.chatgpt.settings.OpenAISettingsPanel.CREATE_API_KEY;
@@ -30,23 +26,23 @@ public class OpenAIUtil {
                     header("Authorization", "Bearer " + apiKey).setProxy(state.getProxy()).
                     timeout(5000)
                     .execute().body();
-            JSONObject object = JSON.parseObject(grants);
-            if (object.containsKey("error")) {
-                String errorMessage = object.getJSONObject("error").getString("message");
+            JsonObject object = JsonParser.parseString(grants).getAsJsonObject();
+            if (object.keySet().contains("error")) {
+                String errorMessage = object.get("error").getAsJsonObject().get("message").getAsString();
                 MessageDialogBuilder.yesNo("Refresh Failed",
                                 "Refresh grant failed, error: " + errorMessage)
                         .show();
                 return;
             }
-            if (!object.containsKey("total_used") || !object.containsKey("total_granted")) {
+            if (!object.keySet().contains("total_used") || !object.keySet().contains("total_granted")) {
                 MessageDialogBuilder.yesNo("Refresh Failed",
                                 "Refresh grant failed, please try again later.")
                         .show();
                 return;
             }
-            Double used = object.getDouble("total_used");
-            Double available = object.getDouble("total_available");
-            Double granted = object.getDouble("total_granted");
+            Double used = object.get("total_used").getAsDouble();
+            Double available = object.get("total_available").getAsDouble();
+            Double granted = object.get("total_granted").getAsDouble();
             usedField.setText(String.valueOf(used));
             availableField.setText(String.valueOf(available));
             grantField.setText(String.valueOf(granted));
@@ -58,33 +54,33 @@ public class OpenAIUtil {
     }
 
     public static void createAPIKey(String apiKey, JComponent component) {
-        JSONObject params = new JSONObject();
-        params.put("action", "create");
+        JsonObject params = new JsonObject();
+        params.addProperty("action", "create");
         OpenAISettingsState state = OpenAISettingsState.getInstance();
         try {
             String grants = HttpUtil.createPost(CREATE_API_KEY).
                     header("Authorization", "Bearer " + apiKey).
                     header("Content-Type", "application/json")
-                    .body(params.toJSONString().getBytes(StandardCharsets.UTF_8))
+                    .body(params.toString().getBytes(StandardCharsets.UTF_8))
                     .timeout(5000)
                     .setProxy(state.getProxy())
                     .execute().body();
-            JSONObject object = JSON.parseObject(grants);
-            if (object.containsKey("error")) {
-                String errorMessage = object.getJSONObject("error").getString("message");
+            JsonObject object = JsonParser.parseString(grants).getAsJsonObject();
+            if (object.keySet().contains("error")) {
+                String errorMessage = object.get("error").getAsJsonObject().get("message").getAsString();
                 MessageDialogBuilder.yesNo("Create API Key Failed",
                                 "Refresh grant failed, error: " + errorMessage)
                         .show();
                 return;
             }
-            if (!object.containsKey("result") || !object.getString("result").equals("success")) {
+            if (!object.keySet().contains("result") || !object.get("result").getAsString().equals("success")) {
                 MessageDialogBuilder.yesNo("Create API Key Failed",
                                 "Create API Key failed, please try again later.")
                         .show();
                 return;
             }
-            JSONObject key = object.getJSONObject("key");
-            String newKey = key.getString("sensitive_id");
+            JsonObject key = object.get("key").getAsJsonObject();
+            String newKey = key.get("sensitive_id").getAsString();
             boolean ask = MessageDialogBuilder.yesNo("Create API Key successful",
                             "Your API Key is: \n\n" + newKey + " \n\nThe API Key will only be displayed once, please record the API " +
                                     "Key immediately. Do you want to save it to GPT-3.5-Turbo?\n")
