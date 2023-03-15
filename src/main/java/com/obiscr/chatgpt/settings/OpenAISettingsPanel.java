@@ -23,8 +23,6 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.net.Proxy;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,16 +56,12 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JLabel contentOrderHelpLabel;
     private JLabel supportDonate;
     private JPanel supportPanel;
-    private JTextField usedField;
     private JTextField totalField;
     private JBTextField assistantApiKey;
     private JButton createAPIKeyButton;
     private JButton refreshButton;
     private JPanel openaiAssistantTitledBorderBox;
-    private JTextField availableField;
-    private JTextField grantField;
     private JLabel openaiAssistantContentHelpLabel;
-    private JLabel openaiAssistantUsageHelpLabel;
     private final String[] comboboxItemsString = {
             CHATGPT_CONTENT_NAME,
             GPT35_TRUBO_CONTENT_NAME};
@@ -107,8 +101,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
             if (StringUtil.isEmpty(apiKey)) {
                 return;
             }
-            OpenAIUtil.refreshGranted(apiKey, myMainPanel,
-                    usedField, availableField, grantField);
+            OpenAIUtil.refreshGranted(apiKey, myMainPanel);
         });
 
         createAPIKeyButton.addActionListener(e -> {
@@ -322,8 +315,5 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         openaiAssistantContentHelpLabel.setFont(JBUI.Fonts.smallFont());
         openaiAssistantContentHelpLabel.setForeground(UIUtil.getContextHelpForeground());
-
-        openaiAssistantUsageHelpLabel.setFont(JBUI.Fonts.smallFont());
-        openaiAssistantUsageHelpLabel.setForeground(UIUtil.getContextHelpForeground());
     }
 }

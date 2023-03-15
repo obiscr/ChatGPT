@@ -60,6 +60,8 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
   public String gpt35Model = "gpt-3.5-turbo";
   public Boolean enableContext = false;
   public String assistantApiKey = "";
+  public Boolean enableTokenConsumption = false;
+
   public static OpenAISettingsState getInstance() {
     return ApplicationManager.getApplication().getService(OpenAISettingsState.class);
   }

@@ -17,9 +17,7 @@ import static com.obiscr.chatgpt.settings.OpenAISettingsPanel.FIND_GRANTS;
  */
 public class OpenAIUtil {
 
-    public static void refreshGranted(String apiKey, JComponent component,
-                                      JTextField usedField,JTextField availableField,
-                                      JTextField grantField) {
+    public static void refreshGranted(String apiKey, JComponent component) {
         OpenAISettingsState state = OpenAISettingsState.getInstance();
         try {
             String grants = HttpUtil.createGet(FIND_GRANTS).
@@ -40,12 +38,14 @@ public class OpenAIUtil {
                         .show();
                 return;
             }
-            Double used = object.get("total_used").getAsDouble();
-            Double available = object.get("total_available").getAsDouble();
-            Double granted = object.get("total_granted").getAsDouble();
-            usedField.setText(String.valueOf(used));
-            availableField.setText(String.valueOf(available));
-            grantField.setText(String.valueOf(granted));
+            double used = object.get("total_used").getAsDouble();
+            double available = object.get("total_available").getAsDouble();
+            double granted = object.get("total_granted").getAsDouble();
+            String info = "Tips: Usage data may be delayed by up to 5 minutes.\n\n" +
+                    "<b>Used</b>: " + used + "\n" +
+                    "<b>Available</b>: " + available + "\n" +
+                    "<b>Total</b>: " + granted;
+            MessageDialogBuilder.okCancel("Usage info", info).ask(component);
         } catch (Exception e) {
             MessageDialogBuilder.yesNo("Refresh Failed",
                             "Refresh grant failed, error: " + e.getMessage())
