@@ -297,6 +297,7 @@
               <model>
                 <item value="text-davinci-002-render-sha"/>
                 <item value="text-davinci-002-render-paid"/>
+                <item value="gpt-4"/>
               </model>
             </properties>
           </component>
