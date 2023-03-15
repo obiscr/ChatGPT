@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.intellij.openapi.project.Project;
 import com.obiscr.chatgpt.core.ConversationManager;
+import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.ui.MessageComponent;
 import com.obiscr.chatgpt.util.HtmlUtil;
 import org.jetbrains.annotations.NotNull;
@@ -57,9 +58,22 @@ public class OfficialParser {
             String content = messages.get("content").getAsString();
             result.append(content);
         }
+
+        OpenAISettingsState state = OpenAISettingsState.getInstance();
+        StringBuilder usageResult = new StringBuilder(result);
+        if (state.enableTokenConsumption) {
+            JsonObject usage = object.get("usage").getAsJsonObject();
+            usageResult.append("<br /><br />");
+            usageResult.append("*");
+            usageResult.
+                    append("Prompt tokens: ").append("<b>").append(usage.get("prompt_tokens").getAsInt()).append("</b>").append(", ").
+                    append("Completion tokens: ").append("<b>").append(usage.get("completion_tokens").getAsInt()).append("</b>").append(", ").
+                    append("Total tokens: ").append("<b>").append(usage.get("total_tokens").getAsInt()).append("</b>");
+            usageResult.append("*");
+        }
         ParseResult parseResult = new ParseResult();
         parseResult.source = result.toString();
-        parseResult.html = HtmlUtil.md2html(result.toString());
+        parseResult.html = HtmlUtil.md2html(usageResult.toString());
         return parseResult;
     }
 
