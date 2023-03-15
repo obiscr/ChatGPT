@@ -45,4 +45,8 @@ This is a newly established project with many areas that can be optimized. We lo
 
 # License
 
-This project uses the "GNU General Public License Agreement V3", and additional restrictions: it is forbidden to use the code of this project to build other plug-in products of JetBrains Marketplace. Offenders will be punished.
+This project uses the "GNU General Public License Agreement V2". and additional restrictions: it is forbidden to use the code of this project to build other plug-in products of JetBrains Marketplace. Offenders will be punished.
+
+# Disclaimers
+
+This is not an official OpenAI product, and I am not responsible for any damage caused by the use of this plugin.
