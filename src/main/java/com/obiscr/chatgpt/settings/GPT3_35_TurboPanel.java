@@ -24,6 +24,7 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
     private JPanel modelTitledBorderBox;
     private JCheckBox enableContextCheckBox;
     private JLabel contextLabel;
+    private JCheckBox enableTokenConsumptionCheckBox;
 
 
     public GPT3_35_TurboPanel() {
@@ -43,6 +44,7 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
         apiKeyField.setText(state.apiKey);
         comboCombobox.setSelectedItem(state.gpt35Model);
         enableContextCheckBox.setSelected(state.enableContext);
+        enableTokenConsumptionCheckBox.setSelected(state.enableTokenConsumption);
     }
 
     @Override
@@ -56,7 +58,8 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
 
         return !state.apiKey.equals(apiKeyField.getText()) ||
                !state.gpt35Model.equals(comboCombobox.getSelectedItem().toString()) ||
-               !state.enableContext == enableContextCheckBox.isSelected();
+               !state.enableContext == enableContextCheckBox.isSelected() ||
+               !state.enableTokenConsumption == enableTokenConsumptionCheckBox.isSelected();
     }
 
     @Override
@@ -65,6 +68,7 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
         state.apiKey = apiKeyField.getText();
         state.gpt35Model = comboCombobox.getSelectedItem().toString();
         state.enableContext = enableContextCheckBox.isSelected();
+        state.enableTokenConsumption = enableTokenConsumptionCheckBox.isSelected();
     }
 
     @Override
@@ -82,7 +86,7 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
         apiKeyTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
 
         modelTitledBorderBox = new JPanel(new BorderLayout());
-        TitledSeparator mdUrl = new TitledSeparator("Model Settings");
+        TitledSeparator mdUrl = new TitledSeparator("Other Settings");
         modelTitledBorderBox.add(mdUrl,BorderLayout.CENTER);
     }
 
