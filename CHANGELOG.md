@@ -2,6 +2,13 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.7-201]
+### Added
++ Support GPT 3.5 Turbo to display the number of Tokens consumed per conversation
+
+### Changed
++ Changed the display of OpenAI assistant
+
 ## [2.1.6-201]
 ### Changed
 + Fix [#107](https://github.com/dromara/ChatGPT/issues/107)
