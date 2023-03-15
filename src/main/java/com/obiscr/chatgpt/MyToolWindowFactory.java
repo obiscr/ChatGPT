@@ -88,7 +88,7 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         });
 
         List<AnAction> actionList = new ArrayList<>();
-        actionList.add(new DocumentationAction());
+        actionList.add(new HelpAction());
         actionList.add(new SettingAction(ChatGPTBundle.message("action.settings")));
         actionList.add(new GitHubAction());
         actionList.add(new PluginAction());
