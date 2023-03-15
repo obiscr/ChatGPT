@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>ChatGPT</id>
   <name>ChatGPT</name>
-  <version>2.1.6-222.223</version>
+  <version>2.1.7-222.223</version>
   <vendor email="wuzi@obiscr.com" url="https://obiscr.com">obiscr</vendor>
 
   <description><![CDATA[
@@ -11,9 +11,16 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>2.1.7-222.223</p>
+      <ul>
+        <li>Add help button</li>
+        <li>Support GPT 3.5 Turbo to display the number of Tokens consumed per conversation</li>
+        <li>Changed the display of OpenAI assistant</li>
+      </ul>
+      <p>For more details, please see <a href="https://chatgpt.en.obiscr.com/release/2.1.7">What's new in version 2.1.7</a></p><br>
       <p>2.1.6-222.223</p>
       <ul>
-        <li>Fix <a href="https://github.com/dromara/ChatGPT/issues/94">#94</a></li>
+        <li>Fix <a href="https://github.com/dromara/ChatGPT/issues/107">#107</a></li>
         <li>Support enable/disable avatar</li>
         <li>Fix ChatGPT network error</li>
       </ul><br>
