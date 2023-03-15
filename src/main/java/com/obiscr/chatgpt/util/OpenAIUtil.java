@@ -45,7 +45,7 @@ public class OpenAIUtil {
                     "<b>Used</b>: " + used + "\n" +
                     "<b>Available</b>: " + available + "\n" +
                     "<b>Total</b>: " + granted;
-            MessageDialogBuilder.okCancel("Usage info", info).ask(component);
+            MessageDialogBuilder.yesNo("Usage info", info).show();
         } catch (Exception e) {
             MessageDialogBuilder.yesNo("Refresh Failed",
                             "Refresh grant failed, error: " + e.getMessage())
