@@ -1,3 +1,4 @@
+import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -7,11 +8,11 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.6.10"
+    id("org.jetbrains.kotlin.jvm") version "1.7.22"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.10.1"
+    id("org.jetbrains.intellij") version "1.13.2"
     // Gradle Changelog Plugin
-    id("org.jetbrains.changelog") version "1.3.1"
+    id("org.jetbrains.changelog") version "2.0.0"
     // Gradle Qodana Plugin
     id("org.jetbrains.qodana") version "0.1.13"
 }
@@ -52,6 +53,7 @@ intellij {
 changelog {
     version.set(properties("pluginVersion"))
     groups.set(emptyList())
+    lineSeparator.set("\n")
 }
 
 // Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
@@ -98,9 +100,9 @@ tasks {
 
         // Get the latest available change notes from the changelog file
         changeNotes.set(provider {
-            changelog.run {
+            changelog.renderItem(changelog.run {
                 getOrNull(properties("pluginVersion")) ?: getLatest()
-            }.toHTML()
+            }, Changelog.OutputType.HTML)
         })
     }
 
@@ -116,6 +118,11 @@ tasks {
     runPluginVerifier {
         downloadDir.set("D:/env/.pluginVerifier/ides")
     }
+
+//    runIde {
+//        // Enable the hot reload function Only support JBR
+//        jvmArgs = listOf("-XX:+AllowEnhancedClassRedefinition")
+//    }
 
     signPlugin {
         certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
