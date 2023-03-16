@@ -8,8 +8,10 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.components.JBLabel;
+import com.intellij.ui.components.JBPasswordField;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
+import com.intellij.ui.components.fields.ExpandableTextField;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
 import com.obiscr.chatgpt.core.TokenManager;
@@ -34,15 +36,12 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     private JPanel customizeOptions;
     private JPanel urlTitledBorderBox;
     private JBTextField emailField;
-    private JBTextField passwordField;
-    private JEditorPane accessTokenField;
+    private JBPasswordField passwordField;
+    private ExpandableTextField accessTokenField;
     private JTextField expireTimeField;
     private JButton loginButton;
-    private JPanel officialIntroducePanel;
     private JPanel customizeIntroducePanel;
-    private JBLabel accountHelpLabel;
     private JBLabel customizeHelpLabel;
-    private JLabel accessTokenHelpLabel;
     private JPanel modelTitledBorderBox;
     private JComboBox<String> comboCombobox;
 
@@ -68,8 +67,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
         customizeUrlField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.url.customize.url.empty_text"));
         emailField.getEmptyText().setText("Your OpenAI account");
         passwordField.getEmptyText().setText("Your OpenAI password");
+        accessTokenField.getEmptyText().setText("Automatically fill after login, if you fill in manually, you don't need to login");
 
-        accessTokenField.setBorder(JBUI.Borders.customLine(JBColor.border(),1));
         expireTimeField.setEnabled(false);
         expireTimeField.setEditable(false);
 
@@ -198,13 +197,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     }
 
     private void initHelp() {
-        accountHelpLabel.setFont(JBUI.Fonts.smallFont());
-        accountHelpLabel.setForeground(UIUtil.getContextHelpForeground());
-
         customizeHelpLabel.setFont(JBUI.Fonts.smallFont());
         customizeHelpLabel.setForeground(UIUtil.getContextHelpForeground());
-
-        accessTokenHelpLabel.setFont(JBUI.Fonts.smallFont());
-        accessTokenHelpLabel.setForeground(UIUtil.getContextHelpForeground());
     }
 }
