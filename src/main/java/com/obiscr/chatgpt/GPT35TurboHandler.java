@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.*;
 import java.io.IOException;
 import java.net.Proxy;
 import java.net.SocketException;
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Wuzi
  */
-public class GPT35TurboHandler  extends AbstractHandler {
+public class GPT35TurboHandler extends AbstractHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GPT35TurboHandler.class);
 
     public Call handle(MainPanel mainPanel, MessageComponent component, String question) {
@@ -46,6 +47,8 @@ public class GPT35TurboHandler  extends AbstractHandler {
             OkHttpClient.Builder builder = new OkHttpClient.Builder()
                     .connectTimeout(Integer.parseInt(instance.connectionTimeout), TimeUnit.MILLISECONDS)
                     .readTimeout(Integer.parseInt(instance.readTimeout), TimeUnit.MILLISECONDS);
+            builder.hostnameVerifier(getHostNameVerifier());
+            builder.sslSocketFactory(getSslContext().getSocketFactory(), (X509TrustManager) getTrustAllManager());
             if (instance.enableProxy) {
                 Proxy proxy = getProxy();
                 builder.proxy(proxy);
