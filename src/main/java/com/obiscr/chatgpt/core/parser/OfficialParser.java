@@ -77,6 +77,25 @@ public class OfficialParser {
         return parseResult;
     }
 
+    public static ParseResult parseGPT35TurboWithStream(MessageComponent component, String response) {
+        JsonObject object = JsonParser.parseString(response).getAsJsonObject();
+        JsonArray choices = object.get("choices").getAsJsonArray();
+        StringBuilder result = new StringBuilder();
+        for (JsonElement element : choices) {
+            JsonObject messages = element.getAsJsonObject().get("delta").getAsJsonObject();
+            if (!messages.keySet().contains("content")) {
+                continue;
+            }
+            String content = messages.get("content").getAsString();
+            result.append(content);
+            component.getAnswers().add(result.toString());
+        }
+        ParseResult parseResult = new ParseResult();
+        parseResult.source = component.prevAnswers() + result;
+        parseResult.html = HtmlUtil.md2html(component.prevAnswers() + result);
+        return parseResult;
+    }
+
     public static class ParseResult {
         private String source;
         private String html;

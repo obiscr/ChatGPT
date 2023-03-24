@@ -14,7 +14,7 @@ public abstract class AbstractHandler {
 
     public abstract  <T> T handle(MainPanel mainPanel, MessageComponent component, String question);
 
-    protected static Proxy getProxy() {
+    public static Proxy getProxy() {
         Proxy proxy;
         OpenAISettingsState instance = OpenAISettingsState.getInstance();
         if (!instance.enableProxy) {
