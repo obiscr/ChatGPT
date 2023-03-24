@@ -38,6 +38,9 @@
 
   <actions>
     <group id="ChatGPT" text="Search with ChatGPT" description="Search with ChatGPT">
+      <action id="EditorAction" icon="/icons/toolWindow.svg"
+              class="com.obiscr.chatgpt.ui.action.editor.EditorAction"/>
+      <separator/>
       <action id="WrongAction" icon="/icons/toolWindow.svg"
               class="com.obiscr.chatgpt.ui.action.editor.BugAction"/>
       <action id="OptimizeAction" class="com.obiscr.chatgpt.ui.action.editor.OptimizeAction"

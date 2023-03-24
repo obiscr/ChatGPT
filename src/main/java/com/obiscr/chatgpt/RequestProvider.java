@@ -48,7 +48,7 @@ public class RequestProvider {
             provider.header = TokenManager.getInstance().getChatGPTHeaders();
             provider.data = OfficialBuilder.buildChatGPT(myProject,question).toString();
         } else {
-            provider.url = "https://api.openai.com/v1/chat/completions";
+            provider.url = instance.gpt35TurboUrl;
             provider.header = TokenManager.getInstance().getGPT35TurboHeaders();
             if (instance.enableContext) {
                 provider.data = OfficialBuilder.buildGpt35Turbo(question,mainPanel.getContentPanel()).toString();
