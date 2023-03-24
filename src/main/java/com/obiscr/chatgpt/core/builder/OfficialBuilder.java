@@ -57,7 +57,9 @@ public class OfficialBuilder {
         message0.addProperty("content",text);
         messages.add(message0);
         result.add("messages",messages);
-        result.addProperty("stream",true);
+        if (OpenAISettingsState.getInstance().enableGPT35StreamResponse) {
+            result.addProperty("stream",true);
+        }
         return result;
     }
 
@@ -67,7 +69,9 @@ public class OfficialBuilder {
         result.addProperty("model",settingsState.gpt35Model);
         component.getMessages().add(userMessage(text));
         result.add("messages",component.getMessages());
-        result.addProperty("stream",true);
+        if (OpenAISettingsState.getInstance().enableGPT35StreamResponse) {
+            result.addProperty("stream",true);
+        }
         return result;
     }
 
