@@ -48,6 +48,10 @@ public class ChatGPTHandler extends AbstractHandler {
             Proxy proxy = getProxy();
             builder.proxy(proxy);
         }
+        if (instance.enableProxyAuth) {
+            Authenticator proxyAuth = getProxyAuth();
+            builder.proxyAuthenticator(proxyAuth);
+        }
         OkHttpClient httpClient = builder.build();
         EventSourceListener listener = new EventSourceListener() {
 
