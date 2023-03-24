@@ -100,6 +100,6 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
         contextLabel.setForeground(UIUtil.getContextHelpForeground());
 
         tokenLabel.setFont(JBUI.Fonts.smallFont());
-        contextLabel.setForeground(UIUtil.getContextHelpForeground());
+        tokenLabel.setForeground(UIUtil.getContextHelpForeground());
     }
 }

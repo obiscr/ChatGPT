@@ -4,6 +4,7 @@ import com.obiscr.OpenAIProxy;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.ui.MainPanel;
 import com.obiscr.chatgpt.ui.MessageComponent;
+import okhttp3.*;
 
 import java.net.Proxy;
 
@@ -43,4 +44,13 @@ public abstract class AbstractHandler {
         return proxy;
     }
 
+    protected Authenticator getProxyAuth() {
+        OpenAISettingsState state = OpenAISettingsState.getInstance();
+        return (route, response) -> {
+            String credential = Credentials.basic(state.proxyUsername, state.proxyPassword);
+            return response.request().newBuilder()
+                    .header("Proxy-Authorization", credential)
+                    .build();
+        };
+    }
 }

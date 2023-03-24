@@ -6,13 +6,14 @@ import com.intellij.openapi.application.ex.ApplicationManagerEx;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.ui.PortField;
 import com.intellij.ui.TitledSeparator;
+import com.intellij.ui.components.JBPasswordField;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
-import com.obiscr.OpenAIProxy;
 import com.obiscr.chatgpt.icons.ChatGPTIcons;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.ui.SupportDialog;
@@ -39,7 +40,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JBTextField readTimeoutField;
     private JBTextField connectionTimeoutField;
     private JCheckBox enableProxyCheckBox;
-    private JBTextField portField;
+    private PortField portField;
     private JPanel proxyTitledBorderBox;
     private JBRadioButton proxyDirectChoice;
     private JBRadioButton proxyHttpChoice;
@@ -63,6 +64,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JButton refreshButton;
     private JPanel openaiAssistantTitledBorderBox;
     private JLabel openaiAssistantContentHelpLabel;
+    private JCheckBox enableProxyAuthCheckBox;
+    private JTextField proxyUsernameField;
+    private JBPasswordField proxyPasswordField;
+    private JPanel proxyAuthPanel;
     private final String[] comboboxItemsString = {
             CHATGPT_CONTENT_NAME,
             GPT35_TRUBO_CONTENT_NAME,
@@ -87,9 +92,18 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 enableProxyOptions(false);
             }
         };
-
         enableProxyCheckBox.addItemListener(proxyTypeChangedListener);
         enableProxyOptions(false);
+
+        ItemListener proxyAuthChangedListener = e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                enableProxyAuthOptions(true);
+            } else if (e.getStateChange() == ItemEvent.DESELECTED) {
+                enableProxyAuthOptions(false);
+            }
+        };
+        enableProxyAuthCheckBox.addItemListener(proxyAuthChangedListener);
+        enableProxyAuthOptions(false);
 
         readTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.read_timeout.empty_text"));
         connectionTimeoutField.getEmptyText().setText(ChatGPTBundle.message("ui.setting.connection.connection_timeout.empty_text"));
@@ -135,6 +149,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         UIUtil.setEnabled(proxyOptions, enabled, true);
     }
 
+    private void enableProxyAuthOptions(boolean enabled) {
+        UIUtil.setEnabled(proxyAuthPanel, enabled, true);
+    }
+
     @Override
     public void reset() {
         OpenAISettingsState state = OpenAISettingsState.getInstance();
@@ -146,7 +164,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         enableAvatarCheckBox.setSelected(state.enableAvatar);
         setProxyChoice(state.proxyType);
         hostnameField.setText(state.proxyHostname);
-        portField.setText(state.proxyPort);
+        portField.setValue(Integer.parseInt(state.proxyPort));
+        enableProxyAuthCheckBox.setSelected(state.enableProxyAuth);
+        proxyUsernameField.setText(state.proxyUsername);
+        proxyPasswordField.setText(state.proxyPassword);
 
         firstCombobox.setSelectedItem(state.contentOrder.get(1));
         secondCombobox.setSelectedItem(state.contentOrder.get(2));
@@ -179,7 +200,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 !state.enableProxy == enableProxyCheckBox.isSelected() ||
                 !state.enableAvatar == enableAvatarCheckBox.isSelected() ||
                 !StringUtil.equals(state.proxyHostname, hostnameField.getText()) ||
-                !StringUtil.equals(state.proxyPort, portField.getText()) ||
+                !StringUtil.equals(state.proxyPort, portField.getValue().toString()) ||
+                !state.enableProxyAuth == enableProxyAuthCheckBox.isSelected() ||
+                !StringUtil.equals(state.proxyUsername, proxyUsernameField.getText()) ||
+                !StringUtil.equals(state.proxyPassword, proxyPasswordField.getText()) ||
                 !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem()) ||
                 !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem()) ||
                 !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem()) ||
@@ -204,8 +228,11 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         state.proxyHostname = hostnameField.getText();
 
         boolean portIsNumber = com.obiscr.chatgpt.util.
-                StringUtil.isNumber(portField.getText());
-        state.proxyPort = !portIsNumber ? "0" : portField.getText();
+                StringUtil.isNumber(portField.getValue().toString());
+        state.proxyPort = !portIsNumber ? "0" : portField.getValue().toString();
+        state.enableProxyAuth = enableProxyAuthCheckBox.isSelected();
+        state.proxyUsername = proxyUsernameField.getText();
+        state.proxyPassword = proxyPasswordField.getText();
 
         String firstSelected = (String) firstCombobox.getSelectedItem();
         String secondSelected = (String) secondCombobox.getSelectedItem();
