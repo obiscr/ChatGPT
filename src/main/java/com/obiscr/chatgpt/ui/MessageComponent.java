@@ -3,9 +3,6 @@ package com.obiscr.chatgpt.ui;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.swing.clipboard.ClipboardUtil;
 import com.intellij.icons.AllIcons;
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
 import com.intellij.notification.impl.ui.NotificationsUtil;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBLabel;
@@ -13,7 +10,6 @@ import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.panels.VerticalLayout;
 import com.intellij.util.ui.JBUI;
 import com.obiscr.chatgpt.icons.ChatGPTIcons;
-import com.obiscr.chatgpt.message.ChatGPTBundle;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.util.ImgUtils;
 import com.obiscr.chatgpt.util.StringUtil;
@@ -24,7 +20,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Wuzi
@@ -36,6 +33,8 @@ public class MessageComponent extends JBPanel<MessageComponent> {
     private final String question;
 
     private String answer;
+
+    private final List<String> answers = new ArrayList<>();
 
     public MessageComponent(String content, boolean me) {
         question = content;
@@ -125,5 +124,17 @@ public class MessageComponent extends JBPanel<MessageComponent> {
             Rectangle bounds = getBounds();
             scrollRectToVisible(bounds);
         });
+    }
+
+    public List<String> getAnswers() {
+        return answers;
+    }
+
+    public String prevAnswers() {
+        StringBuilder result = new StringBuilder();
+        for (String s : answers){
+            result.append(s);
+        }
+        return result.toString();
     }
 }

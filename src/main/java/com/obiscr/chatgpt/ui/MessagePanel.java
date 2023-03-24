@@ -2,6 +2,7 @@ package com.obiscr.chatgpt.ui;
 
 import com.intellij.util.ui.HtmlPanel;
 import com.intellij.util.ui.UIUtil;
+import com.obiscr.chatgpt.util.HtmlUtil;
 import com.obiscr.chatgpt.util.StringUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
