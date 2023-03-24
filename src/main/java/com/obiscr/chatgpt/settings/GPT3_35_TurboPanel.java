@@ -25,6 +25,8 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
     private JCheckBox enableContextCheckBox;
     private JLabel contextLabel;
     private JCheckBox enableTokenConsumptionCheckBox;
+    private JCheckBox enableStreamResponseCheckBox;
+    private JLabel tokenLabel;
 
 
     public GPT3_35_TurboPanel() {
@@ -45,6 +47,7 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
         comboCombobox.setSelectedItem(state.gpt35Model);
         enableContextCheckBox.setSelected(state.enableContext);
         enableTokenConsumptionCheckBox.setSelected(state.enableTokenConsumption);
+        enableStreamResponseCheckBox.setSelected(state.enableStreamResponse);
     }
 
     @Override
@@ -59,7 +62,8 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
         return !state.apiKey.equals(apiKeyField.getText()) ||
                !state.gpt35Model.equals(comboCombobox.getSelectedItem().toString()) ||
                !state.enableContext == enableContextCheckBox.isSelected() ||
-               !state.enableTokenConsumption == enableTokenConsumptionCheckBox.isSelected();
+               !state.enableTokenConsumption == enableTokenConsumptionCheckBox.isSelected() ||
+               !state.enableStreamResponse == enableStreamResponseCheckBox.isSelected();
     }
 
     @Override
@@ -69,6 +73,7 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
         state.gpt35Model = comboCombobox.getSelectedItem().toString();
         state.enableContext = enableContextCheckBox.isSelected();
         state.enableTokenConsumption = enableTokenConsumptionCheckBox.isSelected();
+        state.enableStreamResponse = enableStreamResponseCheckBox.isSelected();
     }
 
     @Override
@@ -92,6 +97,9 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
 
     private void initHelp() {
         contextLabel.setFont(JBUI.Fonts.smallFont());
+        contextLabel.setForeground(UIUtil.getContextHelpForeground());
+
+        tokenLabel.setFont(JBUI.Fonts.smallFont());
         contextLabel.setForeground(UIUtil.getContextHelpForeground());
     }
 }

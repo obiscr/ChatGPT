@@ -105,18 +105,18 @@ public class SendAction extends AnAction {
         try {
             ExecutorService executorService = mainPanel.getExecutorService();
             // Request the server.
-            if (mainPanel.isChatGPTModel()) {
-                ChatGPTHandler chatGPTHandler = project.getService(ChatGPTHandler.class);
+            if (!mainPanel.isChatGPTModel() && !OpenAISettingsState.getInstance().enableStreamResponse) {
+                GPT35TurboHandler gpt35TurboHandler = project.getService(GPT35TurboHandler.class);
                 executorService.submit(() -> {
-                    EventSource handle = chatGPTHandler.handle(mainPanel, answer, data);
+                    Call handle = gpt35TurboHandler.handle(mainPanel, answer, data);
                     mainPanel.setRequestHolder(handle);
                     contentPanel.updateLayout();
                     contentPanel.scrollToBottom();
                 });
             } else {
-                GPT35TurboHandler gpt35TurboHandler = project.getService(GPT35TurboHandler.class);
+                ChatGPTHandler chatGPTHandler = project.getService(ChatGPTHandler.class);
                 executorService.submit(() -> {
-                    Call handle = gpt35TurboHandler.handle(mainPanel, answer, data);
+                    EventSource handle = chatGPTHandler.handle(mainPanel, answer, data);
                     mainPanel.setRequestHolder(handle);
                     contentPanel.updateLayout();
                     contentPanel.scrollToBottom();

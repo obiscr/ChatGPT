@@ -78,16 +78,21 @@ public class ChatGPTHandler extends AbstractHandler {
                 if (data.contains("[DONE]")) {
                     return;
                 }
-                if (!data.contains("message")) {
+                if (mainPanel.isChatGPTModel() && !data.contains("message")) {
                     return;
                 }
                 try {
-                    OfficialParser.ParseResult parseResult = OfficialParser.
-                            parseChatGPT(myProject, component, data);;
+                    OfficialParser.ParseResult parseResult;
+                    if (mainPanel.isChatGPTModel()) {
+                        parseResult = OfficialParser.
+                                parseChatGPT(myProject, component, data);
+                    } else {
+                        parseResult = OfficialParser.
+                                parseGPT35TurboWithStream(component, data);
+                    }
                     if (parseResult == null) {
                         return;
                     }
-
                     // Copy action only needed source content
                     component.setSourceContent(parseResult.getSource());
                     component.setContent(parseResult.getHtml());
