@@ -105,7 +105,7 @@ public class SendAction extends AnAction {
         try {
             ExecutorService executorService = mainPanel.getExecutorService();
             // Request the server.
-            if (!mainPanel.isChatGPTModel() && !OpenAISettingsState.getInstance().enableStreamResponse) {
+            if (!mainPanel.isChatGPTModel() && !OpenAISettingsState.getInstance().enableGPT35StreamResponse) {
                 GPT35TurboHandler gpt35TurboHandler = project.getService(GPT35TurboHandler.class);
                 executorService.submit(() -> {
                     Call handle = gpt35TurboHandler.handle(mainPanel, answer, data);
@@ -124,6 +124,8 @@ public class SendAction extends AnAction {
             }
 
         } catch (Exception e) {
+            answer.setSourceContent(e.getMessage());
+            answer.setContent(e.getMessage());
             mainPanel.aroundRequest(false);
             LOG.error("ChatGPT: Request failed, error={}", e.getMessage());
         }
