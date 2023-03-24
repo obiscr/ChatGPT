@@ -63,6 +63,11 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
   public Boolean enableTokenConsumption = false;
   public Boolean enableStreamResponse = false;
   public String gpt35TurboUrl = "https://api.openai.com/v1/chat/completions";
+
+  public Boolean enableProxyAuth = false;
+  public String proxyUsername = "";
+  public String proxyPassword = "";
+
   public static OpenAISettingsState getInstance() {
     return ApplicationManager.getApplication().getService(OpenAISettingsState.class);
   }

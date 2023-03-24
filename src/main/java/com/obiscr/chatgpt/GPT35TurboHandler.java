@@ -53,6 +53,10 @@ public class GPT35TurboHandler  extends AbstractHandler {
                 Proxy proxy = getProxy();
                 builder.proxy(proxy);
             }
+            if (instance.enableProxyAuth) {
+                Authenticator proxyAuth = getProxyAuth();
+                builder.proxyAuthenticator(proxyAuth);
+            }
             OkHttpClient httpClient = builder.build();
             call = httpClient.newCall(request);
             call.enqueue(new Callback() {
