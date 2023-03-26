@@ -2,6 +2,15 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.8-201]
+### Added
++ Supports GPT-3.5-Turbo stream response
++ Support proxy authentication
+
+### Fixed
++ Fix [#116](https://github.com/dromara/ChatGPT/issues/116)
+
+
 ## [2.1.7-201]
 ### Added
 + Support GPT 3.5 Turbo to display the number of Tokens consumed per conversation
