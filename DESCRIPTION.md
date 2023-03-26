@@ -27,10 +27,6 @@ This project is a plugin that supports ChatGPT running on JetBrains series IDE.
 
 <img alt="微信公众号: 观察与创造" width="600" src="https://user-images.githubusercontent.com/28687074/224671786-ecb449a1-4901-4690-bef5-b8d03a8120fa.png" />
 
-## 强烈推荐
-
-PC端好用国内免费在线访问ChatGPT网站：[https://aicodehelper.com](https://aicodehelper.com#1)
-
 ## 简体中文
 
 [ChatGPT](https://chat.openai.com/chat)是一种语言模型，它由OpenAI训练，
