@@ -91,8 +91,8 @@ public class OfficialParser {
             component.getAnswers().add(result.toString());
         }
         ParseResult parseResult = new ParseResult();
-        parseResult.source = component.prevAnswers() + result;
-        parseResult.html = HtmlUtil.md2html(component.prevAnswers() + result);
+        parseResult.source = component.prevAnswers();
+        parseResult.html = HtmlUtil.md2html(component.prevAnswers());
         return parseResult;
     }
 
