@@ -2,6 +2,14 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.8-222.223]
+### Added
++ Supports GPT-3.5-Turbo stream response
++ Support proxy authentication
+
+### Fixed
++ Fix [#116](https://github.com/dromara/ChatGPT/issues/116)
+
 ## [2.1.7-222.223]
 ### Added
 + Add help button
