@@ -2,6 +2,10 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.9-201]
+### Added
++ Support gp4-xxx series model
+
 ## [2.1.8-201]
 ### Added
 + Supports GPT-3.5-Turbo stream response
