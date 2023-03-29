@@ -11,6 +11,8 @@ import com.obiscr.chatgpt.ui.MessageComponent;
 import com.obiscr.chatgpt.util.HtmlUtil;
 import org.jetbrains.annotations.NotNull;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author Wuzi
  */
@@ -20,6 +22,7 @@ public class OfficialParser {
     private static final String DONE = "[DONE]";
 
     public static ParseResult parseChatGPT(@NotNull Project project, MessageComponent component, String response) {
+        response = new String(response.getBytes(StandardCharsets.UTF_8));
         JsonObject object = JsonParser.parseString(response).getAsJsonObject();
         // Handler the error info from the proxy server.
         if (object.keySet().contains("detail")) {
