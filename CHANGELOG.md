@@ -2,6 +2,11 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.10-222.231]
+### Fixed
++ [#133](https://github.com/dromara/ChatGPT/issues/133)
++ [#139](https://github.com/dromara/ChatGPT/issues/139)
+
 ## [2.1.9-222.223]
 ### Added
 + Support gp4-xxx series model
