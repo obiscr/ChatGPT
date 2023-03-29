@@ -115,13 +115,15 @@ public class ChatGPTHandler extends AbstractHandler {
                 public void onFailure(@NotNull EventSource eventSource, @Nullable Throwable t, @Nullable Response response) {
                     if (t != null) {
                         if (t instanceof StreamResetException) {
-                            LOG.info("ChatGPT: Stop generating");
-                            component.setContent("Stop generating");
+                            LOG.info("ChatGPT: Request failure, throwable StreamResetException, cause: {}", t.getMessage());
+                            component.setContent("Request failure, cause: " + t.getMessage());
+                            mainPanel.aroundRequest(false);
                             t.printStackTrace();
                             return;
                         }
                         LOG.info("ChatGPT: conversation failure. Url={}, response={}, errorMessage={}",eventSource.request().url(), response, t.getMessage());
                         component.setContent("Response failure, cause: " + t.getMessage() + ", please try again. <br><br> Tips: if proxy is enabled, please check if the proxy server is working.");
+                        mainPanel.aroundRequest(false);
                         t.printStackTrace();
                     } else {
                         String responseString = "";
@@ -129,6 +131,9 @@ public class ChatGPTHandler extends AbstractHandler {
                             try {
                                 responseString = response.body().string();
                             } catch (IOException e) {
+                                mainPanel.aroundRequest(false);
+                                LOG.error("ChatGPT: parse response error, cause: {}", e.getMessage());
+                                component.setContent("Response failure, cause: " + e.getMessage());
                                 throw new RuntimeException(e);
                             }
                         }
@@ -142,7 +147,7 @@ public class ChatGPTHandler extends AbstractHandler {
             EventSource.Factory factory = EventSources.createFactory(httpClient);
             return factory.newEventSource(request, listener);
         } catch (Exception e) {
-
+            LOG.info("ChatGPT: request exception. Error: {}",e.getMessage());
         }
         return null;
     }
