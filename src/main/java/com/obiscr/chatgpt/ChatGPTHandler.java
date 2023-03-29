@@ -81,7 +81,6 @@ public class ChatGPTHandler extends AbstractHandler {
                 @Override
                 public void onEvent(@NotNull EventSource eventSource, @Nullable String id, @Nullable String type, @NotNull String data) {
                     handler = true;
-                    data = new String(data.getBytes(StandardCharsets.UTF_8));
                     if (StringUtil.isEmpty(data)) {
                         return;
                     }
