@@ -99,7 +99,7 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
         myList.setBackground(UIUtil.getListBackground());
         myList.setBorder(JBUI.Borders.emptyRight(10));
 
-        myScrollPane.setBorder(null);
+        myScrollPane.setBorder(JBUI.Borders.empty());
         mainPanel.add(myScrollPane);
         myScrollPane.getVerticalScrollBar().setAutoscrolls(true);
         myScrollPane.getVerticalScrollBar().addAdjustmentListener(e -> {

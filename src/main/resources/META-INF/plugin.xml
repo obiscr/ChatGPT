@@ -34,6 +34,7 @@
     <projectService serviceImplementation="com.obiscr.chatgpt.ChatGPTHandler"/>
     <projectService serviceImplementation="com.obiscr.chatgpt.GPT35TurboHandler"/>
     <postStartupActivity implementation="com.obiscr.chatgpt.core.StartUpActivity"/>
+    <iconMapper mappingFile="ChatGPTIconMappings.json"/>
   </extensions>
 
   <actions>
