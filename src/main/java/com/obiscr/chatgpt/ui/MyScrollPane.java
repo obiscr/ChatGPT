@@ -1,6 +1,7 @@
 package com.obiscr.chatgpt.ui;
 
 import com.intellij.ui.components.JBScrollPane;
+import com.intellij.util.ui.JBUI;
 
 import java.awt.*;
 
@@ -15,13 +16,13 @@ public class MyScrollPane extends JBScrollPane {
 
     @Override
     public void updateUI() {
-        setBorder(null);
+        setBorder(JBUI.Borders.empty());
         super.updateUI();
     }
 
     @Override
     public void setCorner(String key, Component corner) {
-        setBorder(null);
+        setBorder(JBUI.Borders.empty());
         super.setCorner(key, corner);
     }
 }
