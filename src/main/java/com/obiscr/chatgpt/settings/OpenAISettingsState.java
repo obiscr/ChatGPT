@@ -69,6 +69,8 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
   public String proxyUsername = "";
   public String proxyPassword = "";
 
+  public Boolean enableCustomizeGpt35TurboUrl = false;
+
   public static OpenAISettingsState getInstance() {
     return ApplicationManager.getApplication().getService(OpenAISettingsState.class);
   }
