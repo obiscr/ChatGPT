@@ -1,6 +1,7 @@
 // Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.obiscr.chatgpt.settings;
 
+import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.ui.MessageDialogBuilder;
@@ -17,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -40,7 +42,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     private JBLabel customizeHelpLabel;
     private JPanel modelTitledBorderBox;
     private JComboBox<String> comboCombobox;
-    private BrowserLink unofficialHelpLabel;
+    private ActionLink unofficialHelpLabel;
 
 
     public ChatGPTSettingsPanel() {
@@ -192,7 +194,12 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
         TitledSeparator mdUrl = new TitledSeparator("Model Settings");
         modelTitledBorderBox.add(mdUrl,BorderLayout.CENTER);
 
-        unofficialHelpLabel = new BrowserLink("https://chatgpt.en.obiscr.com/settings/chatgpt-settings/#unofficial-unstable");
+        unofficialHelpLabel = new ActionLink("Safety instructions about server", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BrowserUtil.browse("https://chatgpt.en.obiscr.com/settings/chatgpt-settings/#unofficial-unstable");
+            }
+        });
     }
 
     private void initHelp() {

@@ -1,10 +1,12 @@
 // Copyright 2000-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.obiscr.chatgpt.settings;
 
+import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.ui.TitledSeparator;
-import com.intellij.ui.components.BrowserLink;
+import com.intellij.ui.components.ActionLink;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
@@ -15,6 +17,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -35,7 +38,7 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
     private JPanel urlTitledBox;
     private JCheckBox enableCustomizeGpt35TurboUrlCheckBox;
     private JTextField customizeServerField;
-    private BrowserLink customizeServerHelpLabel;
+    private ActionLink customizeServerHelpLabel;
     private JPanel customizeServerOptions;
 
 
@@ -124,7 +127,12 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
         TitledSeparator url = new TitledSeparator("Server Settings");
         urlTitledBox.add(url,BorderLayout.CENTER);
 
-        customizeServerHelpLabel = new BrowserLink("https://chatgpt.en.obiscr.com/settings/gpt-3.5-trubo-settings/#server-settings");
+        customizeServerHelpLabel = new ActionLink("Safety instructions about server", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BrowserUtil.browse("https://chatgpt.en.obiscr.com/settings/gpt-3.5-trubo-settings/#server-settings");
+            }
+        });
     }
 
     private void initHelp() {
