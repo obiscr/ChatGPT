@@ -5,12 +5,8 @@ import com.intellij.openapi.Disposable;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.ui.JBColor;
 import com.intellij.ui.TitledSeparator;
-import com.intellij.ui.components.JBLabel;
-import com.intellij.ui.components.JBPasswordField;
-import com.intellij.ui.components.JBRadioButton;
-import com.intellij.ui.components.JBTextField;
+import com.intellij.ui.components.*;
 import com.intellij.ui.components.fields.ExpandableTextField;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
@@ -44,6 +40,7 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
     private JBLabel customizeHelpLabel;
     private JPanel modelTitledBorderBox;
     private JComboBox<String> comboCombobox;
+    private BrowserLink unofficialHelpLabel;
 
 
     public ChatGPTSettingsPanel() {
@@ -194,6 +191,8 @@ public class ChatGPTSettingsPanel implements Configurable, Disposable {
         modelTitledBorderBox = new JPanel(new BorderLayout());
         TitledSeparator mdUrl = new TitledSeparator("Model Settings");
         modelTitledBorderBox.add(mdUrl,BorderLayout.CENTER);
+
+        unofficialHelpLabel = new BrowserLink("https://chatgpt.en.obiscr.com/settings/chatgpt-settings/#unofficial-unstable");
     }
 
     private void initHelp() {
