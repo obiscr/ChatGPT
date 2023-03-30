@@ -245,7 +245,7 @@
           </component>
         </children>
       </grid>
-      <component id="fc97d" class="com.intellij.ui.components.BrowserLink" binding="unofficialHelpLabel" custom-create="true">
+      <component id="fc97d" class="com.intellij.ui.components.labels.ActionLink" binding="unofficialHelpLabel" custom-create="true">
         <constraints>
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
         </constraints>
