@@ -13,6 +13,8 @@ import com.obiscr.chatgpt.icons.ChatGPTIcons;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.util.ImgUtils;
 import com.obiscr.chatgpt.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.accessibility.AccessibleContext;
 import javax.swing.*;
@@ -27,6 +29,8 @@ import java.util.List;
  * @author Wuzi
  */
 public class MessageComponent extends JBPanel<MessageComponent> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MessageComponent.class);
 
     private final MessagePanel component = new MessagePanel();
 
@@ -106,10 +110,7 @@ public class MessageComponent extends JBPanel<MessageComponent> {
     }
 
     public void setContent(String content) {
-        SwingUtilities.invokeLater(() -> {
-            component.updateMessage(content);
-            component.updateUI();
-        });
+        new MessageWorker(content).execute();
     }
 
     public void setSourceContent(String source) {
@@ -133,5 +134,30 @@ public class MessageComponent extends JBPanel<MessageComponent> {
             result.append(s);
         }
         return result.toString();
+    }
+
+    class MessageWorker extends SwingWorker<Void, String> {
+        private final String message;
+
+        public MessageWorker(String message) {
+            this.message = message;
+        }
+
+        @Override
+        protected Void doInBackground() throws Exception {
+            return null;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                get();
+                component.updateMessage(message);
+                component.updateUI();
+            } catch (Exception e) {
+                LOG.error("ChatGPT Exception in processing response: response:{} error: {}", message, e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 }
