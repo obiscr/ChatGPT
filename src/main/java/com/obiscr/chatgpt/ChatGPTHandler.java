@@ -20,8 +20,6 @@ import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.net.Proxy;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -76,6 +74,7 @@ public class ChatGPTHandler extends AbstractHandler {
                     }
                     mainPanel.aroundRequest(false);
                     component.scrollToBottom();
+                    mainPanel.getExecutorService().shutdown();
                 }
 
                 @Override
@@ -108,6 +107,8 @@ public class ChatGPTHandler extends AbstractHandler {
                     } catch (Exception e) {
                         LOG.error("ChatGPT: Parse response error, e={}, message={}", e, e.getMessage());
                         component.setContent(e.getMessage());
+                    } finally {
+                        mainPanel.getExecutorService().shutdown();
                     }
                 }
 
@@ -142,12 +143,15 @@ public class ChatGPTHandler extends AbstractHandler {
                     }
                     mainPanel.aroundRequest(false);
                     component.scrollToBottom();
+                    mainPanel.getExecutorService().shutdown();
                 }
             };
             EventSource.Factory factory = EventSources.createFactory(httpClient);
             return factory.newEventSource(request, listener);
         } catch (Exception e) {
-            LOG.info("ChatGPT: request exception. Error: {}",e.getMessage());
+            LOG.error("ChatGPT handle Exception, error: {}", e.getMessage());
+        } finally {
+            mainPanel.getExecutorService().shutdown();
         }
         return null;
     }
