@@ -77,6 +77,7 @@ public class GPT35TurboHandler extends AbstractHandler {
                     component.setContent(errorMessage);
                     mainPanel.aroundRequest(false);
                     component.scrollToBottom();
+                    mainPanel.getExecutorService().shutdown();
                 }
 
                 @Override
@@ -103,6 +104,8 @@ public class GPT35TurboHandler extends AbstractHandler {
             component.setSourceContent(e.getMessage());
             component.setContent(e.getMessage());
             mainPanel.aroundRequest(false);
+        } finally {
+            mainPanel.getExecutorService().shutdown();
         }
         return call;
     }
