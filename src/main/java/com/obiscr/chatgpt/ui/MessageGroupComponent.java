@@ -1,6 +1,11 @@
 package com.obiscr.chatgpt.ui;
 
 import com.google.gson.JsonArray;
+import com.intellij.icons.AllIcons;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.actionSystem.impl.ActionToolbarImpl;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.NullableComponent;
 import com.intellij.ui.Gray;
@@ -16,7 +21,7 @@ import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
 import com.obiscr.chatgpt.core.Constant;
 import com.obiscr.chatgpt.core.ConversationManager;
-import com.obiscr.chatgpt.core.builder.OfficialBuilder;
+import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -54,9 +59,29 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
         if (!isChatGPT) {
             JPanel panel = new NonOpaquePanel(new GridLayout(2,1));
             panel.add(new JBLabel(" System role: you can direct your assistant and set its behavior"));
+            JPanel rolePanel = new NonOpaquePanel(new BorderLayout());
             systemRole = new JBTextField();
-            systemRole.getEmptyText().setText(systemRoleText);
-            panel.add(systemRole);
+            OpenAISettingsState instance = OpenAISettingsState.getInstance();
+            systemRole.setText(instance.gpt35RoleText);
+            rolePanel.add(systemRole,BorderLayout.CENTER);
+            DefaultActionGroup toolbarActions = new DefaultActionGroup();
+            toolbarActions.add(new AnAction(AllIcons.Actions.MenuSaveall) {
+                @Override
+                public void actionPerformed(@NotNull AnActionEvent e) {
+                    instance.gpt35RoleText = systemRole.getText().isEmpty() ? systemRoleText : systemRole.getText();
+                }
+            });
+            toolbarActions.add(new AnAction(AllIcons.Actions.Rollback) {
+                @Override
+                public void actionPerformed(@NotNull AnActionEvent e) {
+                    systemRole.setText(systemRoleText);
+                    instance.gpt35RoleText = systemRoleText;
+                }
+            });
+            ActionToolbarImpl actonPanel = new ActionToolbarImpl("System Role Toolbar",toolbarActions,true);
+            actonPanel.setTargetComponent(this);
+            rolePanel.add(actonPanel,BorderLayout.EAST);
+            panel.add(rolePanel);
             panel.setBorder(JBUI.Borders.empty(0,8,10,10));
             add(panel,BorderLayout.NORTH);
         }
@@ -204,9 +229,6 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
     }
 
     public String getSystemRole() {
-        if (systemRole.getText().isEmpty()) {
-            return systemRoleText;
-        }
-        return systemRole.getText();
+        return OpenAISettingsState.getInstance().gpt35RoleText;
     }
 }
