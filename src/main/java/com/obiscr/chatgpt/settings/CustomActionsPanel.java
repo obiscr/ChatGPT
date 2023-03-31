@@ -90,6 +90,9 @@ public class CustomActionsPanel implements Configurable, Disposable {
                 }
 
                 List<String> items = new ArrayList<>(myModel.getItems());
+                if(row >= items.size()) {
+                    return;
+                }
                 items.set(row, value);
                 myModel.setItems(items);
                 myModel.fireTableCellUpdated(row, TableModelEvent.ALL_COLUMNS);
