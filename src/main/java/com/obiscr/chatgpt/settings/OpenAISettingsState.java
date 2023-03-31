@@ -70,6 +70,8 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
 
   public Boolean enableCustomizeGpt35TurboUrl = false;
 
+  public String gpt35RoleText = "You are a helpful language assistant";
+
   public static OpenAISettingsState getInstance() {
     return ApplicationManager.getApplication().getService(OpenAISettingsState.class);
   }
