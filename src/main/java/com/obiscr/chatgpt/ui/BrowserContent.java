@@ -58,10 +58,12 @@ public class BrowserContent {
         question = question.replace("'", "\\'");
 
         String fillQuestion = "document.getElementsByTagName(\"textarea\")[0].value = '" + question + "'";
+        String enableButton = "document.getElementsByTagName(\"textarea\")[0].nextSibling.removeAttribute('disabled')";
         String doClick = "document.getElementsByTagName(\"textarea\")[0].nextSibling.click()";
         // Fill the question
         String formattedQuestion = fillQuestion.replace("\n", "\\n");
         browser.getCefBrowser().executeJavaScript(formattedQuestion,url,0);
+        browser.getCefBrowser().executeJavaScript(enableButton,url,0);
         browser.getCefBrowser().executeJavaScript(doClick,url,0);
     }
 }
