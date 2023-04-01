@@ -46,10 +46,7 @@ public class OfficialParser {
         for (int i = 0 ; i < partsArray.size() ; i++) {
             result.append(partsArray.get(i).getAsString());
         }
-        ParseResult parseResult = new ParseResult();
-        parseResult.source = result.toString();
-        parseResult.html = HtmlUtil.md2html(result.toString());
-        return parseResult;
+        return new ParseResult(result.toString(), HtmlUtil.md2html(result.toString()));
     }
 
     public static ParseResult parseGPT35Turbo(String response) {
@@ -74,10 +71,7 @@ public class OfficialParser {
                     append("Total tokens: ").append("<b>").append(usage.get("total_tokens").getAsInt()).append("</b>");
             usageResult.append("*");
         }
-        ParseResult parseResult = new ParseResult();
-        parseResult.source = result.toString();
-        parseResult.html = HtmlUtil.md2html(usageResult.toString());
-        return parseResult;
+        return new ParseResult(result.toString(), HtmlUtil.md2html(usageResult.toString()));
     }
 
     public static ParseResult parseGPT35TurboWithStream(MessageComponent component, String response) {
@@ -93,23 +87,6 @@ public class OfficialParser {
             result.append(content);
             component.getAnswers().add(result.toString());
         }
-        ParseResult parseResult = new ParseResult();
-        parseResult.source = component.prevAnswers();
-        parseResult.html = HtmlUtil.md2html(component.prevAnswers());
-        return parseResult;
+        return new ParseResult(component.prevAnswers(), HtmlUtil.md2html(component.prevAnswers()));
     }
-
-    public static class ParseResult {
-        private String source;
-        private String html;
-
-        public String getSource() {
-            return source;
-        }
-
-        public String getHtml() {
-            return html;
-        }
-    }
-
 }

@@ -2,6 +2,7 @@ package com.obiscr.chatgpt;
 
 import com.obiscr.chatgpt.core.builder.OfficialBuilder;
 import com.obiscr.chatgpt.core.parser.OfficialParser;
+import com.obiscr.chatgpt.core.parser.ParserResult;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.ui.MainPanel;
 import com.obiscr.chatgpt.ui.MessageComponent;
@@ -89,7 +90,7 @@ public class GPT35TurboHandler extends AbstractHandler {
                         mainPanel.aroundRequest(false);
                         return;
                     }
-                    OfficialParser.ParseResult parseResult = OfficialParser.
+                    ParseResult parseResult = OfficialParser.
                             parseGPT35Turbo(responseMessage);
 
                     mainPanel.getContentPanel().getMessages().add(OfficialBuilder.assistantMessage(parseResult.getSource()));

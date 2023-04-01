@@ -91,7 +91,7 @@ public class ChatGPTHandler extends AbstractHandler {
                         return;
                     }
                     try {
-                        OfficialParser.ParseResult parseResult;
+                        ParseResult parseResult;
                         if (mainPanel.isChatGPTModel()) {
                             parseResult = OfficialParser.
                                     parseChatGPT(myProject, component, data);
