@@ -111,11 +111,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         secondCombobox.setModel(new DefaultComboBoxModel<>(comboboxItemsString));
 
         refreshButton.addActionListener(e -> {
-            String apiKey = checkKeyExists();
-            if (StringUtil.isEmpty(apiKey)) {
-                return;
-            }
-            OpenAIUtil.refreshGranted(apiKey, myMainPanel);
+            OpenAIUtil.refreshGranted();
         });
 
         createAPIKeyButton.addActionListener(e -> {
