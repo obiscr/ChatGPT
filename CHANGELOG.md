@@ -2,6 +2,12 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.12-203.221]
+### Fixed
++ [#146](https://github.com/dromara/ChatGPT/issues/131)
++ [#152](https://github.com/dromara/ChatGPT/issues/152)
++ Some other bugs
+
 ## [2.1.11-203.221]
 ### Fixed
 + [#131](https://github.com/dromara/ChatGPT/issues/131)
