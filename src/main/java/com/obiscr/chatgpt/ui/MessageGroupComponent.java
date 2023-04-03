@@ -77,7 +77,7 @@ public class MessageGroupComponent extends JBPanel<MessageGroupComponent> implem
             });
             rolePanel.add(systemRole,BorderLayout.CENTER);
             DefaultActionGroup toolbarActions = new DefaultActionGroup();
-            toolbarActions.add(new AnAction(AllIcons.Actions.MenuSaveall) {
+            toolbarActions.add(new AnAction(AllIcons.Actions.Menu_saveall) {
                 @Override
                 public void actionPerformed(@NotNull AnActionEvent e) {
                     instance.gpt35RoleText = systemRole.getText().isEmpty() ? systemRoleText : systemRole.getText();
