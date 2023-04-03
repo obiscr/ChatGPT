@@ -53,6 +53,7 @@ public class GPT3_35_TurboPanel implements Configurable, Disposable {
             }
         };
         enableCustomizeGpt35TurboUrlCheckBox.addItemListener(proxyTypeChangedListener);
+        enableCustomizeServerOptions(false);
         initHelp();
     }
 
