@@ -45,7 +45,7 @@ public class RequestProvider {
         OpenAISettingsState instance = OpenAISettingsState.getInstance();
         if (mainPanel.isChatGPTModel()) {
             if (instance.urlType == SettingConfiguration.SettingURLType.CUSTOMIZE) {
-                if (StringUtil.isEmpty(instance.gpt35TurboUrl)) {
+                if (StringUtil.isEmpty(instance.customizeUrl)) {
                     Notifications.Bus.notify(
                             new Notification(ChatGPTBundle.message("group.id"),
                                     "Error settings",
@@ -55,7 +55,7 @@ public class RequestProvider {
                                     NotificationType.WARNING));
                     provider.url = OFFICIAL_CONVERSATION_URL;
                 } else {
-                    provider.url = instance.gpt35TurboUrl;
+                    provider.url = instance.customizeUrl;
                 }
             } else {
                 provider.url = OFFICIAL_CONVERSATION_URL;
