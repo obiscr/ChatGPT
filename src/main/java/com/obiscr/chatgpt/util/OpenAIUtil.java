@@ -3,7 +3,9 @@ package com.obiscr.chatgpt.util;
 import cn.hutool.http.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.ui.MessageDialogBuilder;
+import com.intellij.openapi.ui.Messages;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
 
 import javax.swing.*;
@@ -17,39 +19,13 @@ import static com.obiscr.chatgpt.settings.OpenAISettingsPanel.FIND_GRANTS;
  */
 public class OpenAIUtil {
 
-    public static void refreshGranted(String apiKey, JComponent component) {
-        OpenAISettingsState state = OpenAISettingsState.getInstance();
-        try {
-            String grants = HttpUtil.createGet(FIND_GRANTS).
-                    header("Authorization", "Bearer " + apiKey).setProxy(state.getProxy()).
-                    timeout(5000)
-                    .execute().body();
-            JsonObject object = JsonParser.parseString(grants).getAsJsonObject();
-            if (object.keySet().contains("error")) {
-                String errorMessage = object.get("error").getAsJsonObject().get("message").getAsString();
-                MessageDialogBuilder.yesNo("Refresh Failed",
-                                "Refresh grant failed, error: " + errorMessage)
-                        .show();
-                return;
-            }
-            if (!object.keySet().contains("total_used") || !object.keySet().contains("total_granted")) {
-                MessageDialogBuilder.yesNo("Refresh Failed",
-                                "Refresh grant failed, please try again later.")
-                        .show();
-                return;
-            }
-            double used = object.get("total_used").getAsDouble();
-            double available = object.get("total_available").getAsDouble();
-            double granted = object.get("total_granted").getAsDouble();
-            String info = "Tips: Usage data may be delayed by up to 5 minutes.\n\n" +
-                    "<b>Used</b>: " + used + "\n" +
-                    "<b>Available</b>: " + available + "\n" +
-                    "<b>Total</b>: " + granted;
-            MessageDialogBuilder.yesNo("Usage info", info).show();
-        } catch (Exception e) {
-            MessageDialogBuilder.yesNo("Refresh Failed",
-                            "Refresh grant failed, error: " + e.getMessage())
-                    .show();
+    public static void refreshGranted() {
+        int result = MessageDialogBuilder.yesNo("Refresh Tips",
+                        "In recent days, OpenAI has banned usage restrictions via API queries. \n" +
+                                "Does it open a browser for you to make a query? (Login is required first)")
+                .show();
+        if (result == Messages.YES) {
+            BrowserUtil.browse("https://platform.openai.com/account/usage");
         }
     }
 
