@@ -37,6 +37,9 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         Content gpt35Turbo = contentFactory.createContent(gpt35TurboToolWindow.getContent(), GPT35_TRUBO_CONTENT_NAME, false);
         gpt35Turbo.setCloseable(false);
 
+        // get input focus by keystroke
+        gpt35TurboToolWindow.registerKeystrokeFocus();
+
         OpenAISettingsState settingsState = OpenAISettingsState.getInstance();
         Map<Integer, String> contentSort = settingsState.contentOrder;
 
