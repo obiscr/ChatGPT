@@ -36,6 +36,7 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         ChatGPTToolWindow chatGPTToolWindow = new ChatGPTToolWindow(project);
         Content chatGpt = contentFactory.createContent(chatGPTToolWindow.getContent(), CHATGPT_CONTENT_NAME, false);
         chatGpt.setCloseable(false);
+        chatGPTToolWindow.registerKeystrokeFocus();
 
         GPT35TurboToolWindow gpt35TurboToolWindow = new GPT35TurboToolWindow(project);
         Content gpt35Turbo = contentFactory.createContent(gpt35TurboToolWindow.getContent(), GPT35_TRUBO_CONTENT_NAME, false);
