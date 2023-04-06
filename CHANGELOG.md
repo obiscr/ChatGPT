@@ -2,9 +2,16 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.13-203.221]
+### Fixed
++ [#150](https://github.com/dromara/ChatGPT/issues/150)
+
+### Changed
++ Switch to manually refreshing Access Token
+
 ## [2.1.12-203.221]
 ### Fixed
-+ [#146](https://github.com/dromara/ChatGPT/issues/131)
++ [#146](https://github.com/dromara/ChatGPT/issues/146)
 + [#152](https://github.com/dromara/ChatGPT/issues/152)
 + Some other bugs
 
