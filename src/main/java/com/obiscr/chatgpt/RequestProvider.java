@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class RequestProvider {
 
-    public static final String OFFICIAL_CONVERSATION_URL = "https://bypass.duti.tech/api/conversation";
+    public static final String OFFICIAL_CONVERSATION_URL = "https://bypass.churchless.tech/api/conversation";
     public static final String OFFICIAL_GPT35_TURBO_URL = "https://api.openai.com/v1/chat/completions";
     private Project myProject;
     private String url;
