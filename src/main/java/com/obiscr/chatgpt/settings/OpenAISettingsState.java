@@ -28,13 +28,9 @@ import static com.obiscr.chatgpt.MyToolWindowFactory.*;
 public class OpenAISettingsState implements PersistentStateComponent<OpenAISettingsState> {
 
   public String customizeUrl = "";
-  public SettingConfiguration.SettingURLType urlType =
-          SettingConfiguration.SettingURLType.OFFICIAL;
+
   public String readTimeout = "50000";
   public String connectionTimeout = "50000";
-
-  public String email = "";
-  public String password = "";
   public Boolean enableProxy = false;
   public Boolean enableAvatar = true;
   public SettingConfiguration.SettingProxyType proxyType =
@@ -70,6 +66,7 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
   public String proxyPassword = "";
 
   public Boolean enableCustomizeGpt35TurboUrl = false;
+  public Boolean enableCustomizeChatGPTUrl = false;
 
   public String gpt35RoleText = "You are a helpful language assistant";
 

@@ -45,25 +45,21 @@ public class SendAction extends AnAction {
     private boolean presetCheck(boolean isChatGPTModel) {
         OpenAISettingsState instance = OpenAISettingsState.getInstance();
         if (isChatGPTModel) {
-            if (instance.urlType == SettingConfiguration.SettingURLType.OFFICIAL) {
-                if (StringUtil.isEmpty(instance.accessToken)){
-                    Notifications.Bus.notify(
-                            new Notification(ChatGPTBundle.message("group.id"),
-                                    "Wrong setting",
-                                    "Please configure the access token or login in at first.\n" +
-                                            "Open Setting/Preference - Tools - OpenAI - ChatGPT, and login.",
-                                    NotificationType.ERROR));
-                    return false;
-                }
-            } else if (instance.urlType == SettingConfiguration.SettingURLType.CUSTOMIZE) {
-                if (StringUtil.isEmpty(instance.customizeUrl)) {
-                    Notifications.Bus.notify(
-                            new Notification(ChatGPTBundle.message("group.id"),
-                                    "Wrong setting",
-                                    "Please configure a Customize URL first.",
-                                    NotificationType.ERROR));
-                    return false;
-                }
+            if (StringUtil.isEmpty(instance.accessToken)) {
+                Notifications.Bus.notify(
+                        new Notification(ChatGPTBundle.message("group.id"),
+                                "Wrong setting",
+                                "Please configure the access token first.",
+                                NotificationType.ERROR));
+                return false;
+            }
+            if (instance.enableCustomizeChatGPTUrl && StringUtil.isEmpty(instance.customizeUrl)) {
+                Notifications.Bus.notify(
+                        new Notification(ChatGPTBundle.message("group.id"),
+                                "Wrong setting",
+                                "Please configure ChatGPT customize server first.",
+                                NotificationType.ERROR));
+                return false;
             }
         } else {
             if (StringUtil.isEmpty(instance.apiKey)) {
@@ -71,6 +67,14 @@ public class SendAction extends AnAction {
                         new Notification(ChatGPTBundle.message("group.id"),
                                 "Wrong setting",
                                 "Please configure a API Key first.",
+                                NotificationType.ERROR));
+                return false;
+            }
+            if (instance.enableCustomizeGpt35TurboUrl && StringUtil.isEmpty(instance.gpt35TurboUrl)) {
+                Notifications.Bus.notify(
+                        new Notification(ChatGPTBundle.message("group.id"),
+                                "Wrong setting",
+                                "Please configure GPT-3.5-Turbo customize server first.",
                                 NotificationType.ERROR));
                 return false;
             }

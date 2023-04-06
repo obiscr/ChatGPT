@@ -1,5 +1,6 @@
 package com.obiscr.chatgpt;
 
+import com.alibaba.fastjson2.JSON;
 import com.intellij.openapi.project.Project;
 import com.obiscr.chatgpt.core.parser.OfficialParser;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
