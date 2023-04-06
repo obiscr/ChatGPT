@@ -44,19 +44,8 @@ public class RequestProvider {
 
         OpenAISettingsState instance = OpenAISettingsState.getInstance();
         if (mainPanel.isChatGPTModel()) {
-            if (instance.urlType == SettingConfiguration.SettingURLType.CUSTOMIZE) {
-                if (StringUtil.isEmpty(instance.customizeUrl)) {
-                    Notifications.Bus.notify(
-                            new Notification(ChatGPTBundle.message("group.id"),
-                                    "Error settings",
-                                    "You currently have a custom ChatGPT Server enabled, \n" +
-                                            "but do not have the correct server address set. \n" +
-                                            "The default configuration will be used.",
-                                    NotificationType.WARNING));
-                    provider.url = OFFICIAL_CONVERSATION_URL;
-                } else {
-                    provider.url = instance.customizeUrl;
-                }
+            if (instance.enableCustomizeChatGPTUrl) {
+                provider.url = instance.customizeUrl;
             } else {
                 provider.url = OFFICIAL_CONVERSATION_URL;
             }
@@ -64,18 +53,7 @@ public class RequestProvider {
             provider.data = OfficialBuilder.buildChatGPT(myProject,question).toString();
         } else {
             if (instance.enableCustomizeGpt35TurboUrl) {
-                if (StringUtil.isEmpty(instance.gpt35TurboUrl)) {
-                    Notifications.Bus.notify(
-                            new Notification(ChatGPTBundle.message("group.id"),
-                                    "Error settings",
-                                    "You currently have a custom GPT 3.5 Turbo Server enabled, \n" +
-                                            "but do not have the correct server address set. \n" +
-                                            "The default configuration will be used.",
-                                    NotificationType.WARNING));
-                    provider.url = OFFICIAL_GPT35_TURBO_URL;
-                } else {
-                    provider.url = instance.gpt35TurboUrl;
-                }
+                provider.url = instance.gpt35TurboUrl;
             } else {
                 provider.url = OFFICIAL_GPT35_TURBO_URL;
             }
