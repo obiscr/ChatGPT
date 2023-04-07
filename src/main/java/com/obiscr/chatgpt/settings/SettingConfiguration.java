@@ -5,14 +5,6 @@ package com.obiscr.chatgpt.settings;
  */
 public class SettingConfiguration {
 
-    public enum SettingURLType {
-        //
-        OFFICIAL,
-
-        //
-        CUSTOMIZE,
-    }
-
     public enum SettingProxyType {
         //
         DIRECT,
