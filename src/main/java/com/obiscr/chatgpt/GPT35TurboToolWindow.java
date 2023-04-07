@@ -46,4 +46,8 @@ public class GPT35TurboToolWindow {
     inputMap.put(keyStroke, "focusAction");
     myTextArea.getActionMap().put("focusAction", focusAction);
   }
+
+  public JTextArea getInputTextArea(){
+    return panel.getSearchTextArea().getTextArea();
+  }
 }
