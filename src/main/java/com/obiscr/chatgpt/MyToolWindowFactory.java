@@ -32,14 +32,14 @@ public class MyToolWindowFactory implements ToolWindowFactory {
         ChatGPTToolWindow chatGPTToolWindow = new ChatGPTToolWindow(project);
         Content chatGpt = contentFactory.createContent(chatGPTToolWindow.getContent(), CHATGPT_CONTENT_NAME, false);
         chatGpt.setCloseable(false);
-        chatGPTToolWindow.registerKeystrokeFocus();
+        //chatGPTToolWindow.registerKeystrokeFocus();
 
         GPT35TurboToolWindow gpt35TurboToolWindow = new GPT35TurboToolWindow(project);
         Content gpt35Turbo = contentFactory.createContent(gpt35TurboToolWindow.getContent(), GPT35_TRUBO_CONTENT_NAME, false);
         gpt35Turbo.setCloseable(false);
 
         // get input focus by keystroke
-        gpt35TurboToolWindow.registerKeystrokeFocus();
+        //gpt35TurboToolWindow.registerKeystrokeFocus();
 
         OpenAISettingsState settingsState = OpenAISettingsState.getInstance();
         Map<Integer, String> contentSort = settingsState.contentOrder;
