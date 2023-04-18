@@ -50,6 +50,7 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
 
   public Boolean enableLineWarp = true;
 
+  @Deprecated
   public List<String> customActionsPrefix = new ArrayList<>();
 
   public String chatGptModel = "text-davinci-002-render-sha";
@@ -69,6 +70,7 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
 
   public String gpt35RoleText = "You are a helpful language assistant";
 
+  public Map<String, String> customPrompts = new HashMap<>();
   public static OpenAISettingsState getInstance() {
     return ApplicationManager.getApplication().getService(OpenAISettingsState.class);
   }
