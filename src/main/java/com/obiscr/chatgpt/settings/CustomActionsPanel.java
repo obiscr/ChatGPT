@@ -65,7 +65,7 @@ public class CustomActionsPanel implements Configurable, Disposable {
 
     @Override
     public String getDisplayName() {
-        return "Custom Actions";
+        return "Custom Prompt";
     }
 
     @Override
@@ -161,7 +161,7 @@ public class CustomActionsPanel implements Configurable, Disposable {
 
     private void createUIComponents() {
         customActionsTitledBorderBox = new JPanel(new BorderLayout());
-        TitledSeparator tsUrl = new TitledSeparator("Custom Actions Settings");
+        TitledSeparator tsUrl = new TitledSeparator("Custom Prompt Settings");
         customActionsTitledBorderBox.add(tsUrl,BorderLayout.CENTER);
 
         myMainPanel = new JPanel(new BorderLayout());
