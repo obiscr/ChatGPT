@@ -16,8 +16,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.components.JBLabel;
-import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextField;
+import com.intellij.ui.components.fields.ExpandableTextField;
 import com.intellij.ui.components.panels.NonOpaquePanel;
 import com.intellij.ui.components.panels.VerticalLayout;
 import com.intellij.ui.scale.JBUIScale;
@@ -31,7 +31,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import static com.obiscr.chatgpt.ui.action.editor.CustomAction.ACTIVE_PREFIX;
 import static com.obiscr.chatgpt.ui.action.editor.CustomAction.ACTIVE_PROMPT;
@@ -64,7 +64,8 @@ public class AddCustomAction extends AnAction {
     static class CustomActionDialog extends DialogWrapper {
         private final Runnable runnable;
         private JPanel panel;
-        private final JBTextField question = new JBTextField();
+        private final JBTextField nameField = new JBTextField();
+        private final ExpandableTextField valueField = new ExpandableTextField();
         private final Project project;
         private Editor editor;
 
@@ -102,7 +103,7 @@ public class AddCustomAction extends AnAction {
             myOKAction = new DialogWrapperAction("Send") {
                 @Override
                 protected void doAction(ActionEvent e) {
-                    project.putUserData(ACTIVE_PREFIX, question.getText());
+                    project.putUserData(ACTIVE_PREFIX, valueField.getText());
                     project.putUserData(ACTIVE_PROMPT, editor.getDocument().getText());
                     runnable.run();
                     dispose();
@@ -113,12 +114,12 @@ public class AddCustomAction extends AnAction {
             DialogWrapperAction mySendAndSaveAction = new DialogWrapperAction("Send And Save") {
                 @Override
                 protected void doAction(ActionEvent e) {
-                    project.putUserData(ACTIVE_PREFIX, question.getText());
+                    project.putUserData(ACTIVE_PREFIX, valueField.getText());
                     project.putUserData(ACTIVE_PROMPT, editor.getDocument().getText());
                     runnable.run();
-                    if (!StringUtil.isEmpty(question.getText())) {
-                        List<String> customActionsPrefix = OpenAISettingsState.getInstance().customActionsPrefix;
-                        customActionsPrefix.add(question.getText());
+                    if (!StringUtil.isEmpty(valueField.getText())) {
+                        Map<String, String> customPrompts = OpenAISettingsState.getInstance().customPrompts;
+                        customPrompts.put(nameField.getText(), valueField.getText());
                     }
                     dispose();
                     close(OK_EXIT_CODE);
@@ -141,14 +142,27 @@ public class AddCustomAction extends AnAction {
 
         private JPanel createItemPanel() {
             JPanel basePanel = new JPanel(new BorderLayout());
-            JPanel prefixPanel = new NonOpaquePanel(new BorderLayout());
-            JBLabel prefixLabel = new JBLabel("Prefix: ");
-            prefixLabel.setBorder(JBUI.Borders.emptyBottom(5));
-            prefixPanel.add(prefixLabel, BorderLayout.NORTH);
-            question.getEmptyText().setText("Type new custom action here");
-            prefixPanel.add(question,BorderLayout.CENTER);
-            prefixPanel.setBorder(JBUI.Borders.empty(5,0));
-            basePanel.add(prefixPanel,BorderLayout.NORTH);
+            JPanel promptPanel = new NonOpaquePanel(new GridLayout(2,1));
+
+            JPanel namePanel = new JPanel(new BorderLayout());
+            JBLabel promptNameLabel = new JBLabel("Prompt name: ");
+            promptNameLabel.setBorder(JBUI.Borders.emptyBottom(5));
+            namePanel.add(promptNameLabel, BorderLayout.NORTH);
+            nameField.getEmptyText().setText("Type prompt name here, if empty, the prompt value will be used");
+            namePanel.add(nameField, BorderLayout.CENTER);
+
+            JPanel valuePanel = new JPanel(new BorderLayout());
+            JBLabel promptValueLabel = new JBLabel("Prompt value: ");
+            promptValueLabel.setBorder(JBUI.Borders.emptyBottom(5));
+            valuePanel.add(promptValueLabel,BorderLayout.NORTH);
+            valueField.getEmptyText().setText("Type new custom action here");
+            valueField.setFont(nameField.getFont());
+            valuePanel.add(valueField,BorderLayout.CENTER);
+
+            promptPanel.add(namePanel);
+            promptPanel.add(valuePanel);
+
+            basePanel.add(promptPanel,BorderLayout.NORTH);
 
             JPanel codePanel = new NonOpaquePanel(new BorderLayout());
             JBLabel codeLabel = new JBLabel("Code block:");

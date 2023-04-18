@@ -54,7 +54,7 @@ public class CustomAction extends AbstractEditorAction {
         @Override
         public AnAction @NotNull [] getChildren(@Nullable AnActionEvent e) {
             List<AnAction> anActionList = initialization();
-            for (String customActionsPrefix : OpenAISettingsState.getInstance().customActionsPrefix) {
+            for (String customActionsPrefix : OpenAISettingsState.getInstance().customPrompts.keySet()) {
                 anActionList.add(new CustomActionItem(customActionsPrefix, this.runnable));
             }
             return anActionList.toArray(AnAction[]::new);
