@@ -3,7 +3,6 @@ package com.obiscr.chatgpt.settings;
 
 import com.intellij.application.options.pathMacros.PathMacroConfigurable;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.util.NlsContexts;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.fields.ExpandableTextField;
 import com.intellij.util.ui.JBUI;
@@ -26,7 +25,7 @@ public class CustomPromptEditor extends DialogWrapper {
         boolean isOK(String name, String value);
     }
 
-    public CustomPromptEditor(@NlsContexts.DialogTitle String title, String key, String value, Validator validator) {
+    public CustomPromptEditor(String title, String key, String value, Validator validator) {
         super(true);
         setTitle(title);
         myValidator = validator;
