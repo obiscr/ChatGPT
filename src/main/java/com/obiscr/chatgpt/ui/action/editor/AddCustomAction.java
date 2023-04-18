@@ -43,7 +43,7 @@ public class AddCustomAction extends AnAction {
 
     private final Runnable runnable;
     public AddCustomAction(Runnable runnable) {
-        super(() -> "Add Custom Prompt", AllIcons.Actions.AddList);
+        super(() -> "Add Custom Prompt", AllIcons.ToolbarDecorator.AddLink);
         this.runnable = runnable;
     }
     @Override
