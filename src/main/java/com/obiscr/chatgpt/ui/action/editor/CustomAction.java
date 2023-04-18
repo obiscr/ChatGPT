@@ -32,7 +32,7 @@ public class CustomAction extends AbstractEditorAction {
             doActionPerformed(e);
         };
 
-        ListPopup actionGroupPopup = JBPopupFactory.getInstance().createActionGroupPopup("Custom Action Popups",
+        ListPopup actionGroupPopup = JBPopupFactory.getInstance().createActionGroupPopup("Custom Prompt Popups",
                 new CustomPrefixActionGroup(runnable), e.getDataContext(), true, null, Integer.MAX_VALUE);
         actionGroupPopup.showInBestPositionFor(e.getData(CommonDataKeys.EDITOR));
     }

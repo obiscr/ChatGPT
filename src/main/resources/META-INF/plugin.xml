@@ -26,7 +26,7 @@
                              displayName="GPT 3.5 Turbo"/>
     <applicationConfigurable parentId="com.obiscr.chatgpt.settings.OpenAISettings" instance="com.obiscr.chatgpt.settings.CustomActionsPanel"
                              id="com.obiscr.chatgpt.settings.commandActions"
-                             displayName="Custom Actions"/>
+                             displayName="Custom Prompt"/>
     <applicationService serviceImplementation="com.obiscr.chatgpt.settings.OpenAISettingsState"/>
     <applicationService serviceImplementation="com.obiscr.chatgpt.core.TokenManager"/>
     <projectService serviceImplementation="com.obiscr.chatgpt.core.ConversationManager"/>
