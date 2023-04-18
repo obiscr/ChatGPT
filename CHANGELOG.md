@@ -2,6 +2,14 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.15-201]
+### Fixed
++ [#185](https://github.com/dromara/ChatGPT/issues/185)
++ [#189](https://github.com/dromara/ChatGPT/issues/189)
++ [#191](https://github.com/dromara/ChatGPT/issues/191)
+
+
+## [Unreleased]
 ## [2.1.14-201]
 ### Fixed
 + [#182](https://github.com/dromara/ChatGPT/issues/182): Temporarily remove this feature
