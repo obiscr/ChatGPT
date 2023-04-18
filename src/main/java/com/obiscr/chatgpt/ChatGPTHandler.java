@@ -2,6 +2,7 @@ package com.obiscr.chatgpt;
 
 import com.alibaba.fastjson2.JSON;
 import com.intellij.openapi.project.Project;
+import com.obiscr.chatgpt.core.builder.OfficialBuilder;
 import com.obiscr.chatgpt.core.parser.OfficialParser;
 import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import com.obiscr.chatgpt.ui.MainPanel;
@@ -21,6 +22,7 @@ import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.net.Proxy;
 import java.nio.charset.StandardCharsets;
+import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,6 +34,7 @@ public class ChatGPTHandler extends AbstractHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(ChatGPTHandler.class);
 
+    private final Stack<String> gpt35Stack = new Stack<>();
 
     public EventSource handle(MainPanel mainPanel, MessageComponent component, String question) {
         myProject = mainPanel.getProject();
@@ -101,6 +104,14 @@ public class ChatGPTHandler extends AbstractHandler {
                         }
                         if (parseResult == null) {
                             return;
+                        }
+                        if (!mainPanel.isChatGPTModel()) {
+                            if (data.contains("\"finish_reason\":\"stop\"")) {
+                                mainPanel.getContentPanel().getMessages().add(OfficialBuilder.assistantMessage(gpt35Stack.pop()));
+                                gpt35Stack.clear();
+                            } else {
+                                gpt35Stack.push(parseResult.getSource());
+                            }
                         }
                         // Copy action only needed source content
                         component.setSourceContent(parseResult.getSource());
