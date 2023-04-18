@@ -43,7 +43,7 @@ public class AddCustomAction extends AnAction {
 
     private final Runnable runnable;
     public AddCustomAction(Runnable runnable) {
-        super(() -> "Add Custom Action", AllIcons.ToolbarDecorator.AddLink);
+        super(() -> "Add Custom Prompt", AllIcons.Actions.AddList);
         this.runnable = runnable;
     }
     @Override
@@ -72,7 +72,7 @@ public class AddCustomAction extends AnAction {
         public CustomActionDialog(@Nullable Project project, Runnable runnable) {
             super(project);
             this.project = project;
-            setTitle("New Custom Action");
+            setTitle("New Custom Prompt");
             setResizable(false);
             init();
             setOKActionEnabled(true);
@@ -146,6 +146,9 @@ public class AddCustomAction extends AnAction {
 
             JPanel namePanel = new JPanel(new BorderLayout());
             JBLabel promptNameLabel = new JBLabel("Prompt name: ");
+            promptNameLabel.setIcon(AllIcons.General.ContextHelp);
+            promptNameLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+            promptNameLabel.setToolTipText("<html>The name displayed in the menu, and it should be as short as possible.");
             promptNameLabel.setBorder(JBUI.Borders.emptyBottom(5));
             namePanel.add(promptNameLabel, BorderLayout.NORTH);
             nameField.getEmptyText().setText("Type prompt name here, if empty, the prompt value will be used");
@@ -153,9 +156,12 @@ public class AddCustomAction extends AnAction {
 
             JPanel valuePanel = new JPanel(new BorderLayout());
             JBLabel promptValueLabel = new JBLabel("Prompt value: ");
+            promptValueLabel.setIcon(AllIcons.General.ContextHelp);
+            promptValueLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+            promptValueLabel.setToolTipText("<html>When asking a question, the prompt content sent to AI.");
             promptValueLabel.setBorder(JBUI.Borders.emptyBottom(5));
             valuePanel.add(promptValueLabel,BorderLayout.NORTH);
-            valueField.getEmptyText().setText("Type new custom action here");
+            valueField.getEmptyText().setText("Type new custom prompt here");
             valueField.setFont(nameField.getFont());
             valuePanel.add(valueField,BorderLayout.CENTER);
 
