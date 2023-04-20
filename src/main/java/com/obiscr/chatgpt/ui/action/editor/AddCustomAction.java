@@ -119,7 +119,8 @@ public class AddCustomAction extends AnAction {
                     runnable.run();
                     if (!StringUtil.isEmpty(valueField.getText())) {
                         Map<String, String> customPrompts = OpenAISettingsState.getInstance().customPrompts;
-                        customPrompts.put(nameField.getText(), valueField.getText());
+                        customPrompts.put(StringUtil.isEmpty(nameField.getText()) ? valueField.getText() :
+                                nameField.getText(), valueField.getText());
                     }
                     dispose();
                     close(OK_EXIT_CODE);
