@@ -1,6 +1,18 @@
 # ChatGPT
 
-## Important: At present, Open AI officially does not support Google/Microsoft account login, not because the plugin does not support it
+## OpenAI 正版账号
+
+> 领取海外原装 ChatGPT 正版账号，因为在注册OpenAI账号的流程比较繁琐，因此这里提供了现成的账号。
+>
+> 点击此处可以获取: https://fk.nsjiasu.com/details/89B55176
+
+---
+
+## 苔藓社区正式公测
+
+[苔藓社区](https://moss.heshixi.com)正式公测，支持Android、iOS、Mac、Windows。免翻墙极速免费使用ChatGPT。
+
+---
 
 [ChatGPT](https://chat.openai.com/chat) is a language model trained
 by OpenAI and can be used for a variety of tasks, including dialogue

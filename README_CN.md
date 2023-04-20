@@ -1,6 +1,18 @@
 # ChatGPT
 
-## 重要：目前OpenAI官方不支持Google/Microsoft账户登录，并不是插件不支持
+## OpenAI 正版账号
+
+> 领取海外原装 ChatGPT 正版账号，因为在注册OpenAI账号的流程比较繁琐，因此这里提供了现成的账号。
+>
+> 点击此处可以获取: https://fk.nsjiasu.com/details/89B55176
+
+---
+
+## 苔藓社区正式公测
+
+[苔藓社区](https://moss.heshixi.com)正式公测，支持Android、iOS、Mac、Windows。免翻墙极速免费使用ChatGPT。
+
+---
 
 [ChatGPT](https://chat.openai.com/chat)是一种语言模型，它由OpenAI训练，
 可以用于多种任务，包括对话和文本生成。ChatGPT 是一种基于神经网络的模型，它使用
