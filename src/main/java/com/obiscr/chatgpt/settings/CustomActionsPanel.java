@@ -80,6 +80,9 @@ public class CustomActionsPanel implements Configurable, Disposable {
                 .setEditAction(anActionButton -> {
                     doEditAction();
                 })
+                .setRemoveAction(anActionButton -> {
+                    doRemoveAction();
+                })
                 .createPanel();
     }
 
@@ -107,11 +110,23 @@ public class CustomActionsPanel implements Configurable, Disposable {
         }
     }
 
+    public void doRemoveAction() {
+        int selectedRow = myTable.getSelectedRow();
+        if (selectedRow < 0) {
+            return;
+        }
+        myModel.removeRow(selectedRow);
+    }
+
     @Override
     public boolean isModified() {
         List<MyPrompt> prompts = new ArrayList<>(myModel.getItems());
         Map<String, String> customPrompts = OpenAISettingsState.getInstance().customPrompts;
-        for (MyPrompt prompt : prompts) {
+        if (prompts.size() != customPrompts.size()) {
+            return true;
+        }
+        for (int i = 0 ; i < customPrompts.size() ; i++) {
+            MyPrompt prompt = prompts.get(i);
             if (!customPrompts.containsKey(prompt.name)) {
                 return true;
             }
