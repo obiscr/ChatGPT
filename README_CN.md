@@ -1,5 +1,14 @@
 # ChatGPT
 
+## 公告
+
+ChatGPTGold现在已经发布，支持强大的对话管理功能。
+
++ [前往官网](https://chatgpt.gold/getting-started)
++ [插件市场](https://plugins.jetbrains.com/plugin/21558-chatgptgold)
+
+---
+
 ## OpenAI 正版账号
 
 > 领取海外原装 ChatGPT 正版账号，因为在注册OpenAI账号的流程比较繁琐，因此这里提供了现成的账号。
