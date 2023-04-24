@@ -6,6 +6,7 @@ import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import com.intellij.util.xmlb.annotations.Tag;
 import com.obiscr.OpenAIProxy;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -70,7 +71,9 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
 
   public String gpt35RoleText = "You are a helpful language assistant";
 
+  @Tag("customPrompts")
   public Map<String, String> customPrompts = new HashMap<>();
+
   public static OpenAISettingsState getInstance() {
     return ApplicationManager.getApplication().getService(OpenAISettingsState.class);
   }
