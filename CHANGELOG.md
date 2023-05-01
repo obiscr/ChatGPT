@@ -2,6 +2,11 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.18-202]
+### Fixed
++ Fix custom prompt error.
++ Fix initialization on Android Studio
+
 ## [2.1.17-202]
 ### Fixed
 + Fix #203
