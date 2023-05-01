@@ -2,6 +2,10 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.1.18-201]
+### Fixed
++ Fix custom prompt error.
+
 ## [2.1.17-201]
 ### Fixed
 + Fix #203
