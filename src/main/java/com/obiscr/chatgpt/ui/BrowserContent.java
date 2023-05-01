@@ -19,10 +19,9 @@ public class BrowserContent {
 
     public static final String url = "https://chat.openai.com/chat";
     private final JPanel contentPanel;
-    private final JBCefBrowser browser;
+    private JBCefBrowser browser;
     public BrowserContent() {
         contentPanel = new JPanel(new BorderLayout());
-        browser = new JBCefBrowser(url);
 
         if (!JBCefApp.isSupported()) {
             String message = "The current IDE does not support Online ChatGPT, because the JVM RunTime does not support JCEF.\n" +
@@ -35,7 +34,7 @@ public class BrowserContent {
             contentPanel.add(area,BorderLayout.CENTER);
             return;
         }
-
+        browser = new JBCefBrowser(url);
         AtomicReference<JComponent> component = new AtomicReference<>(browser.getComponent());
         DefaultActionGroup toolbarActions = new DefaultActionGroup();
         toolbarActions.add(new RefreshPage(browser));
