@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Wuzi
@@ -54,8 +55,10 @@ public class CustomAction extends AbstractEditorAction {
         @Override
         public AnAction @NotNull [] getChildren(@Nullable AnActionEvent e) {
             List<AnAction> anActionList = initialization();
-            for (String customActionsPrefix : OpenAISettingsState.getInstance().customPrompts.values()) {
-                anActionList.add(new CustomActionItem(customActionsPrefix, this.runnable));
+            for (Map.Entry<String, String> entry : OpenAISettingsState.getInstance().customPrompts.entrySet()) {
+                String prefix = entry.getKey();
+                String prompt = entry.getValue();
+                anActionList.add(new CustomActionItem(prefix, prompt, this.runnable));
             }
             return anActionList.toArray(AnAction[]::new);
         }
@@ -64,15 +67,15 @@ public class CustomAction extends AbstractEditorAction {
     static class CustomActionItem extends AnAction {
 
         private final Runnable runnable;
-        private final String prefix;
-        public CustomActionItem(String prefix, Runnable runnable) {
+        private final String prompt;
+        public CustomActionItem(String prefix, String prompt, Runnable runnable) {
             super(() -> prefix, ChatGPTIcons.TOOL_WINDOW);
             this.runnable = runnable;
-            this.prefix = prefix;
+            this.prompt = prompt;
         }
         @Override
         public void actionPerformed(@NotNull AnActionEvent e) {
-            e.getProject().putUserData(ACTIVE_PREFIX, prefix);
+            e.getProject().putUserData(ACTIVE_PREFIX, prompt);
             runnable.run();
         }
     }
