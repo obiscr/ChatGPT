@@ -338,7 +338,7 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         openaiAssistantTitledBorderBox.add(oaUrl,BorderLayout.CENTER);
 
         corePromptBorderBox = new JPanel(new BorderLayout());
-        TitledSeparator corePrompt = new TitledSeparator("Core Prompt");
+        TitledSeparator corePrompt = new TitledSeparator("Custom Built-in Prompt");
         corePromptBorderBox.add(corePrompt,BorderLayout.CENTER);
 
 
