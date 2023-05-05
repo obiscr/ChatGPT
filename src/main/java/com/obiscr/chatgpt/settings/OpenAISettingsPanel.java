@@ -67,6 +67,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JTextField proxyUsernameField;
     private JBPasswordField proxyPasswordField;
     private JPanel proxyAuthPanel;
+    private JPanel corePromptBorderBox;
+    private JBTextField corePromptFindBugField;
+    private JBTextField corePromptOptimizeField;
+    private JLabel corePromptHelpLabel;
     private final String[] comboboxItemsString = {
             CHATGPT_CONTENT_NAME,
             GPT35_TRUBO_CONTENT_NAME};
@@ -167,6 +171,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         enableLineWarpCheckBox.setSelected(state.enableLineWarp);
         assistantApiKey.setText(state.assistantApiKey);
+
+        corePromptFindBugField.setText(state.corePromptFindBug);
+        corePromptOptimizeField.setText(state.corePromptOptimize);
+
         initHelp();
     }
 
@@ -198,7 +206,9 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem()) ||
                 !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem()) ||
                 !state.enableLineWarp == enableLineWarpCheckBox.isSelected() ||
-                !StringUtil.equals(state.assistantApiKey,assistantApiKey.getText());
+                !StringUtil.equals(state.assistantApiKey,assistantApiKey.getText()) ||
+                !StringUtil.equals(state.corePromptFindBug,corePromptFindBugField.getText()) ||
+                !StringUtil.equals(state.corePromptOptimize,corePromptOptimizeField.getText());
     }
 
     @Override
@@ -216,6 +226,9 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         state.enableProxy = enableProxyCheckBox.isSelected();
         state.enableAvatar = enableAvatarCheckBox.isSelected();
         state.proxyHostname = hostnameField.getText();
+
+        state.corePromptFindBug = corePromptFindBugField.getText();
+        state.corePromptOptimize = corePromptOptimizeField.getText();
 
         boolean portIsNumber = com.obiscr.chatgpt.util.
                 StringUtil.isNumber(portField.getValue().toString());
@@ -315,6 +328,11 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         TitledSeparator oaUrl = new TitledSeparator("OpenAI Assistant");
         openaiAssistantTitledBorderBox.add(oaUrl,BorderLayout.CENTER);
 
+        corePromptBorderBox = new JPanel(new BorderLayout());
+        TitledSeparator corePrompt = new TitledSeparator("Custom Built-in Prompt");
+        corePromptBorderBox.add(corePrompt,BorderLayout.CENTER);
+
+
         supportPanel = new JPanel(new BorderLayout());
         supportDonate = new LinkLabel<>("Support / Donate", ChatGPTIcons.SUPPORT);
         supportDonate.setBorder(JBUI.Borders.emptyTop(20));
@@ -338,5 +356,8 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         openaiAssistantContentHelpLabel.setFont(JBUI.Fonts.smallFont());
         openaiAssistantContentHelpLabel.setForeground(UIUtil.getContextHelpForeground());
+
+        corePromptHelpLabel.setForeground(UIUtil.getContextHelpForeground());
+        corePromptHelpLabel.setForeground(UIUtil.getContextHelpForeground());
     }
 }

@@ -71,6 +71,9 @@ public class OpenAISettingsState implements PersistentStateComponent<OpenAISetti
 
   public String gpt35RoleText = "You are a helpful language assistant";
 
+  public String corePromptFindBug = "Find the bug in the code below:";
+  public String corePromptOptimize = "Optimize this code:";
+
   @Tag("customPrompts")
   public Map<String, String> customPrompts = new HashMap<>();
 
