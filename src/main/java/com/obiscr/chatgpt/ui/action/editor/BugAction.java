@@ -2,6 +2,7 @@ package com.obiscr.chatgpt.ui.action.editor;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
+import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,7 +16,8 @@ public class BugAction extends AbstractEditorAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        key = "Find the bug in the code below:";
+        OpenAISettingsState state = OpenAISettingsState.getInstance();
+        key = state.corePromptFindBug;
         super.actionPerformed(e);
     }
 

@@ -2,6 +2,7 @@ package com.obiscr.chatgpt.ui.action.editor;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.obiscr.chatgpt.message.ChatGPTBundle;
+import com.obiscr.chatgpt.settings.OpenAISettingsState;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,7 +16,8 @@ public class OptimizeAction extends AbstractEditorAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        key = "Optimize this code:";
+        OpenAISettingsState state = OpenAISettingsState.getInstance();
+        key = state.corePromptOptimize;
         super.actionPerformed(e);
     }
 
