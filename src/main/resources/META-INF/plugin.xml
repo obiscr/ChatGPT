@@ -38,12 +38,12 @@
 
   <actions>
     <group id="ChatGPT" text="Search with ChatGPT" description="Search with ChatGPT">
-      <action id="WrongAction" icon="/icons/toolWindow.svg"
-              class="com.obiscr.chatgpt.ui.action.editor.BugAction"/>
-      <action id="OptimizeAction" class="com.obiscr.chatgpt.ui.action.editor.OptimizeAction"
+      <action id="Prompt1Action" icon="/icons/toolWindow.svg"
+              class="com.obiscr.chatgpt.ui.action.editor.Prompt1Action"/>
+      <action id="Prompt2Action" class="com.obiscr.chatgpt.ui.action.editor.Prompt2Action"
               icon="/icons/toolWindow.svg" />
-      <action id="CustomAction" icon="/icons/toolWindow.svg"
-              class="com.obiscr.chatgpt.ui.action.editor.CustomAction">
+      <action id="Prompt3Action" icon="/icons/toolWindow.svg"
+              class="com.obiscr.chatgpt.ui.action.editor.Prompt3Action">
         <keyboard-shortcut keymap="$default" first-keystroke="control shift Q"/>
       </action>
       <separator/>
