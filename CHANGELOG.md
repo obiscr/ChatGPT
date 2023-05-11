@@ -2,6 +2,13 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.2.1-222.231]
+### Fixed
++ Fix [#211](https://github.com/dromara/ChatGPT/issues/211)
+
+### Changed
++ Upgrade the built-in prompts
+
 ## [2.1.18-222.231]
 ### Fixed
 + Fix custom prompt error.
