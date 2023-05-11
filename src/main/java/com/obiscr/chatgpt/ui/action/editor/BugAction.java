@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Wuzi
  */
+@Deprecated
 public class BugAction extends AbstractEditorAction {
 
     public BugAction() {
@@ -17,7 +18,7 @@ public class BugAction extends AbstractEditorAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         OpenAISettingsState state = OpenAISettingsState.getInstance();
-        key = state.corePromptFindBug;
+        key = state.prompt1Name;
         super.actionPerformed(e);
     }
 

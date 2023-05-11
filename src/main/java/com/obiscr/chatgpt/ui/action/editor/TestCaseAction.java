@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Wuzi
  */
+@Deprecated
 public class TestCaseAction extends AbstractEditorAction {
 
     public TestCaseAction() {

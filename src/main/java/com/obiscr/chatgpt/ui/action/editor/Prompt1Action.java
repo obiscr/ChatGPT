@@ -8,17 +8,16 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Wuzi
  */
-@Deprecated
-public class OptimizeAction extends AbstractEditorAction {
+public class Prompt1Action extends AbstractEditorAction {
 
-    public OptimizeAction() {
-        super(() -> ChatGPTBundle.message("action.code.optimize.menu"));
+    public Prompt1Action() {
+        super(() -> OpenAISettingsState.getInstance().prompt1Name);
     }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         OpenAISettingsState state = OpenAISettingsState.getInstance();
-        key = state.prompt2Name;
+        key = state.prompt1Value;
         super.actionPerformed(e);
     }
 
