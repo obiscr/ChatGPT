@@ -11,6 +11,7 @@ import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.components.JBPasswordField;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
+import com.intellij.ui.components.fields.ExpandableTextField;
 import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
@@ -69,9 +70,12 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
     private JBPasswordField proxyPasswordField;
     private JPanel proxyAuthPanel;
     private JPanel corePromptBorderBox;
-    private JBTextField corePromptFindBugField;
-    private JBTextField corePromptOptimizeField;
-    private JLabel corePromptHelpLabel;
+    private JBTextField prompt1NameField;
+    private JBTextField prompt2NameField;
+    private JBTextField prompt3NameField;
+    private ExpandableTextField prompt1ValueField;
+    private ExpandableTextField prompt3ValueField;
+    private ExpandableTextField prompt2ValueField;
     private final String[] comboboxItemsString = {
             CHATGPT_CONTENT_NAME,
             GPT35_TRUBO_CONTENT_NAME,
@@ -128,6 +132,10 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
             }
             OpenAIUtil.createAPIKey(apiKey,myMainPanel);
         });
+
+        prompt1ValueField.setFont(JBUI.Fonts.label());
+        prompt2ValueField.setFont(JBUI.Fonts.label());
+        prompt3ValueField.setFont(JBUI.Fonts.label());
     }
 
     private String checkKeyExists() {
@@ -176,8 +184,12 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         enableLineWarpCheckBox.setSelected(state.enableLineWarp);
         assistantApiKey.setText(state.assistantApiKey);
 
-        corePromptFindBugField.setText(state.corePromptFindBug);
-        corePromptOptimizeField.setText(state.corePromptOptimize);
+        prompt1NameField.setText(state.prompt1Name);
+        prompt1ValueField.setText(state.prompt1Value);
+        prompt2NameField.setText(state.prompt2Name);
+        prompt2ValueField.setText(state.prompt2Value);
+        prompt3NameField.setText(state.prompt3Name);
+        prompt3ValueField.setText(state.prompt3Value);
 
         initHelp();
     }
@@ -195,7 +207,11 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         needRestart = !StringUtil.equals(state.contentOrder.get(1), (String)firstCombobox.getSelectedItem())||
                 !StringUtil.equals(state.contentOrder.get(2), (String)secondCombobox.getSelectedItem())||
                 !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem()) ||
-                !state.enableLineWarp == enableLineWarpCheckBox.isSelected();
+                !state.enableLineWarp == enableLineWarpCheckBox.isSelected() ||
+                !StringUtil.equals(state.prompt1Name, prompt1NameField.getText()) ||
+                !StringUtil.equals(state.prompt2Name, prompt2NameField.getText()) ||
+                !StringUtil.equals(state.prompt3Name, prompt3NameField.getText())
+        ;
 
         return
                 !StringUtil.equals(state.readTimeout, readTimeoutField.getText()) ||
@@ -213,8 +229,13 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
                 !StringUtil.equals(state.contentOrder.get(3), (String)thirdCombobox.getSelectedItem()) ||
                 !state.enableLineWarp == enableLineWarpCheckBox.isSelected() ||
                 !StringUtil.equals(state.assistantApiKey,assistantApiKey.getText()) ||
-                !StringUtil.equals(state.corePromptFindBug,corePromptFindBugField.getText()) ||
-                !StringUtil.equals(state.corePromptOptimize,corePromptOptimizeField.getText());
+                !StringUtil.equals(state.prompt1Name, prompt1NameField.getText()) ||
+                !StringUtil.equals(state.prompt1Value, prompt1ValueField.getText()) ||
+                !StringUtil.equals(state.prompt2Name, prompt2NameField.getText()) ||
+                !StringUtil.equals(state.prompt2Value, prompt2ValueField.getText()) ||
+                !StringUtil.equals(state.prompt3Name, prompt3NameField.getText()) ||
+                !StringUtil.equals(state.prompt3Value, prompt3ValueField.getText())
+                ;
     }
 
     @Override
@@ -233,8 +254,12 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
         state.enableAvatar = enableAvatarCheckBox.isSelected();
         state.proxyHostname = hostnameField.getText();
 
-        state.corePromptFindBug = corePromptFindBugField.getText();
-        state.corePromptOptimize = corePromptOptimizeField.getText();
+        state.prompt1Name = prompt1NameField.getText();
+        state.prompt1Value = prompt1ValueField.getText();
+        state.prompt2Name = prompt2NameField.getText();
+        state.prompt2Value = prompt2ValueField.getText();
+        state.prompt3Name = prompt3NameField.getText();
+        state.prompt3Value = prompt3ValueField.getText();
 
         boolean portIsNumber = com.obiscr.chatgpt.util.
                 StringUtil.isNumber(portField.getValue().toString());
@@ -365,8 +390,5 @@ public class OpenAISettingsPanel implements Configurable, Disposable {
 
         openaiAssistantContentHelpLabel.setFont(JBUI.Fonts.smallFont());
         openaiAssistantContentHelpLabel.setForeground(UIUtil.getContextHelpForeground());
-
-        corePromptHelpLabel.setForeground(UIUtil.getContextHelpForeground());
-        corePromptHelpLabel.setForeground(UIUtil.getContextHelpForeground());
     }
 }
