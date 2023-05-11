@@ -71,6 +71,7 @@ public class MainPanel {
 
         actionPanel = new JPanel(new BorderLayout());
         progressBar = new JProgressBar();
+        progressBar.setVisible(false);
         actionPanel.add(progressBar, BorderLayout.NORTH);
         actionPanel.add(searchTextArea, BorderLayout.CENTER);
         actionPanel.add(button, BorderLayout.EAST);
@@ -107,6 +108,7 @@ public class MainPanel {
 
     public void aroundRequest(boolean status) {
         progressBar.setIndeterminate(status);
+        progressBar.setVisible(status);
         button.setEnabled(!status);
         if (status) {
             contentPanel.addScrollListener();
