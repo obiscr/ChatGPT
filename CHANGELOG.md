@@ -2,6 +2,10 @@
 
 # ChatGPT Changelog
 ## [Unreleased]
+## [2.2.2-202]
+### Fixed
++ Fix the problem of Custom Prompt disappearing [#220](https://github.com/dromara/ChatGPT/issues/220)
+
 ## [2.2.1-202]
 ### Fixed
 + Fix [#211](https://github.com/dromara/ChatGPT/issues/211)
