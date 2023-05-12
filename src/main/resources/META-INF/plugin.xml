@@ -42,8 +42,10 @@
               class="com.obiscr.chatgpt.ui.action.editor.Prompt1Action"/>
       <action id="Prompt2Action" class="com.obiscr.chatgpt.ui.action.editor.Prompt2Action"
               icon="/icons/toolWindow.svg" />
-      <action id="Prompt3Action" icon="/icons/toolWindow.svg"
-              class="com.obiscr.chatgpt.ui.action.editor.Prompt3Action">
+      <action id="Prompt3Action" class="com.obiscr.chatgpt.ui.action.editor.Prompt3Action"
+              icon="/icons/toolWindow.svg" />
+      <action id="CustomAction" icon="/icons/toolWindow.svg"
+              class="com.obiscr.chatgpt.ui.action.editor.CustomAction">
         <keyboard-shortcut keymap="$default" first-keystroke="control shift Q"/>
       </action>
       <separator/>
