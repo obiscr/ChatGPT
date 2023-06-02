@@ -1,35 +1,12 @@
 # ChatGPT
 
-## 公告
-
-ChatGPTGold现在已经发布，支持强大的对话管理功能。
-
-+ [前往官网](https://chatgpt.gold/getting-started)
-+ [插件市场](https://plugins.jetbrains.com/plugin/21558-chatgptgold)
-
----
-
-## OpenAI 正版账号
-
-> 领取海外原装 ChatGPT 正版账号，因为在注册OpenAI账号的流程比较繁琐，因此这里提供了现成的账号。
->
-> 点击此处可以获取: https://fk.nsjiasu.com/details/89B55176
-
----
-
-## 苔藓社区正式公测
-
-[苔藓社区](https://moss.heshixi.com)正式公测，支持Android、iOS、Mac、Windows。免翻墙极速免费使用ChatGPT。
-
----
-
 [ChatGPT](https://chat.openai.com/chat)是一种语言模型，它由OpenAI训练，
 可以用于多种任务，包括对话和文本生成。ChatGPT 是一种基于神经网络的模型，它使用
 人类语言的大量样本进行训练，可以在给定上下文的情 况下生成有意义的自然语言文本。
 该模型可以用于许多应用，例如自然语言处理（NLP）和 对话系统。
 
-[English](https://github.com/dromara/ChatGPT/blob/main/README.md) | 
-[简体中文](https://github.com/dromara/ChatGPT/blob/main/README_CN.md)
+[English](https://github.com/obiscr/ChatGPT/blob/main/README.md) | 
+[简体中文](https://github.com/obiscr/ChatGPT/blob/main/README_CN.md)
 <br/>
 
 # 关于本项目
