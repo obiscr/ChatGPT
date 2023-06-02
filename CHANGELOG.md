@@ -4,11 +4,11 @@
 ## [Unreleased]
 ## [2.2.2-202]
 ### Fixed
-+ Fix the problem of Custom Prompt disappearing [#220](https://github.com/dromara/ChatGPT/issues/220)
++ Fix the problem of Custom Prompt disappearing [#220](https://github.com/obiscr/ChatGPT/issues/220)
 
 ## [2.2.1-202]
 ### Fixed
-+ Fix [#211](https://github.com/dromara/ChatGPT/issues/211)
++ Fix [#211](https://github.com/obiscr/ChatGPT/issues/211)
 
 ### Changed
 + Upgrade the built-in prompts
@@ -28,36 +28,36 @@
 
 ## [2.1.15-202]
 ### Fixed
-+ [#185](https://github.com/dromara/ChatGPT/issues/185)
-+ [#189](https://github.com/dromara/ChatGPT/issues/189)
-+ [#191](https://github.com/dromara/ChatGPT/issues/191)
++ [#185](https://github.com/obiscr/ChatGPT/issues/185)
++ [#189](https://github.com/obiscr/ChatGPT/issues/189)
++ [#191](https://github.com/obiscr/ChatGPT/issues/191)
 
 ## [2.1.14-202]
 ### Fixed
-+ [#182](https://github.com/dromara/ChatGPT/issues/182): Temporarily remove this feature
++ [#182](https://github.com/obiscr/ChatGPT/issues/182): Temporarily remove this feature
 
 ## [2.1.13-202]
 ### Fixed
-+ [#150](https://github.com/dromara/ChatGPT/issues/150)
++ [#150](https://github.com/obiscr/ChatGPT/issues/150)
 
 ### Changed
 + Switch to manually refreshing Access Token
 
 ## [2.1.12-202]
 ### Fixed
-+ [#146](https://github.com/dromara/ChatGPT/issues/146)
-+ [#152](https://github.com/dromara/ChatGPT/issues/152)
++ [#146](https://github.com/obiscr/ChatGPT/issues/146)
++ [#152](https://github.com/obiscr/ChatGPT/issues/152)
 + Some other bugs
 
 ## [2.1.11-202]
 ### Fixed
-+ [#131](https://github.com/dromara/ChatGPT/issues/131)
-+ [#137](https://github.com/dromara/ChatGPT/issues/137)
++ [#131](https://github.com/obiscr/ChatGPT/issues/131)
++ [#137](https://github.com/obiscr/ChatGPT/issues/137)
 
 ## [2.1.10-202]
 ### Fixed
-+ [#133](https://github.com/dromara/ChatGPT/issues/133)
-+ [#139](https://github.com/dromara/ChatGPT/issues/139)
++ [#133](https://github.com/obiscr/ChatGPT/issues/133)
++ [#139](https://github.com/obiscr/ChatGPT/issues/139)
 
 ## [2.1.9-202]
 ### Added
@@ -69,7 +69,7 @@
 + Support proxy authentication
 
 ### Fixed
-+ Fix [#116](https://github.com/dromara/ChatGPT/issues/116)
++ Fix [#116](https://github.com/obiscr/ChatGPT/issues/116)
 
 ## [2.1.7-202]
 ### Added
@@ -81,13 +81,13 @@
 
 ## [2.1.6-202]
 ### Changed
-+ Fix [#107](https://github.com/dromara/ChatGPT/issues/107)
++ Fix [#107](https://github.com/obiscr/ChatGPT/issues/107)
 + Fix the problem of GPT 3.5 Turbo displaying blank
 + Fix the UI flicker problem
 
 ## [2.1.5-202]
 ### Changed
-+ Fix [#94](https://github.com/dromara/ChatGPT/issues/94)
++ Fix [#94](https://github.com/obiscr/ChatGPT/issues/94)
 + Support enable/disable avatar
 + Fix ChatGPT network error
 
