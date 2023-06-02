@@ -27,20 +27,6 @@ This project is a plugin that supports ChatGPT running on JetBrains series IDE.
 
 <img alt="微信公众号: 观察与创造" width="600" src="https://user-images.githubusercontent.com/28687074/224671786-ecb449a1-4901-4690-bef5-b8d03a8120fa.png" />
 
-## OpenAI 正版账号
-
-> 领取海外原装 ChatGPT 正版账号，因为在注册OpenAI账号的流程比较繁琐，因此这里提供了现成的账号。
->
-> 点击此处可以获取: https://fk.nsjiasu.com/details/89B55176
-
----
-
-## 苔藓社区正式公测
-
-[苔藓社区](https://moss.heshixi.com)正式公测，支持Android、iOS、Mac、Windows。免翻墙极速免费使用ChatGPT。
-
----
-
 ## 简体中文
 
 [ChatGPT](https://chat.openai.com/chat)是一种语言模型，它由OpenAI训练，

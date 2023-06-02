@@ -77,11 +77,11 @@ public class SupportDialog extends DialogWrapper {
     private JPanel createItemPanel() {
         JPanel jPanel = new NonOpaquePanel();
         jPanel.setLayout(new GridLayout(5,1));
-        jPanel.add(createActionLink("1. Star this project on GitHub","https://github.com/dromara/ChatGPT"));
-        jPanel.add(createActionLink("2. Report bugs","https://github.com/dromara/ChatGPT/issues"));
-        jPanel.add(createActionLink("3. Tell me your ideas","https://github.com/dromara/ChatGPT/discussions"));
-        jPanel.add(createActionLink("4. Create pull requests","https://github.com/dromara/ChatGPT"));
-        jPanel.add(createActionLink("5. Share this plugin with you friends","https://github.com/dromara/ChatGPT"));
+        jPanel.add(createActionLink("1. Star this project on GitHub","https://github.com/obiscr/ChatGPT"));
+        jPanel.add(createActionLink("2. Report bugs","https://github.com/obiscr/ChatGPT/issues"));
+        jPanel.add(createActionLink("3. Tell me your ideas","https://github.com/obiscr/ChatGPT/discussions"));
+        jPanel.add(createActionLink("4. Create pull requests","https://github.com/obiscr/ChatGPT"));
+        jPanel.add(createActionLink("5. Share this plugin with you friends","https://github.com/obiscr/ChatGPT"));
         return jPanel;
     }
 

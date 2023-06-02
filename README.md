@@ -1,19 +1,5 @@
 # ChatGPT
 
-## OpenAI 正版账号
-
-> 领取海外原装 ChatGPT 正版账号，因为在注册OpenAI账号的流程比较繁琐，因此这里提供了现成的账号。
->
-> 点击此处可以获取: https://fk.nsjiasu.com/details/89B55176
-
----
-
-## 苔藓社区正式公测
-
-[苔藓社区](https://moss.heshixi.com)正式公测，支持Android、iOS、Mac、Windows。免翻墙极速免费使用ChatGPT。
-
----
-
 [ChatGPT](https://chat.openai.com/chat) is a language model trained
 by OpenAI and can be used for a variety of tasks, including dialogue
 and text generation. ChatGPT is a neural network-based model that is
@@ -22,8 +8,8 @@ natural language text that is meaningful in a given context. The model
 can be used for many applications, such as natural language processing
 (NLP) and dialogue systems.
 
-[简体中文](https://github.com/dromara/ChatGPT/blob/main/README_CN.md) | 
-[English](https://github.com/dromara/ChatGPT/blob/main/README.md)
+[简体中文](https://github.com/obiscr/ChatGPT/blob/main/README_CN.md) | 
+[English](https://github.com/obiscr/ChatGPT/blob/main/README.md)
 <br/>
 
 # About this project

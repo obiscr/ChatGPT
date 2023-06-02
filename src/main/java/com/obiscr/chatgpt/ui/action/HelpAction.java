@@ -59,7 +59,7 @@ public class HelpAction extends DumbAwareAction {
     }
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-      BrowserUtil.browse("https://github.com/dromara/ChatGPT/discussions/categories/announcements");
+      BrowserUtil.browse("https://github.com/obiscr/ChatGPT/discussions/categories/announcements");
     }
   }
 
