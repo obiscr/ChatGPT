@@ -36,10 +36,6 @@ This project is a plugin that supports ChatGPT running on JetBrains series IDE.
 
 Please see the document: [https://chatgpt.en.obiscr.com/getting-started/](https://chatgpt.en.obiscr.com/getting-started/)
 
-# Contribution
-
-This is a newly established project with many areas that can be optimized. We look forward to your joining us.
-
 # License
 
 This project uses the "GNU General Public License Agreement V2". and additional restrictions: it is forbidden to use the code of this project to build other plug-in products of JetBrains Marketplace. Offenders will be punished.
