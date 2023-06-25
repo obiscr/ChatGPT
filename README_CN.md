@@ -33,11 +33,6 @@
 
 请看文档: [https://chatgpt.cn.obiscr.com/getting-started/](https://chatgpt.en.obiscr.com/getting-started/)
 
-
-# 贡献
-
-这是一个新成立的项目，有很多地方可以优化。期待您的加入。
-
 # License
 
 本项目采用《GNU通用公共许可协议V2》。另外附加条件: 禁止使用本项目的代码构建其他 JetBrains Marketplace 平台的插件。违者必究。
