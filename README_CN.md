@@ -13,13 +13,13 @@
 
 这个项目是支持ChatGPT在JetBrains系列IDE上运行的一款插件。
 
-![gpt3-write-article](https://user-images.githubusercontent.com/28687074/222499283-d80a7601-b57d-49d9-90bd-2bb749d7e6ab.gif)
+![code-generation](https://github.com/obiscr/ChatGPT/assets/28687074/2cad58e3-f388-4f98-8652-9196a7978545)
 
-![chatgpt-write-article](https://user-images.githubusercontent.com/28687074/222499301-8118f05f-1cc5-442d-b705-3c1008e9effa.gif)
+![code-insert-to-editor](https://github.com/obiscr/ChatGPT/assets/28687074/c3e9d94e-81cb-4da4-9154-3555d72014c0)
 
-![gpt3-test-case](https://user-images.githubusercontent.com/28687074/222499405-6fe25a51-8456-4831-9d1b-6e5060d6fa0a.gif)
+![explain-codes](https://github.com/obiscr/ChatGPT/assets/28687074/eb33c99d-fa45-4f08-8f23-e21e2cc2e935)
 
-![chatgpt-how-to-learn](https://user-images.githubusercontent.com/28687074/222499424-25c8a2bb-13b5-47d1-82bb-ca12b6cc05fa.gif)
+![learn-binary-tree](https://github.com/obiscr/ChatGPT/assets/28687074/1ee5698b-f392-4b4a-b39f-05efdb9836aa)
 
 
 # 安装
