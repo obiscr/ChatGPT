@@ -34,7 +34,7 @@ This project is a plugin that supports ChatGPT running on JetBrains series IDE.
 
 # Getting Started
 
-Please see the document: [https://chatgpt.en.obiscr.com/getting-started/](https://chatgpt.en.obiscr.com/getting-started/)
+Please see the document: [https://chatgpt.gold/getting-started/](https://chatgpt.gold/getting-started/)
 
 # License
 
