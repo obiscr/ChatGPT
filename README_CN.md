@@ -31,7 +31,7 @@
 
 # 入门
 
-请看文档: [https://chatgpt.cn.obiscr.com/getting-started/](https://chatgpt.en.obiscr.com/getting-started/)
+请看文档: [https://chatgpt.gold/getting-started/](https://chatgpt.gold/getting-started/)
 
 # License
 
