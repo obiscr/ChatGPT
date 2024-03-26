@@ -18,8 +18,6 @@ This project is a plugin that supports ChatGPT running on JetBrains series IDE.
 
 ![code-generation](https://github.com/obiscr/ChatGPT/assets/28687074/2cad58e3-f388-4f98-8652-9196a7978545)
 
-![code-insert-to-editor](https://github.com/obiscr/ChatGPT/assets/28687074/c3e9d94e-81cb-4da4-9154-3555d72014c0)
-
 ![explain-codes](https://github.com/obiscr/ChatGPT/assets/28687074/eb33c99d-fa45-4f08-8f23-e21e2cc2e935)
 
 ![learn-binary-tree](https://github.com/obiscr/ChatGPT/assets/28687074/1ee5698b-f392-4b4a-b39f-05efdb9836aa)
