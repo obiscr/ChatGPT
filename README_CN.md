@@ -13,13 +13,29 @@
 
 这个项目是支持ChatGPT在JetBrains系列IDE上运行的一款插件。
 
-![code-generation](https://github.com/obiscr/ChatGPT/assets/28687074/2cad58e3-f388-4f98-8652-9196a7978545)
 
-![code-insert-to-editor](https://github.com/obiscr/ChatGPT/assets/28687074/c3e9d94e-81cb-4da4-9154-3555d72014c0)
+# 新特性
 
-![explain-codes](https://github.com/obiscr/ChatGPT/assets/28687074/eb33c99d-fa45-4f08-8f23-e21e2cc2e935)
+## ⌥(Alt) D 在Diff模式中生成内容
 
-![learn-binary-tree](https://github.com/obiscr/ChatGPT/assets/28687074/1ee5698b-f392-4b4a-b39f-05efdb9836aa)
+![cmdd](https://github.com/user-attachments/assets/2893feb2-bbef-451d-8c93-571b47839cb7)
+
+## ⌥⏎(Alt Enter) 快速修复错误
+
+![quick-fix](https://github.com/user-attachments/assets/c15cc39d-7f99-4a24-b34f-35b1c793a65d)
+
+## 解释和修复运行时错误
+
+![explain-and-fix-exceptions](https://github.com/user-attachments/assets/0a0ee912-283c-4cb5-8d2c-fcdef793a2f0)
+
+## 询问代码库
+
+![ask-codebase](https://github.com/user-attachments/assets/8d65b288-30c5-4701-8be3-1497b08b3916)
+
+## 输入 `@` 在提问的时候包含文件
+
+![at-file-system](https://github.com/user-attachments/assets/8942eaef-530e-4d26-8f68-6869c9366ccc)
+
 
 
 # 安装
