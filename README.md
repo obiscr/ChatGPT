@@ -16,12 +16,27 @@ can be used for many applications, such as natural language processing
 
 This project is a plugin that supports ChatGPT running on JetBrains series IDE.
 
-![code-generation](https://github.com/obiscr/ChatGPT/assets/28687074/2cad58e3-f388-4f98-8652-9196a7978545)
+# What's new
 
-![explain-codes](https://github.com/obiscr/ChatGPT/assets/28687074/eb33c99d-fa45-4f08-8f23-e21e2cc2e935)
+## ⌥(Alt) D in editor to switch to diff mode
 
-![learn-binary-tree](https://github.com/obiscr/ChatGPT/assets/28687074/1ee5698b-f392-4b4a-b39f-05efdb9836aa)
+![cmdd](https://github.com/user-attachments/assets/2893feb2-bbef-451d-8c93-571b47839cb7)
 
+## ⌥⏎（Alt Enter）to quick fix errors
+
+![quick-fix](https://github.com/user-attachments/assets/c15cc39d-7f99-4a24-b34f-35b1c793a65d)
+
+## Explain & fix runtime errors
+
+![explain-and-fix-exceptions](https://github.com/user-attachments/assets/0a0ee912-283c-4cb5-8d2c-fcdef793a2f0)
+
+## Ask with codebase
+
+![ask-codebase](https://github.com/user-attachments/assets/8d65b288-30c5-4701-8be3-1497b08b3916)
+
+## Type `@` to include specific files
+
+![at-file-system](https://github.com/user-attachments/assets/8942eaef-530e-4d26-8f68-6869c9366ccc)
 
 # Installation
 
